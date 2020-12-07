@@ -16,7 +16,11 @@ TEST(Parallel_matrix_vectort_mult_MPI, Test_1) {
                           -2,  1,  3,
                           -1, 0, 1 };
 
-    std::vector<int> vec{ 1, 2, -1 };
+    std::vector<int> vec;
+
+    if (rank == 0) {
+        vec = std::vector<int>{ 1, 2, -1 };
+    }
 
     std::vector<int> global_max;
     global_max = getParallelOperations(mat, rows, cols, vec);
@@ -38,7 +42,11 @@ TEST(Parallel_matrix_vectort_mult_MPI, Test_2) {
                           0, 0,
                           1, 1 };
 
-    std::vector<int> vec{ -1, 1};
+    std::vector<int> vec;
+
+    if (rank == 0) {
+        vec = std::vector<int>{ -1, 1 };
+    }
 
     std::vector<int> global_result;
     global_result = getParallelOperations(mat, rows, cols, vec);
@@ -57,7 +65,11 @@ TEST(Parallel_matrix_vectort_mult_MPI, Random_Test_1) {
 
     std::vector<int> mat = getMatrixWithRandomNumbers(rows, cols);
 
-    std::vector<int> vec = getMatrixWithRandomNumbers(cols, 1);
+    std::vector<int> vec;
+
+    if (rank == 0) {
+        vec = getMatrixWithRandomNumbers(cols, 1);
+    }
 
     std::vector<int> global_result;
     global_result = getParallelOperations(mat, rows, cols, vec);
@@ -76,7 +88,11 @@ TEST(Parallel_matrix_vectort_mult_MPI, Random_Test_2_many_items) {
 
     std::vector<int> mat = getMatrixWithRandomNumbers(rows, cols);
 
-    std::vector<int> vec = getMatrixWithRandomNumbers(cols, 1);
+    std::vector<int> vec;
+
+    if (rank == 0) {
+        vec = getMatrixWithRandomNumbers(cols, 1);
+    }
 
     std::vector<int> global_result;
     global_result = getParallelOperations(mat, rows, cols, vec);
@@ -95,7 +111,11 @@ TEST(Parallel_matrix_vectort_mult_MPI, Random_Test_3_all_zero) {
 
     std::vector<int> mat = getMatrixWithRandomNumbers(rows, cols);
 
-    std::vector<int> vec(cols);
+    std::vector<int> vec;
+
+    if (rank == 0) {
+        vec = std::vector<int>(cols);
+    }
 
     std::vector<int> global_result;
     global_result = getParallelOperations(mat, rows, cols, vec);
