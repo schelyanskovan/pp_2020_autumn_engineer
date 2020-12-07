@@ -47,7 +47,7 @@ std::vector<int> getParallelOperations(std::vector<int> mat, int rows, int cols,
                 MPI_INT, proc, 0, MPI_COMM_WORLD);
         }
     }
-    
+
     vec.resize(cols);
     MPI_Bcast(&vec[0], cols, MPI_INT, 0, MPI_COMM_WORLD);
 
