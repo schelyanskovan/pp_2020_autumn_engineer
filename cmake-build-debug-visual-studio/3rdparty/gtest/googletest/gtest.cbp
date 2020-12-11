@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="gtest"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="msvc8"/>
+		<Option virtualFolders="CMake Files\;CMake Files\modules\;CMake Files\modules\task_1\;CMake Files\modules\task_1\Kryukov_num_of_altern_char\;CMake Files\modules\task_1\Ndah_vector_error\;CMake Files\modules\task_1\SLEPOV_K_COLUMN_SUM\;CMake Files\modules\task_1\alekhin_d_integration_trapezoidal_method\;CMake Files\modules\task_1\anisimova_p_wrong_vector_update\;CMake Files\modules\task_1\avdeev_a_rectangle_method\;CMake Files\modules\task_1\baulin_m_matrix_max\;CMake Files\modules\task_1\bourmistrova_e_matrix_elem_sum\;CMake Files\modules\task_1\bulychev_a_max_val_of_vector\;CMake Files\modules\task_1\chesnokov_a_matrix_column_sum\;CMake Files\modules\task_1\egorov_k_matrix_sum\;CMake Files\modules\task_1\elandaev_p_find_vector_error\;CMake Files\modules\task_1\eremina_a_diff_elements\;CMake Files\modules\task_1\frolova_o_min_val_mat_columns\;CMake Files\modules\task_1\gavrilov_n_monte_carlo\;CMake Files\modules\task_1\gorbunova_v_lexicograph\;CMake Files\modules\task_1\ivanov_y_string_dif\;CMake Files\modules\task_1\kadnikov_d_multi_scalar\;CMake Files\modules\task_1\kamskov_e_word_count\;CMake Files\modules\task_1\kartashev_v_lexical_order\;CMake Files\modules\task_1\khismatulina_k_column_sum\;CMake Files\modules\task_1\kirillov_z_max_vector\;CMake Files\modules\task_1\kochankov_i_matrix_columns_sum\;CMake Files\modules\task_1\kokh_v_min_val_matrix\;CMake Files\modules\task_1\krasilnikov_a_count_sentences\;CMake Files\modules\task_1\kren_p_find_max_element_of_matrix_by_rows\;CMake Files\modules\task_1\kucheryavykh_y_matrix_column_sum\;CMake Files\modules\task_1\kustova_a_max_vector\;CMake Files\modules\task_1\makhov_p_sim_v_stroke\;CMake Files\modules\task_1\maksimov_a_vector_avg\;CMake Files\modules\task_1\nasedkin_a_vector_min_val\;CMake Files\modules\task_1\nekravtsev_a_matrix_sum\;CMake Files\modules\task_1\novikov_d_max_elem_matrix\;CMake Files\modules\task_1\oganyan_r_letters_amount\;CMake Files\modules\task_1\ognev_d_integration_rectangular_method\;CMake Files\modules\task_1\osipov_n_matrix_column_max\;CMake Files\modules\task_1\pasukhin_d_word_count\;CMake Files\modules\task_1\ptitsyn_p_min_colums\;CMake Files\modules\task_1\rachin_i_max_val_mat_columns\;CMake Files\modules\task_1\rukhovich_i_integration_trapezoidal_method\;CMake Files\modules\task_1\ryazanov_d_integral_trap\;CMake Files\modules\task_1\sharov_a_vector_different\;CMake Files\modules\task_1\shulman_e_change_sign\;CMake Files\modules\task_1\sozinov_a_max_row_matrix\;CMake Files\modules\task_1\stoicheva_d_matrix_max\;CMake Files\modules\task_1\tronin_d_min_row_element\;CMake Files\modules\task_1\voronin_a_multi_scalar\;CMake Files\modules\task_1\zhafyarov_o_vector_sum\;CMake Files\modules\task_1\zlobin_g_method_of_rectangles\;CMake Files\modules\reports\;CMake Files\modules\task_2\;CMake Files\modules\task_2\alekhin_d_Gaussian_Method\;CMake Files\modules\task_2\anisimova_p_philosophers\;CMake Files\modules\task_2\bulychev_a_gather\;CMake Files\modules\task_2\chesnokov_a_scatter\;CMake Files\modules\task_2\chuvashov_a_seidel_method\;CMake Files\modules\task_2\egorov_k_circle_comm\;CMake Files\modules\task_2\elfahli_Hor_rib_sch\;CMake Files\modules\task_2\eremina_a_ring\;CMake Files\modules\task_2\ermolin_d_hypercube\;CMake Files\modules\task_2\frolova_o_bcast\;CMake Files\modules\task_2\gavrilov_n_reduce\;CMake Files\modules\task_2\gorbunova_v_scatter\;CMake Files\modules\task_2\ivanov_y_contrast\;CMake Files\modules\task_2\kamskov_e_matrix_multi_for_a\;CMake Files\modules\task_2\khismatulina_k_contrast_raise\;CMake Files\modules\task_2\kochankov_i_simple_iteration\;CMake Files\modules\task_2\kokh_v_producers_and_consumers\;CMake Files\modules\task_2\krasilnikov_a_bubble_sort\;CMake Files\modules\task_2\kren_p_grid_torus_topology\;CMake Files\modules\task_2\kryukov_s_topology_star\;CMake Files\modules\task_2\kustova_a_jacoby\;CMake Files\modules\task_2\maksimov_a_matr_vec_mult\;CMake Files\modules\task_2\nasedkin_mpi_scatter\;CMake Files\modules\task_2\ndah_r_interative_method\;CMake Files\modules\task_2\nekravtsev_a_star\;CMake Files\modules\task_2\novikov_d_allreduce\;CMake Files\modules\task_2\oganyan_r_writers_readers\;CMake Files\modules\task_2\ognev_d_matrix_vector_vertical_multiplication\;CMake Files\modules\task_2\pasukhin_d_hypercube\;CMake Files\modules\task_2\ryazanov_d_star\;CMake Files\modules\task_2\sandalov_k_torus\;CMake Files\modules\task_2\schelyanskova_a_bubble_sort\;CMake Files\modules\task_2\sharov_a_producers\;CMake Files\modules\task_2\shulman_e_sleeping_barber\;CMake Files\modules\task_2\sozinov_a_gauss_horisontal\;CMake Files\modules\task_2\stoicheva_d_allreduce\;CMake Files\modules\task_2\tronin_d_sleeping_hairdresser\;CMake Files\modules\task_2\vizgalov_a_seidel\;CMake Files\modules\task_2\zhafyarov_o_smoothing_image\;CMake Files\modules\task_2\zlobin_g_gather\;CMake Files\modules\task_3\;CMake Files\modules\task_3\alekhin_d_dijkstras_algorithm\;CMake Files\modules\task_3\anisimova_p_global_search\;CMake Files\modules\task_3\frolova_o_radix_sort_simple_merge_update\;CMake Files\modules\task_3\kustova_a_convex_hull_for_binary\;CMake Files\modules\task_3\maksimov_a_mark_components\;CMake Files\modules\task_3\nekravtsev_a_simpson\;CMake Files\modules\task_3\oganyan_r_global_search\;CMake Files\modules\task_3\ognev_d_quick_sort\;CMake Files\modules\task_4\;CMake Files\modules\test_tasks\;CMake Files\modules\test_tasks\test_latex\;CMake Files\modules\test_tasks\test_mpi\;CMake Files\modules\test_tasks\test_omp\;CMake Files\modules\test_tasks\test_seq\;CMake Files\modules\test_tasks\test_std\;CMake Files\modules\test_tasks\test_tbb\;CMake Files\cmake\;CMake Files\cmake-build-debug-visual-studio\;CMake Files\cmake-build-debug-visual-studio\tbb_downloaded\;CMake Files\cmake-build-debug-visual-studio\tbb_downloaded\tbb-2020\;CMake Files\cmake-build-debug-visual-studio\tbb_downloaded\tbb-2020\tbb\;CMake Files\cmake-build-debug-visual-studio\tbb_downloaded\tbb-2020\tbb\cmake\;CMake Files\3rdparty\;CMake Files\3rdparty\gtest\;CMake Files\3rdparty\gtest\googlemock\;CMake Files\3rdparty\gtest\googlemock\cmake\;CMake Files\3rdparty\gtest\googletest\;CMake Files\3rdparty\gtest\googletest\cmake\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/3rdparty/gtest/googletest"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest">
+				<Option output="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/arch/gtestd.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/3rdparty/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/include"/>
+					<Add directory="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 gtest"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest/fast">
+				<Option output="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/arch/gtestd.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/3rdparty/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/include"/>
+					<Add directory="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 gtest/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main">
+				<Option output="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/arch/gtest_maind.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/3rdparty/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/include"/>
+					<Add directory="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 gtest_main"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="gtest_main/fast">
+				<Option output="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/arch/gtest_maind.lib" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/3rdparty/gtest/googletest"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="msvc8"/>
+				<Compiler>
+					<Add directory="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/include"/>
+					<Add directory="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\ATLMFC\include"/>
+					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"/>
+					<Add directory="C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\cppwinrt"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 gtest_main/fast"/>
+					<CompileFile command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer\cmake-build-debug-visual-studio\3rdparty\gtest\googletest\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/src/gtest-all.cc">
+			<Option target="gtest"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/src/gtest_main.cc">
+			<Option target="gtest_main"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/Kryukov_num_of_altern_char/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\Kryukov_num_of_altern_char\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/Ndah_vector_error/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\Ndah_vector_error\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/SLEPOV_K_COLUMN_SUM/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\SLEPOV_K_COLUMN_SUM\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/alekhin_d_integration_trapezoidal_method/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\alekhin_d_integration_trapezoidal_method\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/anisimova_p_wrong_vector_update/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\anisimova_p_wrong_vector_update\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/avdeev_a_rectangle_method/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\avdeev_a_rectangle_method\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/baulin_m_matrix_max/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\baulin_m_matrix_max\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/bourmistrova_e_matrix_elem_sum/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\bourmistrova_e_matrix_elem_sum\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/bulychev_a_max_val_of_vector/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\bulychev_a_max_val_of_vector\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/chesnokov_a_matrix_column_sum/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\chesnokov_a_matrix_column_sum\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/egorov_k_matrix_sum/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\egorov_k_matrix_sum\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/elandaev_p_find_vector_error/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\elandaev_p_find_vector_error\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/eremina_a_diff_elements/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\eremina_a_diff_elements\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/frolova_o_min_val_mat_columns/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\frolova_o_min_val_mat_columns\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/gavrilov_n_monte_carlo/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\gavrilov_n_monte_carlo\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/gorbunova_v_lexicograph/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\gorbunova_v_lexicograph\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/ivanov_y_string_dif/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\ivanov_y_string_dif\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/kadnikov_d_multi_scalar/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\kadnikov_d_multi_scalar\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/kamskov_e_word_count/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\kamskov_e_word_count\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/kartashev_v_lexical_order/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\kartashev_v_lexical_order\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/khismatulina_k_column_sum/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\khismatulina_k_column_sum\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/kirillov_z_max_vector/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\kirillov_z_max_vector\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/kochankov_i_matrix_columns_sum/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\kochankov_i_matrix_columns_sum\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/kokh_v_min_val_matrix/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\kokh_v_min_val_matrix\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/krasilnikov_a_count_sentences/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\krasilnikov_a_count_sentences\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/kren_p_find_max_element_of_matrix_by_rows/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\kren_p_find_max_element_of_matrix_by_rows\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/kucheryavykh_y_matrix_column_sum/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\kucheryavykh_y_matrix_column_sum\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/kustova_a_max_vector/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\kustova_a_max_vector\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/makhov_p_sim_v_stroke/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\makhov_p_sim_v_stroke\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/maksimov_a_vector_avg/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\maksimov_a_vector_avg\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/nasedkin_a_vector_min_val/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\nasedkin_a_vector_min_val\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/nekravtsev_a_matrix_sum/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\nekravtsev_a_matrix_sum\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/novikov_d_max_elem_matrix/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\novikov_d_max_elem_matrix\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/oganyan_r_letters_amount/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\oganyan_r_letters_amount\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/ognev_d_integration_rectangular_method/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\ognev_d_integration_rectangular_method\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/osipov_n_matrix_column_max/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\osipov_n_matrix_column_max\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/pasukhin_d_word_count/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\pasukhin_d_word_count\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/ptitsyn_p_min_colums/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\ptitsyn_p_min_colums\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/rachin_i_max_val_mat_columns/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\rachin_i_max_val_mat_columns\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/rukhovich_i_integration_trapezoidal_method/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\rukhovich_i_integration_trapezoidal_method\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/ryazanov_d_integral_trap/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\ryazanov_d_integral_trap\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/sharov_a_vector_different/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\sharov_a_vector_different\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/shulman_e_change_sign/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\shulman_e_change_sign\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/sozinov_a_max_row_matrix/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\sozinov_a_max_row_matrix\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/stoicheva_d_matrix_max/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\stoicheva_d_matrix_max\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/tronin_d_min_row_element/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\tronin_d_min_row_element\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/voronin_a_multi_scalar/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\voronin_a_multi_scalar\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/zhafyarov_o_vector_sum/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\zhafyarov_o_vector_sum\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_1/zlobin_g_method_of_rectangles/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_1\zlobin_g_method_of_rectangles\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/reports/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\reports\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/alekhin_d_Gaussian_Method/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\alekhin_d_Gaussian_Method\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/anisimova_p_philosophers/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\anisimova_p_philosophers\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/bulychev_a_gather/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\bulychev_a_gather\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/chesnokov_a_scatter/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\chesnokov_a_scatter\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/chuvashov_a_seidel_method/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\chuvashov_a_seidel_method\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/egorov_k_circle_comm/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\egorov_k_circle_comm\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/elfahli_Hor_rib_sch/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\elfahli_Hor_rib_sch\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/eremina_a_ring/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\eremina_a_ring\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/ermolin_d_hypercube/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\ermolin_d_hypercube\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/frolova_o_bcast/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\frolova_o_bcast\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/gavrilov_n_reduce/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\gavrilov_n_reduce\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/gorbunova_v_scatter/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\gorbunova_v_scatter\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/ivanov_y_contrast/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\ivanov_y_contrast\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/kamskov_e_matrix_multi_for_a/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\kamskov_e_matrix_multi_for_a\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/khismatulina_k_contrast_raise/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\khismatulina_k_contrast_raise\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/kochankov_i_simple_iteration/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\kochankov_i_simple_iteration\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/kokh_v_producers_and_consumers/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\kokh_v_producers_and_consumers\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/krasilnikov_a_bubble_sort/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\krasilnikov_a_bubble_sort\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/kren_p_grid_torus_topology/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\kren_p_grid_torus_topology\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/kryukov_s_topology_star/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\kryukov_s_topology_star\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/kustova_a_jacoby/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\kustova_a_jacoby\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/maksimov_a_matr_vec_mult/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\maksimov_a_matr_vec_mult\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/nasedkin_mpi_scatter/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\nasedkin_mpi_scatter\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/ndah_r_interative_method/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\ndah_r_interative_method\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/nekravtsev_a_star/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\nekravtsev_a_star\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/novikov_d_allreduce/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\novikov_d_allreduce\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/oganyan_r_writers_readers/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\oganyan_r_writers_readers\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/ognev_d_matrix_vector_vertical_multiplication/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\ognev_d_matrix_vector_vertical_multiplication\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/pasukhin_d_hypercube/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\pasukhin_d_hypercube\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/ryazanov_d_star/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\ryazanov_d_star\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/sandalov_k_torus/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\sandalov_k_torus\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/schelyanskova_a_bubble_sort/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\schelyanskova_a_bubble_sort\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/sharov_a_producers/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\sharov_a_producers\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/shulman_e_sleeping_barber/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\shulman_e_sleeping_barber\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/sozinov_a_gauss_horisontal/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\sozinov_a_gauss_horisontal\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/stoicheva_d_allreduce/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\stoicheva_d_allreduce\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/tronin_d_sleeping_hairdresser/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\tronin_d_sleeping_hairdresser\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/vizgalov_a_seidel/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\vizgalov_a_seidel\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/zhafyarov_o_smoothing_image/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\zhafyarov_o_smoothing_image\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_2/zlobin_g_gather/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_2\zlobin_g_gather\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_3/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_3\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_3/alekhin_d_dijkstras_algorithm/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_3\alekhin_d_dijkstras_algorithm\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_3/anisimova_p_global_search/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_3\anisimova_p_global_search\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_3/frolova_o_radix_sort_simple_merge_update/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_3\frolova_o_radix_sort_simple_merge_update\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_3/kustova_a_convex_hull_for_binary/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_3\kustova_a_convex_hull_for_binary\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_3/maksimov_a_mark_components/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_3\maksimov_a_mark_components\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_3/nekravtsev_a_simpson/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_3\nekravtsev_a_simpson\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_3/oganyan_r_global_search/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_3\oganyan_r_global_search\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_3/ognev_d_quick_sort/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_3\ognev_d_quick_sort\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/task_4/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\task_4\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/test_tasks/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\test_tasks\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/test_tasks/test_latex/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\test_tasks\test_latex\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/test_tasks/test_mpi/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\test_tasks\test_mpi\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/test_tasks/test_omp/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\test_tasks\test_omp\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/test_tasks/test_seq/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\test_tasks\test_seq\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/test_tasks/test_std/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\test_tasks\test_std\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/modules/test_tasks/test_tbb/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\modules\test_tasks\test_tbb\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake/Configure.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake/TBBGet.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/tbb_downloaded/tbb-2020/tbb/cmake/TBBConfig.cmake">
+			<Option virtualFolder="CMake Files\cmake-build-debug-visual-studio\tbb_downloaded\tbb-2020\tbb\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/tbb_downloaded/tbb-2020/tbb/cmake/TBBConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\cmake-build-debug-visual-studio\tbb_downloaded\tbb-2020\tbb\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\3rdparty\gtest\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googlemock/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\3rdparty\gtest\googlemock\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googlemock/cmake/gmock.pc.in">
+			<Option virtualFolder="CMake Files\3rdparty\gtest\googlemock\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googlemock/cmake/gmock_main.pc.in">
+			<Option virtualFolder="CMake Files\3rdparty\gtest\googlemock\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\3rdparty\gtest\googletest\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/cmake/Config.cmake.in">
+			<Option virtualFolder="CMake Files\3rdparty\gtest\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/cmake/gtest.pc.in">
+			<Option virtualFolder="CMake Files\3rdparty\gtest\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/cmake/gtest_main.pc.in">
+			<Option virtualFolder="CMake Files\3rdparty\gtest\googletest\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/3rdparty/gtest/googletest/cmake/internal_utils.cmake">
+			<Option virtualFolder="CMake Files\3rdparty\gtest\googletest\cmake\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

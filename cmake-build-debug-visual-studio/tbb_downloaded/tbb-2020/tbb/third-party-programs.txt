@@ -1,0 +1,156 @@
+This file is the "third-party-programs.txt" file specified  in  the  associated Intel end user license
+agreement for the Intel software you are licensing. The third party programs and their corresponding
+required notices and/or license terms are listed below.
+
+1. Portable Hardware Locality (hwloc):
+    Copyright (c) 2004-2006 The Trustees of Indiana University and Indiana University Research and Technology Corporation.  All rights reserved.
+    Copyright (c) 2004-2005 The University of Tennessee and The University of Tennessee Research Foundation.  All rights reserved.
+    Copyright (c) 2004-2005 High Performance Computing Center Stuttgart, University of Stuttgart.  All rights reserved.
+    Copyright (c) 2004-2005 The Regents of the University of California. All rights reserved.
+    Copyright (c) 2009      CNRS
+    Copyright (c) 2009-2016 Inria.  All rights reserved.
+    Copyright (c) 2009-2015 Universite Bordeaux
+    Copyright (c) 2009-2015 Cisco Systems, Inc.  All rights reserved.
+    Copyright (c) 2009-2012 Oracle and/or its affiliates.  All rights reserved.
+    Copyright (c) 2010      IBM
+    Copyright (c) 2010      Jirka Hladky
+    Copyright (c) 2012      Aleksej Saushev, The NetBSD Foundation
+    Copyright (c) 2012      Blue Brain Project, EPFL. All rights reserved.
+    Copyright (c) 2013-2014 University of Wisconsin-La Crosse. All rights reserved.
+    Copyright (c) 2015      Research Organization for Information Science and Technology (RIST). All rights reserved.
+    Copyright (c) 2015-2016 Intel, Inc.  All rights reserved.
+    See COPYING in top-level directory.
+
+    New BSD License
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
+    1. Redistributions of source code must retain the above copyright
+       notice, this list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright
+       notice, this list of conditions and the following disclaimer in the
+       documentation and/or other materials provided with the distribution.
+    3. The name of the author may not be used to endorse or promote products
+       derived from this software without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+    IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+    INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+    THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+_______________________________________________________________________________________________________
+
+2. Instrumentation and Tracing Technology (ITT) Notify User API:
+    Copyright (c) 2005-2014 Intel Corporation. All rights reserved.
+
+    The 3-Clause BSD License
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
+
+      * Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+      * Redistributions in binary form must reproduce the above copyright
+        notice, this list of conditions and the following disclaimer in
+        the documentation and/or other materials provided with the
+        distribution.
+      * Neither the name of Intel Corporation nor the names of its
+        contributors may be used to endorse or promote products derived
+        from this software without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+    OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+_______________________________________________________________________________________________________
+
+3.  ActiveState Thread pool with same API as (multi)  processing.Pool (Python recipe):
+    Copyright (c) 2008,2016 david decotigny (this file)
+    Copyright (c) 2006-2008, R Oudkerk (multiprocessing.Pool)
+
+    BSD 3-clause "New" or "Revised" License
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
+
+    1. Redistributions of source code must retain the above copyright
+       notice, this list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright
+       notice, this list of conditions and the following disclaimer in the
+       documentation and/or other materials provided with the distribution.
+    3. Neither the name of author nor the names of any contributors may be
+       used to endorse or promote products derived from this software
+       without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+    HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+    OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+    SUCH DAMAGE.
+_______________________________________________________________________________________________________
+
+4.  gperftools: Copyright (c) 2011, Google Inc.
+
+    BSD 3-Clause "New" or "Revised" License
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are
+    met:
+
+        * Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+        * Redistributions in binary form must reproduce the above
+    copyright notice, this list of conditions and the following disclaimer
+    in the documentation and/or other materials provided with the
+    distribution.
+        * Neither the name of Google Inc. nor the names of its
+    contributors may be used to endorse or promote products derived from
+    this software without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+    OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+_______________________________________________________________________________________________________
+
+5.  C Runtime Library (CRT): (c) 2015 Microsoft Corporation.
+
+    MICROSOFT* VISUAL STUDIO ENTERPRISE 2015, VISUAL STUDIO PROFESSIONAL 2015, VISUAL STUDIO TEST PROFESSIONAL 2015 AND TRIAL EDITION
+
+    These license terms are an agreement between Microsoft Corporation (or based on where you live, one of its affiliates) and you. Please read them. They apply to the software named above. The terms also apply to any Microsoft services and updates for the software, except to the extent these come with any different terms.
+
+    BY USING THE SOFTWARE, YOU ACCEPT THESE TERMS. IF YOU DO NOT ACCEPT THEM, DO NOT USE THE SOFTWARE. INSTEAD, RETURN IT TO THE RETAILER FOR A REFUND OR CREDIT. If you cannot obtain a refund there, contact Microsoft or the Microsoft affiliate serving your country for information about Microsoft's refund policies. See www.microsoft.com/worldwide. In the United States and Canada, call (800) MICROSOFT or see https://aka.ms/nareturn.
+
+    TRIAL EDITION USE RIGHTS. If the software is a trial edition, then this Section applies to your use of the trial edition.
+
+    GENERAL. You may use any number of copies of the trial edition on your devices. You may only use the trial edition for internal evaluation purposes, and only during the trial period. You may not deploy any applications you make with the trial edition to a production environment. You may run load tests of up to 250 virtual users during the trial period.
+    TRIAL PERIOD AND CONVERSION. The length of the trial period is the first thirty (30) days after you install the trial edition, plus any permitted extension period. After the expiration of the trial period, the trial edition will stop running. You may extend the trial period an additional ninety (90) days if you sign in to the software. You may not be able to access data used with the trial edition when it stops running. You may convert your trial rights at any time to the full-use rights described below by acquiring a valid full-use license.
+    DISCLAIMER OF WARRANTY. THE TRIAL EDITION IS LICENSED "AS-IS." YOU BEAR THE RISK OF USING IT. MICROSOFT GIVES NO EXPRESS WARRANTIES, GUARANTEES OR CONDITIONS. TO THE EXTENT PERMITTED UNDER YOUR LOCAL LAWS, MICROSOFT EXCLUDES THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.FOR AUSTRALIA 

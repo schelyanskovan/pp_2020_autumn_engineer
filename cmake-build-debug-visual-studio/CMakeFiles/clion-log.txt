@@ -1,0 +1,160 @@
+"C:\Program Files\JetBrains\CLion 2019.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -D USE_SEQ=ON -D USE_MPI=ON -D USE_OMP=ON -D USE_TBB=ON -D USE_STD=ON -G "CodeBlocks - NMake Makefiles" C:\Users\OgRob\Desktop\paral\new_paral\pp_2020_autumn_engineer
+CMake Warning (dev) in CMakeLists.txt:
+  No project() command is present.  The top-level CMakeLists.txt file must
+  contain a literal, direct call to the project() command.  Add a line of
+  code such as
+
+    project(ProjectName)
+
+  near the top of the file, but after cmake_minimum_required().
+
+  CMake is pretending there is a "project(Project)" command on the first
+  line.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Parallel Programming Course
+-- Downloading information from GitHub about Intel TBB releases: https://api.github.com/repos/01org/tbb/releases
+-- Downloading information from GitHub about packages for Intel TBB v2020.1: https://api.github.com/repos/01org/tbb/releases/tags/v2020.1
+-- Needed file was found locally C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/tbb-2020.1-win.zip. Remove it if you still want to download a new one
+-- Unpacking C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/tbb-2020.1-win.zip to C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/tbb_downloaded/tbb-2020
+-- Found TBB: TRUE (found version "2020.1") 
+-- Report
+-- Task 1
+-- -- Kryukov_num_of_altern_char_mpi
+-- -- Ndah_vector_error_mpi
+-- -- SLEPOV_K_COLUMN_SUM_mpi
+-- -- alekhin_d_integration_trapezoidal_method_mpi
+-- -- anisimova_p_wrong_vector_update_mpi
+-- -- avdeev_a_rectangle_method_mpi
+-- -- baulin_m_matrix_max_mpi
+-- -- bourmistrova_e_matrix_elem_sum_mpi
+-- -- bulychev_a_max_val_of_vector_mpi
+-- -- chesnokov_a_matrix_column_sum_mpi
+-- -- egorov_k_matrix_sum_mpi
+-- -- elandaev_p_find_vector_error_mpi
+-- -- eremina_a_diff_elements_mpi
+-- -- frolova_o_min_val_mat_columns_mpi
+-- -- gavrilov_n_monte_carlo_mpi
+-- -- gorbunova_v_lexicograph_mpi
+-- -- ivanov_y_string_dif_mpi
+-- -- kadnikov_d_multi_scalar_mpi
+-- -- kamskov_e_word_count_mpi
+-- -- kartashev_v_lexical_order_mpi
+-- -- khismatulina_k_column_sum_mpi
+-- -- kirillov_z_max_vector_mpi
+-- -- kochankov_i_matrix_columns_sum_mpi
+-- -- kokh_v_min_val_matrix_mpi
+-- -- krasilnikov_a_count_sentences_mpi
+-- -- kren_p_find_max_element_of_matrix_by_rows_mpi
+-- -- kucheryavykh_y_matrix_column_sum_mpi
+-- -- kustova_a_max_vector_mpi
+-- -- makhov_p_sim_v_stroke_mpi
+-- -- maksimov_a_vector_avg_mpi
+-- -- nasedkin_a_vector_min_val_mpi
+-- -- nekravtsev_a_matrix_sum_mpi
+-- -- novikov_d_max_elem_matrix_mpi
+-- -- oganyan_r_letters_amount_mpi
+-- -- ognev_d_integration_rectangular_method_mpi
+-- -- osipov_n_matrix_column_max_mpi
+-- -- pasukhin_d_word_count_mpi
+-- -- ptitsyn_p_min_colums_mpi
+-- -- rachin_i_max_val_mat_columns_mpi
+-- -- rukhovich_i_integration_trapezoidal_method_mpi
+-- -- ryazanov_d_integral_trap_mpi
+-- -- sharov_a_vector_different_mpi
+-- -- shulman_e_change_sign_mpi
+-- -- sozinov_a_max_row_matrix_mpi
+-- -- stoicheva_d_matrix_max_mpi
+-- -- tronin_d_min_row_element_mpi
+-- -- voronin_a_multi_scalar_mpi
+-- -- zhafyarov_o_vector_sum_mpi
+-- -- zlobin_g_method_of_rectangles_mpi
+-- Task 2
+-- -- alekhin_d_Gaussian_Method_mpi
+-- -- anisimova_p_philosophers_mpi
+-- -- bulychev_a_gather_mpi
+-- -- chesnokov_a_scatter_mpi
+-- -- chuvashov_a_seidel_method_mpi
+-- -- egorov_k_circle_comm_mpi
+-- -- elfahli_Hor_rib_sch_mpi
+-- -- eremina_a_ring_mpi
+-- -- ermolin_d_hypercube_mpi
+-- -- frolova_o_bcast_mpi
+-- -- gavrilov_n_reduce_mpi
+-- -- gorbunova_v_scatter_mpi
+-- -- ivanov_y_contrast_mpi
+-- -- kamskov_e_matrix_multi_for_a_mpi
+-- -- khismatulina_k_contrast_raise_mpi
+-- -- kochankov_i_simple_iteration_mpi
+-- -- kokh_v_producers_and_consumers_mpi
+-- -- krasilnikov_a_bubble_sort_mpi
+-- -- kren_p_grid_torus_topology_mpi
+-- -- kryukov_s_topology_star_mpi
+-- -- kustova_a_jacoby_mpi
+-- -- maksimov_a_matr_vec_mult_mpi
+-- -- nasedkin_mpi_scatter_mpi
+-- -- ndah_r_interative_method_mpi
+-- -- nekravtsev_a_star_mpi
+-- -- novikov_d_allreduce_mpi
+-- -- oganyan_r_writers_readers_mpi
+-- -- ognev_d_matrix_vector_vertical_multiplication_mpi
+-- -- pasukhin_d_hypercube_mpi
+-- -- ryazanov_d_star_mpi
+-- -- sandalov_k_torus_mpi
+-- -- schelyanskova_a_bubble_sort_mpi
+-- -- sharov_a_producers_mpi
+-- -- shulman_e_sleeping_barber_mpi
+-- -- sozinov_a_gauss_horisontal_mpi
+-- -- stoicheva_d_allreduce_mpi
+-- -- tronin_d_sleeping_hairdresser_mpi
+-- -- vizgalov_a_seidel_mpi
+-- -- zhafyarov_o_smoothing_image_mpi
+-- -- zlobin_g_gather_mpi
+-- Task 3
+-- -- alekhin_d_dijkstras_algorithm_mpi
+-- -- anisimova_p_global_search_mpi
+-- -- frolova_o_radix_sort_simple_merge_update_mpi
+-- -- kustova_a_convex_hull_for_binary_mpi
+-- -- maksimov_a_mark_components_mpi
+-- -- nekravtsev_a_simpson_mpi
+-- -- oganyan_r_global_search_mpi
+-- -- ognev_d_quick_sort_mpi
+-- Task 4
+-- Test task
+-- -- test_latex - NOT BUILD!
+-- -- test_mpi_mpi
+-- -- test_omp_omp
+-- -- test_seq_seq
+-- -- test_std_std
+-- -- test_tbb_tbb
+-- Configuring done
+CMake Warning in modules/task_1/kren_p_find_max_element_of_matrix_by_rows/CMakeLists.txt:
+  The object file directory
+
+    C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/modules/task_1/kren_p_find_max_element_of_matrix_by_rows/CMakeFiles/kren_p_find_max_element_of_matrix_by_rows_mpi.dir/
+
+  has 213 characters.  The maximum full path to an object file is 250
+  characters (see CMAKE_OBJECT_PATH_MAX).  Object file
+
+    find_max_element_of_matrix_by_rows.cpp.obj
+
+  cannot be safely placed under this directory.  The build may not work
+  correctly.
+
+
+CMake Warning in modules/task_1/rukhovich_i_integration_trapezoidal_method/CMakeLists.txt:
+  The object file directory
+
+    C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio/modules/task_1/rukhovich_i_integration_trapezoidal_method/CMakeFiles/rukhovich_i_integration_trapezoidal_method_mpi_lib.dir/
+
+  has 219 characters.  The maximum full path to an object file is 250
+  characters (see CMAKE_OBJECT_PATH_MAX).  Object file
+
+    integration_trapezoidal_method.cpp.obj
+
+  cannot be safely placed under this directory.  The build may not work
+  correctly.
+
+
+-- Generating done
+-- Build files have been written to: C:/Users/OgRob/Desktop/paral/new_paral/pp_2020_autumn_engineer/cmake-build-debug-visual-studio
