@@ -3,25 +3,39 @@
 #ifndef PP_2020_AUTUMN_ENGINEER_MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_GLOBAL_SEARCH_H_
 #define PP_2020_AUTUMN_ENGINEER_MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_GLOBAL_SEARCH_H_
 
-#include <functional>
-#include <utility>
+#include "../../../modules/task_3/oganyan_r_global_search/functions.h"
 
-using dpair = std::pair<double, double>;
-using d_dpair = std::pair<double, dpair>;
+//  Старт градиентного спуска
+inline dpair GetStart(double x_left, double x_right,
+                      double y_left, double y_right);
 
-d_dpair SequentialGlobalSearch(const std::function<double(double)>& func, double x_left, double x_right,
-                    double y_left, double y_right, double step = 0.25, double eps = 1e-4);
+//  Проверка является ли точка экстремумом
+inline bool IsExtremum(const dpair& last, const dpair& cur,
+                const std::function<double(dpair)>& func, const double& eps);
 
-d_dpair ParallelGlobalSearch(const std::function<double(double)>& func, double x_left, double x_right,
-                           double y_left, double y_right, double step = 0.25, double eps = 1e-4);
+//  Вышли ли за пределы
+inline bool IsInside(dpair cur, double x_left, double x_right,
+                     double y_left, double y_right);
 
-inline std::vector<int> GradientDescent(const std::function<double(double)>& func);
+//  Вычисление новой точки
+inline dpair Calculate(dpair cur, dpair grad, double step);
 
-inline dpair RandomStart(double x_left, double x_right,
-                         double y_left, double y_right);
+//  Вычисление одномерной функции для нахождения шага методом золотого сечения
+inline double MakeSimplefx(double x, dpair grad, dpair cur,
+                const std::function<double(dpair)>& func);
 
-inline bool IsExtremum(double last, double cur);
 
-//inline StepChange()
+//  Вычисление нового шага методом золотого сечения
+inline double GoldenSelection(double a, double b, double eps, dpair gradient,
+                            dpair cur, const std::function<double(dpair)>& func);
+
+d_dpair SequentialGlobalSearch(const std::function<double(dpair)>& func, const std::function<dpair(dpair)>& grad,
+                double x_left, double x_right, double y_left, double y_right,
+                double step = 0.25, double eps = 1e-4);
+
+d_dpair ParallelGlobalSearch(const std::function<double(dpair)>& func, const std::function<dpair(dpair)>& grad,
+                double x_left, double x_right, double y_left, double y_right,
+                double step = 0.25, double eps = 1e-4);
+
 
 #endif //PP_2020_AUTUMN_ENGINEER_MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_GLOBAL_SEARCH_H_

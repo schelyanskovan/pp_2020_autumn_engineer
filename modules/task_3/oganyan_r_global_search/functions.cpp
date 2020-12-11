@@ -3,19 +3,28 @@
 #include <cmath>
 #include "../../../modules/task_3/oganyan_r_global_search/functions.h"
 
-inline double fun_first(double x, double y) {
-    return x * x + y * y;
+extern inline double fun_first(dpair coord) {
+    return coord.x * coord.x + coord.y * coord.y;
 }
 
-inline double fun_second(double x, double y) {
-    return 3*x*x + x*y + 2*y*y -x -4*y;
+extern inline dpair grad_first(dpair coord) {
+    return { 2 * coord.x, 2 * coord.y};
 }
 
-inline double fun_third(double x, double y) {
-    return  -exp(x+y) * (x*x - 2*y*y);
+extern inline double fun_second(dpair coord) {
+    return 3*coord.x*coord.x + coord.x*coord.y + 2*coord.y*coord.y -coord.x -4*coord.y;
 }
 
-inline double fun_forth(double x, double y) {
-    return x * x * x - 6*x*y + 8*y * y * y + 5;
+extern inline dpair grad_second(dpair coord) {
+    return { 6 * coord.x + coord.y - 1, 2 * coord.y};
 }
+
+extern inline double fun_third(dpair coord) {
+    return  -exp(coord.x+coord.y) * (coord.x*coord.x - 2*coord.y*coord.y);
+}
+
+extern inline double fun_forth(dpair coord) {
+    return coord.x * coord.x * coord.x - 6*coord.x*coord.y + 8*coord.y * coord.y * coord.y + 5;
+}
+
 
