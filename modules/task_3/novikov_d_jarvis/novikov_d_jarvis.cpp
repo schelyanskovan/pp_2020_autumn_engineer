@@ -136,7 +136,7 @@ std::vector<point> convex_hull_jarvis_parallel(std::vector <point> p, int vec_si
     std::vector <int> ip;
     MPI_Scatterv(p.data(), send_counts, send_dist, dt_point, local_buf.data(), k, dt_point, 0, MPI_COMM_WORLD);
 
-    local_buf = std::move(convex_hull_jarvis_sequential(local_buf));
+    local_buf = convex_hull_jarvis_sequential(local_buf);
     k = local_buf.size();
 
     int s = size, m = 1;
@@ -157,7 +157,7 @@ std::vector<point> convex_hull_jarvis_parallel(std::vector <point> p, int vec_si
             MPI_Recv(local_buf_2.data(), k1, dt_point,
                 rank + m, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
             local_buf.insert(local_buf.end(), local_buf_2.begin(), local_buf_2.end());
-            local_buf = std::move(convex_hull_jarvis_sequential(local_buf));
+            local_buf = convex_hull_jarvis_sequential(local_buf);
             k = local_buf.size();
         }
         m = 2 * m;
