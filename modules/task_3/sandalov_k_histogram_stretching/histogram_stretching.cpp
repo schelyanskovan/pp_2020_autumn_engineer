@@ -24,10 +24,10 @@ void createRandomImage(std::vector<int>* randImg, int width, int height) {
 int histogramStretching(std::vector<int>* targetImg, int minVal, int maxVal) {
     if (targetImg == nullptr) return -1;
     if (minVal == 0 && maxVal == 255) return 1;
-    float b = 255. / (maxVal - minVal);
-    float a = b * (minVal);
+    double b = 255. / (maxVal - minVal);
+    double a = b * (minVal);
     for (auto& pxlVal : *targetImg) {
-        pxlVal = pxlVal * b - a;
+        pxlVal = static_cast<int>(std::round(pxlVal * b - a));
     }
     return 1;
 }
