@@ -12,8 +12,8 @@
 
 void print_image(std::vector<point> vec, int N) {
     bool flag = false;
-    for (size_t i = 0; i < N; i++) {
-        for (size_t j = 0; j < N; j++) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
             for (auto& pt : vec) {
                 if (pt.x == j && pt.y == i) {
                     flag = true;
@@ -37,7 +37,7 @@ std::vector <point> get_random_image(int N, int size) {
     std::vector <point> result;
     bool flag = false;
     int x, y;
-    for (size_t i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         x = gen() % N;
         y = gen() % N;
         for (auto& pt : result) {
@@ -95,7 +95,7 @@ std::vector<point> convex_hull_jarvis_sequential(std::vector <point> p) {
     } while (p[q] != p[first]);
 
     std::vector<point> res(ip.size());
-    for (size_t i = 0; i < ip.size(); i++) {
+    for (int i = 0; i < ip.size(); i++) {
         res[i] = p[ip[i]];
     }
 
@@ -119,7 +119,7 @@ std::vector<point> convex_hull_jarvis_parallel(std::vector <point> p, int vec_si
 
     if (rank == 0) {
         int dif = 0;
-        for (size_t i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             send_counts[i] = (i < n% size) ? (n / size + 1) : (n / size);
             send_dist[i] = dif;
             dif += (i < n% size) ? (n / size + 1) : (n / size);
