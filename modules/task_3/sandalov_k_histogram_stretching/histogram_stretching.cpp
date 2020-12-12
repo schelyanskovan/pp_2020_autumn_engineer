@@ -105,8 +105,8 @@ int parallelHistogramStretching(std::vector<int>* targetImg) {
     } else {
         MPI_Comm_group(MPI_COMM_WORLD, &myGroup);
     }
-    
-    procSize = std::min(imageSize, static_cast<uint64_t>(procSize));
+
+    procSize = std::min(imageSize, static_cast<size_t>(procSize));
 
     MPI_Comm MY_COMM;
     MPI_Comm_create(MPI_COMM_WORLD, myGroup, &MY_COMM);
