@@ -95,7 +95,7 @@ std::vector<point> convex_hull_jarvis_sequential(std::vector <point> p) {
     } while (p[q] != p[first]);
 
     std::vector<point> res(ip.size());
-    for (long unsigned int i = 0; i < ip.size(); i++) {
+    for (size_t i = 0; i < ip.size(); i++) {
         res[i] = p[ip[i]];
     }
 
