@@ -1,110 +1,52 @@
 // Copyright 2020 Konstantin Sandalov
 
-#include "../../modules/task_3/sandalov_k_histogram_stretching/histogram_stretching.hpp"
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
-#include <array>
+#include <vector>
+#include "../../modules/task_3/sandalov_k_histogram_stretching/histogram_stretching.h"
 
-TEST(Parallel_Operations_MPI, ZeroCheck) {
-    int procSize, procRank;
-    float parTime;
-    float seqTime;
-    MPI_Comm_size(MPI_COMM_WORLD, &procSize);
-    MPI_Comm_rank(MPI_COMM_WORLD, &procRank);
+void myCstmTest(size_t height, size_t width);
 
-    std::vector<int> randArray;
-    std::vector<int> copy;
-    if (procRank == 0) {
-        createRandomImage(&randArray, 100, 100);
-        copy = randArray;
-        // for (const auto& el : randArray) std::cout << el << '\n';
-        // std::cout << '\n';
-    }
-    parTime = MPI_Wtime();
-    parallelHistogramStretching(&randArray);
-    parTime = MPI_Wtime() - parTime;
-    // if (procRank == 0) {
-    //     std::cout << '\n';
-    //     for (const auto& el : randArray) std::cout << el << '\n';
-    // }
-    if (procRank == 0) {
-        seqTime = MPI_Wtime();
-        seqHistogramStretching(&copy);
-        seqTime = MPI_Wtime() - seqTime;
-        for (size_t i = 0; i < randArray.size(); ++i) {
-            ASSERT_EQ(copy[i], randArray[i]);
-        }
-        std::cout << "SeqTime: " << seqTime << std::endl;
-        std::cout << "ParTime: " << parTime << std::endl;
-    }
+TEST(Parallel_Operations_MPI, ZeroImage) {
+    myCstmTest(0, 0);
 }
 
-TEST(Parallel_Operations_MPI, FirstCheck) {
-    int procSize, procRank;
-    float parTime;
-    float seqTime;
-    MPI_Comm_size(MPI_COMM_WORLD, &procSize);
-    MPI_Comm_rank(MPI_COMM_WORLD, &procRank);
-
-    std::vector<int> randArray;
-    std::vector<int> copy;
-    if (procRank == 0) {
-        createRandomImage(&randArray, 1000, 1000);
-        copy = randArray;
-        // for (const auto& el : randArray) std::cout << el << '\n';
-        // std::cout << '\n';
-    }
-    parTime = MPI_Wtime();
-    parallelHistogramStretching(&randArray);
-    parTime = MPI_Wtime() - parTime;
-    // if (procRank == 0) {
-    //     std::cout << '\n';
-    //     for (const auto& el : randArray) std::cout << el << '\n';
-    // }
-    if (procRank == 0) {
-        seqTime = MPI_Wtime();
-        seqHistogramStretching(&copy);
-        seqTime = MPI_Wtime() - seqTime;
-        for (size_t i = 0; i < randArray.size(); ++i) {
-            ASSERT_EQ(copy[i], randArray[i]);
-        }
-        std::cout << "SeqTime: " << seqTime << std::endl;
-        std::cout << "ParTime: " << parTime << std::endl;
-    }
+TEST(Parallel_Operations_MPI, SmallImage) {
+    myCstmTest(10, 10);
 }
 
-TEST(Parallel_Operations_MPI, SecondCheck) {
-    int procSize, procRank;
-    float parTime;
-    float seqTime;
-    MPI_Comm_size(MPI_COMM_WORLD, &procSize);
-    MPI_Comm_rank(MPI_COMM_WORLD, &procRank);
+TEST(Parallel_Operations_MPI, MediumImage) {
+    myCstmTest(100, 100);
+}
 
-    std::vector<int> randArray;
-    std::vector<int> copy;
+TEST(Parallel_Operations_MPI, BigImage) {
+    myCstmTest(1000, 1000);
+}
+
+void myCstmTest(size_t height, size_t width) {
+    int procRank;
+    int procSize;
+    MPI_Comm_rank(MPI_COMM_WORLD, &procRank);
+    MPI_Comm_size(MPI_COMM_WORLD, &procSize);
+    std::vector<int> randImg;
+    std::vector<int> copyImg;
     if (procRank == 0) {
-        createRandomImage(&randArray, 10000, 10000);
-        copy = randArray;
-        // for (const auto& el : randArray) std::cout << el << '\n';
-        // std::cout << '\n';
+        createRandomImage(&randImg, height, width);
+        copyImg = randImg;
     }
-    parTime = MPI_Wtime();
-    parallelHistogramStretching(&randArray);
-    parTime = MPI_Wtime() - parTime;
-    // if (procRank == 0) {
-    //     std::cout << '\n';
-    //     for (const auto& el : randArray) std::cout << el << '\n';
-    // }
+    int parStrFin = parallelHistogramStretching(&randImg);
     if (procRank == 0) {
-        seqTime = MPI_Wtime();
-        seqHistogramStretching(&copy);
-        seqTime = MPI_Wtime() - seqTime;
-        for (size_t i = 0; i < randArray.size(); ++i) {
-            ASSERT_EQ(copy[i], randArray[i]);
-        }
-        std::cout << "SeqTime: " << seqTime << std::endl;
-        std::cout << "ParTime: " << parTime << std::endl;
+        int seqStrFin = seqHistogramStretching(&copyImg);
+        ASSERT_EQ(randImg, copyImg);
+        if (height > 0 && width > 0)
+            ASSERT_EQ(seqStrFin, 1);
+        else
+            ASSERT_EQ(seqStrFin, -2);
     }
+    if (procSize == 1 && (height == 0 || width == 0))
+        ASSERT_EQ(parStrFin, -2);
+    else
+        ASSERT_EQ(parStrFin, 1);
 }
 
 int main(int argc, char** argv) {

@@ -1,10 +1,11 @@
 // Copyright 2020 Konstantin Sandalov
 
-#include "../../modules/task_3/sandalov_k_histogram_stretching/histogram_stretching.hpp"
+#include "../../modules/task_3/sandalov_k_histogram_stretching/histogram_stretching.h"
 #include <mpi.h>
 #include <vector>
 #include <random>
 #include <iostream>
+#include <algorithm>
 
 
 void createRandomImage(std::vector<int>* randImg, int width, int height) {
@@ -21,11 +22,10 @@ void createRandomImage(std::vector<int>* randImg, int width, int height) {
 }
 
 int histogramStretching(std::vector<int>* targetImg, int minVal, int maxVal) {
-    if ((minVal == 0 && maxVal == 255) || targetImg == nullptr) return -1;
-    //std::cout << '\t' << minVal << '\t' << maxVal << '\n';
+    if (targetImg == nullptr) return -1;
+    if (minVal == 0 && maxVal == 255) return 1;
     float b = 255. / (maxVal - minVal);
     float a = b * (minVal);
-    //std::cout << '\t' << a << '\t' << b << '\n';
     for (auto& pxlVal : *targetImg) {
         pxlVal = pxlVal * b - a;
     }
@@ -36,7 +36,7 @@ int countMinMax(std::vector<int>* targetImg, int* minVal, int* maxVal) {
     if (minVal == nullptr || maxVal == nullptr || targetImg == nullptr) return -1;
     int min = 256;
     int max = -1;
-    for(const auto& pxlVal : *targetImg) {
+    for (const auto& pxlVal : *targetImg) {
         if (pxlVal < min) min = pxlVal;
         if (pxlVal > max) max = pxlVal;
     }
@@ -50,9 +50,9 @@ int seqHistogramStretching(std::vector<int>* targetImg) {
     if (targetImg == nullptr) return -1;
     int min = 0, max = 0;
     int countMinMaxRetValue = countMinMax(targetImg, &min, &max);
-    if (countMinMaxRetValue != 1) return -1;
+    if (countMinMaxRetValue != 1) return -2;
     int histStretchingRetValue = histogramStretching(targetImg, min, max);
-    if (histStretchingRetValue != 1) return -1;
+    if (histStretchingRetValue != 1) return -3;
     return 1;
 }
 
@@ -71,8 +71,7 @@ int parallelHistogramStretching(std::vector<int>* targetImg) {
 
     if (procSize == 1) {
         int seqHistStrRes = seqHistogramStretching(targetImg);
-        if (seqHistStrRes != 1) return -1;
-        return 1;
+        return seqHistStrRes;
     }
 
     size_t imageSize = 0;
@@ -81,10 +80,10 @@ int parallelHistogramStretching(std::vector<int>* targetImg) {
     }
 
     MPI_Bcast(&imageSize, 1, MPI_UNSIGNED_LONG, 0, MPI_COMM_WORLD);
-    if (imageSize == 0) return -1;
+    if (imageSize == 0) return 1;
 
     MPI_Group myGroup;
-    if (imageSize < static_cast<unsigned long>(procSize)) {
+    if (imageSize < static_cast<uint64_t>(procSize)) {
         MPI_Group worldGroup;
         MPI_Comm_group(MPI_COMM_WORLD, &worldGroup);
         if (imageSize > procSize - imageSize) {
@@ -106,8 +105,8 @@ int parallelHistogramStretching(std::vector<int>* targetImg) {
     } else {
         MPI_Comm_group(MPI_COMM_WORLD, &myGroup);
     }
-
-    procSize = std::min(imageSize, static_cast<unsigned long>(procSize));
+    
+    procSize = std::min(imageSize, static_cast<uint64_t>(procSize));
 
     MPI_Comm MY_COMM;
     MPI_Comm_create(MPI_COMM_WORLD, myGroup, &MY_COMM);
@@ -129,8 +128,10 @@ int parallelHistogramStretching(std::vector<int>* targetImg) {
         localImg.resize(sendCounts[procRank]);
 
         int* ptr;
-        if (targetImg == nullptr) ptr = nullptr;
-        else ptr = targetImg->data();
+        if (targetImg == nullptr)
+            ptr = nullptr;
+        else
+            ptr = targetImg->data();
         MPI_Scatterv(ptr, sendCounts, displs, MPI_INT, localImg.data(), sendCounts[procRank], MPI_INT, 0, MY_COMM);
 
         int localMinMax[] = {0, 0};
@@ -138,6 +139,7 @@ int parallelHistogramStretching(std::vector<int>* targetImg) {
         int globalMinMax[] = {-1, -1};
         MPI_Op op;
         MPI_Op_create(compareMaxMin, true, &op);
+        // MPI_Allreduce(localMinMax, globalMinMax, 2, MPI_INT, op, MY_COMM);
         MPI_Reduce(localMinMax, globalMinMax, 2, MPI_INT, op, 0, MY_COMM);
         MPI_Bcast(globalMinMax, 2, MPI_INT, 0, MY_COMM);
 
