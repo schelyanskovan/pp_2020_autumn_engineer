@@ -138,7 +138,7 @@ int parallelHistogramStretching(std::vector<int>* targetImg) {
         countMinMax(&localImg, localMinMax, localMinMax + 1);
         int globalMinMax[] = {-1, -1};
         MPI_Op op;
-        MPI_Op_create(compareMaxMin, true, &op);
+        MPI_Op_create(reinterpret_cast<MPI_User_function *>(compareMaxMin), true, &op);
         // MPI_Allreduce(localMinMax, globalMinMax, 2, MPI_INT, op, MY_COMM);
         MPI_Reduce(localMinMax, globalMinMax, 2, MPI_INT, op, 0, MY_COMM);
         MPI_Bcast(globalMinMax, 2, MPI_INT, 0, MY_COMM);
