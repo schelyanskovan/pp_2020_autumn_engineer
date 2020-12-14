@@ -113,10 +113,10 @@ std::vector<double> GetParalSolution(std::vector<double> coefs, std::vector<doub
     posR += sendRightPSize[i];
   }
 
-  MPI_Scatterv(&coefs[0], &sendCoefSize[0], &sendCoefOffset[0], MPI_DOUBLE,
-    &recCoefsVec[0], sendCoefSize[ProcRank], MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  MPI_Scatterv(&rightPart[0], &sendRightPSize[0], &sendRightPOffset[0], MPI_DOUBLE,
-    &recRightPVec[0], sendRightPSize[ProcRank], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Scatterv(coefs.data(), sendCoefSize.data(), sendCoefOffset.data(), MPI_DOUBLE,
+    recCoefsVec.data(), sendCoefSize[ProcRank], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Scatterv(rightPart.data(), sendRightPSize.data(), sendRightPOffset.data(), MPI_DOUBLE,
+    recRightPVec.data(), sendRightPSize[ProcRank], MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 
   pairMP locInd;
@@ -160,10 +160,10 @@ std::vector<double> GetParalSolution(std::vector<double> coefs, std::vector<doub
       }
     }
   }
-  MPI_Gatherv(&recCoefsVec[0], sendCoefSize[ProcRank], MPI_DOUBLE,
-    &coefs[0], &sendCoefSize[0], &sendCoefOffset[0], MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  MPI_Gatherv(&recRightPVec[0], sendRightPSize[ProcRank], MPI_DOUBLE,
-    &rightPart[0], &sendRightPSize[0], &sendRightPOffset[0], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gatherv(recCoefsVec.data(), sendCoefSize[ProcRank], MPI_DOUBLE,
+    coefs.data(), sendCoefSize.data(), sendCoefOffset.data(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Gatherv(recRightPVec.data(), sendRightPSize[ProcRank], MPI_DOUBLE,
+    rightPart.data(), sendRightPSize.data(), sendRightPOffset.data(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
   // Second step - revert
   if (ProcRank == 0) {
