@@ -3,6 +3,7 @@
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
 #include <vector>
+#include <cmath>
 #include "../../../modules/task_3/krasilnikov_a_trapezoid_method/trapezoid_method.h"
 
 void CustomTest(double (*f)(double, double), double a_x, double b_x, double a_y, double b_y);
@@ -69,7 +70,7 @@ void CustomTest(double (*f)(double, double), double a_x, double b_x, double a_y,
     std::cout << "--- Parallel time = " << parallel_time << std::endl;
     std::cout << "--- Acceleration = " << sequential_time / parallel_time << std::endl;
     std::cout << "------------------------------------------------------" << std::endl;
-    ASSERT_EQ(abs(parallel_res - sequential_res) < 0.00001, true);
+    ASSERT_EQ(std::abs(parallel_res - sequential_res) < 0.00001, true);
   }
 }
 

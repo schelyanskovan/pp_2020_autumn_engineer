@@ -3,6 +3,7 @@
 #include <mpi.h>
 #include <iostream>
 #include <ctime>
+#include <cmath>
 #include <random>
 #include <algorithm>
 #include <vector>
@@ -15,16 +16,16 @@ double trapezoidMethodSequential(double (*f)(double, double), double a_x, double
   double dx = (b_x - a_x) / n;
   double dy = (b_y - a_y) / n;
 
-  for (double x = a_x + dx; abs(x - b_x) > 0.00000001; x += dx) {
+  for (double x = a_x + dx; std::abs(x - b_x) > 0.00000001; x += dx) {
     double cur_ans = (f(x, a_y) + f(x, b_y)) / 2;
-    for (double y = a_y + dy; abs(y - b_y) > 0.00000001; y += dy) {
+    for (double y = a_y + dy; std::abs(y - b_y) > 0.00000001; y += dy) {
       cur_ans += f(x, y);
     }
     ans += cur_ans;
   }
 
   ans += (f(a_x, a_y) + f(a_x, b_y) + f(b_x, a_y) + f(b_x, b_y)) / 4;
-  for (double y = a_y + dy; abs(y - b_y) > 0.00000001; y += dy) {
+  for (double y = a_y + dy; std::abs(y - b_y) > 0.00000001; y += dy) {
     ans += f(a_x, y) / 2;
     ans += f(b_x, y) / 2;
   }
@@ -51,7 +52,7 @@ double trapezoidMethodParallel(double (*f)(double, double), double a_x, double b
   }
   for (; b_x - x > 0.00000001; x += dx * size) {
     double cur_ans = (f(x, a_y) + f(x, b_y)) / 2;
-    for (double y = a_y + dy; abs(y - b_y) > 0.00000001; y += dy) {
+    for (double y = a_y + dy; std::abs(y - b_y) > 0.00000001; y += dy) {
       cur_ans += f(x, y);
     }
     local_ans += cur_ans;
@@ -59,7 +60,7 @@ double trapezoidMethodParallel(double (*f)(double, double), double a_x, double b
   MPI_Reduce(&local_ans, &ans, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
   if (rank == 0) {
     ans += (f(a_x, a_y) + f(a_x, b_y) + f(b_x, a_y) + f(b_x, b_y)) / 4;
-    for (double y = a_y + dy; abs(y - b_y) > 0.00000001; y += dy) {
+    for (double y = a_y + dy; std::abs(y - b_y) > 0.00000001; y += dy) {
       ans += f(a_x, y) / 2;
       ans += f(b_x, y) / 2;
     }
