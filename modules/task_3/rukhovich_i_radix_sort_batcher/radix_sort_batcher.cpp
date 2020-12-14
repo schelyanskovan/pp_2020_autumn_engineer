@@ -2,7 +2,6 @@
 #include "../../modules/task_3/rukhovich_i_radix_sort_batcher/radix_sort_batcher.h"
 #include <mpi.h>
 
-
 double RandomDouble::Next() {
     static RandomDouble rand = RandomDouble();
     return rand.dist_(rand.gen_);
@@ -68,7 +67,7 @@ void bitwise_sort(BitsetIt first, BitsetIt last) {
     bitwise_sort_mod(le, last, 62u, true);
 }
 
-void radix_sort(DoubleIt first, DoubleIt last) {
+template<> void radix_sort(DoubleIt first, DoubleIt last) {
     if (first >= last) return;
 
     std::vector<std::bitset<64>> bits(last - first);
@@ -86,7 +85,6 @@ void radix_sort(DoubleIt first, DoubleIt last) {
     }
 }
 
-template <class RandomIt>
-void par_radix_sort_batcher<DoubleIt>(RandomIt first, RandomIt last) {
+template<> void par_radix_sort_batcher(DoubleIt first, DoubleIt last) {
 
 }

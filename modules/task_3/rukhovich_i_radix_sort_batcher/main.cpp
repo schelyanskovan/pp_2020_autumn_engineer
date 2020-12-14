@@ -37,6 +37,30 @@ TEST(RadixSortBatcherMerge, test_radix_one_element) {
     check_arrays(array, array_cpy);
 }
 
+TEST(RadixSortBatcherMerge, test_radix_few_elements) {
+    std::vector<double> array = random_double_array(10u);
+    std::vector<double> array_cpy(array);
+    
+    radix_sort(array.begin(), array.end());
+    std::sort(array_cpy.begin(), array_cpy.end());
+    
+    int rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    std::cout << "rank: " << rank << ", value: " << array[5] << '\n';
+
+    check_arrays(array, array_cpy);
+}
+
+TEST(RadixSortBatcherMerge, test_radix_lots_of_elements) {
+    std::vector<double> array = random_double_array(10000u);
+    std::vector<double> array_cpy(array);
+    
+    radix_sort(array.begin(), array.end());
+    std::sort(array_cpy.begin(), array_cpy.end());
+
+    check_arrays(array, array_cpy);
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     MPI_Init(&argc, &argv);
