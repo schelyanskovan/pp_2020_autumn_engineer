@@ -19,21 +19,14 @@ TEST(Parallel_Operation_MPI, Test_Can_Create_Image_50x50) {
     std::vector<int> Arr2(pixes);
     std::vector<int> Arr1(pixes);
     std::vector<float> Kernel = createKernel(radius, sigma);
-    Arr = CreateRandomImg(height, width);
-    double start, end;
-    start = MPI_Wtime();
+    Arr = CreateRandomImg(height, width); 
     Arr2 = ParallelFilter(Arr, height, width, radius, sigma, Kernel);
-    end = MPI_Wtime();
     if (rank == 0) {
-        double start1, end1;
-        start1 = MPI_Wtime();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 Arr1[i * width + j] = LocalFilter(Arr, height, width, radius, sigma, Kernel, i, j);
             }
         }
-        end1 = MPI_Wtime();
-        // std::cout << ":local:" << end1 - start1 << " " << ":par:" << end - start << std::endl;
         ASSERT_EQ(Arr1, Arr2);
     }
 }
@@ -51,20 +44,13 @@ TEST(Parallel_Operation_MPI, Test_Can_Create_Image_10x10) {
     std::vector<int> Arr1(pixes);
     std::vector<float> Kernel = createKernel(radius, sigma);
     Arr = CreateRandomImg(height, width);
-    double start, end;
-    start = MPI_Wtime();
     Arr2 = ParallelFilter(Arr, height, width, radius, sigma, Kernel);
-    end = MPI_Wtime();
     if (rank == 0) {
-        double start1, end1;
-        start1 = MPI_Wtime();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 Arr1[i * width + j] = LocalFilter(Arr, height, width, radius, sigma, Kernel, i, j);
             }
         }
-        end1 = MPI_Wtime();
-        // std::cout << ":local:" << end1 - start1 << " " << ":par:" << end - start << std::endl;
         ASSERT_EQ(Arr1, Arr2);
     }
 }
@@ -82,20 +68,13 @@ TEST(Parallel_Operation_MPI, Test_Can_Create_Image_100x100) {
     std::vector<int> Arr1(pixes);
     std::vector<float> Kernel = createKernel(radius, sigma);
     Arr = CreateRandomImg(height, width);
-    double start, end;
-    start = MPI_Wtime();
     Arr2 = ParallelFilter(Arr, height, width, radius, sigma, Kernel);
-    end = MPI_Wtime();
     if (rank == 0) {
-        double start1, end1;
-        start1 = MPI_Wtime();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 Arr1[i * width + j] = LocalFilter(Arr, height, width, radius, sigma, Kernel, i, j);
             }
         }
-        end1 = MPI_Wtime();
-        // std::cout << ":local:" << end1 - start1 << " " << ":par:" << end - start << std::endl;
         ASSERT_EQ(Arr1, Arr2);
     }
 }
@@ -113,20 +92,13 @@ TEST(Parallel_Operation_MPI, Test_Can_Create_Image_250x250) {
     std::vector<int> Arr1(pixes);
     std::vector<float> Kernel = createKernel(radius, sigma);
     Arr = CreateRandomImg(height, width);
-    double start, end;
-    start = MPI_Wtime();
     Arr2 = ParallelFilter(Arr, height, width, radius, sigma, Kernel);
-    end = MPI_Wtime();
     if (rank == 0) {
-        double start1, end1;
-        start1 = MPI_Wtime();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 Arr1[i * width + j] = LocalFilter(Arr, height, width, radius, sigma, Kernel, i, j);
             }
         }
-        end1 = MPI_Wtime();
-        // std::cout << ":local:" << end1 - start1 << " " << ":par:" << end - start << std::endl;
         ASSERT_EQ(Arr1, Arr2);
     }
 }
@@ -144,20 +116,13 @@ TEST(Parallel_Operation_MPI, Test_Can_Create_Image_500x500) {
     std::vector<int> Arr1(pixes);
     std::vector<float> Kernel = createKernel(radius, sigma);
     Arr = CreateRandomImg(height, width);
-    double start, end;
-    start = MPI_Wtime();
     Arr2 = ParallelFilter(Arr, height, width, radius, sigma, Kernel);
-    end = MPI_Wtime();
     if (rank == 0) {
-        double start1, end1;
-        start1 = MPI_Wtime();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 Arr1[i * width + j] = LocalFilter(Arr, height, width, radius, sigma, Kernel, i, j);
             }
         }
-        end1 = MPI_Wtime();
-        // std::cout << ":local:" << end1 - start1 << " " << ":par:" << end - start << std::endl;
         ASSERT_EQ(Arr1, Arr2);
     }
 }
