@@ -6,12 +6,6 @@
 
 inline std::vector<int> GradientDescent(const std::function<double(double)>& func);
 
-/*
-inline dpair GetStart(double x_left, double x_right,
-                      double y_left, double y_right) {
-    return {(x_left + x_right) / 2.0, (y_left + y_right) / 2.0};
-}
-*/
 
 inline dpair GetStart(double x_left, double x_right,
                       double y_left, double y_right) {
@@ -98,7 +92,7 @@ d_dpair SequentialGlobalSearch(const std::function<double(dpair)>& func, const s
     do {
         last_pos = cur_pos;
         auto gradient_vec { grad(cur_pos) };
-        double new_step { GoldenSelection(0,0.05,eps,gradient_vec,cur_pos, func)};
+        double new_step { GoldenSelection(0,0.1,eps,gradient_vec,cur_pos, func)};
         cur_pos = Calculate(cur_pos, gradient_vec, new_step);
 
         out_of_borders = IsInside(cur_pos, x_left, x_right, y_left, y_right);

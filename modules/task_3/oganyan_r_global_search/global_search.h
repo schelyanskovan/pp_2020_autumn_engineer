@@ -31,7 +31,7 @@ inline double GoldenSelection(double a, double b, double eps, dpair gradient,
 
 d_dpair SequentialGlobalSearch(const std::function<double(dpair)>& func, const std::function<dpair(dpair)>& grad,
                 double x_left, double x_right, double y_left, double y_right,
-                double step = 0.25, double eps = 1e-4);
+                double step = 0.25, double eps = 1e-5);
 
 d_dpair ParallelGlobalSearch(const std::function<double(dpair)>& func, const std::function<dpair(dpair)>& grad,
                 double x_left, double x_right, double y_left, double y_right,

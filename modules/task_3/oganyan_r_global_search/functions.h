@@ -21,9 +21,9 @@ extern inline double fun_second(dpair coord);
 extern inline dpair grad_second(dpair coord);
 
 extern inline double fun_third(dpair coord);
-//inline dpair grad_third(dpair coord);
+extern inline dpair grad_third(dpair coord);
 
-//inline double fun_forth(dpair coord);
-//inline dpair grad_forth(dpair coord);
+inline double fun_forth(dpair coord);
+inline dpair grad_forth(dpair coord);
 
 #endif //PP_2020_AUTUMN_ENGINEER_MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_FUNCTIONS_H_
