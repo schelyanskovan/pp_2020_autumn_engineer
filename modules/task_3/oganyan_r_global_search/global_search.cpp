@@ -17,8 +17,6 @@ std::pair<std::function<double(dpair)>, std::function<dpair(dpair)>> Cur_fun (in
             return {std::function<double(dpair)>(fun_third),std::function<dpair(dpair)>(grad_third)};
         case 4:
             return {std::function<double(dpair)>(fun_forth),std::function<dpair(dpair)>(grad_forth)};
-        case 5:
-            break;
         default:
             return {std::function<double(dpair)>(fun_first),std::function<dpair(dpair)>(grad_first)};
     }
@@ -152,27 +150,33 @@ double ParallelGlobalSearch(int fun_num,
         to_send.resize(size_vec);
 
         double cur_x = x_left;
-        double cur_y = x_right;
+        double cur_y = y_left;
         for (size_t i = 0; i < size_vec / 4; ++i) {
+//            std::cout << "Sending to  " << i << " rank" <<std::endl;
             to_send[4 * i] = cur_x;
             to_send[4 * i + 1] = cur_y;
             cur_x += deltax;
             to_send[4 * i + 2] = cur_x;
             to_send[4 * i + 3] = cur_y + deltay;
-            if (i % 16 == 0) {
+            if ((i + 1) % 4 == 0 ) {
                 cur_x = x_left;
                 cur_y += deltay;
             }
+//            std::cout << " Left x = " << to_send[4*i]<< " ";
+//            std::cout << " Right x = " << to_send[4*i + 2]<< " ";
+//            std::cout << " Left y = " << to_send[4*i + 1]<< " ";
+//            std::cout << " Right y = " << to_send[4*i + 3]<< " ";
         }
     }
 
     if (rank == 0) {
         // Отпрвка данных
         int cur_step = 0;
-        for (int i = 0; i < rank - 1; ++i) {
+        for (int i = 1; i < rank; ++i) {
             MPI_Send(&to_send[0] + cur_step, 16, MPI_DOUBLE, i, 0, MPI_COMM_WORLD);
             cur_step += 16;
         }
+//        std::cout<<"Sending is done" << std::endl;
     }
 
     std::vector<double> proc_data(16);
@@ -184,15 +188,26 @@ double ParallelGlobalSearch(int fun_num,
         }
     }
     else {
-        MPI_Recv(&proc_data, 16, MPI_DOUBLE, 0, MPI_ANY_TAG, MPI_COMM_WORLD, nullptr);
+//        MPI_Status status;
+//        std::cout<<"Before receiving" << std::endl;
+        MPI_Request req;
+        MPI_Irecv(&proc_data[0], 16, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &req);
+
+//        std::cout<<"Recieved is done" << std::endl;
     }
+//    std::cout << "Current task is " << rank<< std::endl;
+
+//    std::cout<<std::endl;
 
     double local_min = 1e9;
     int cnt = 0;
-    while (cnt++ != 4) {
+    while (cnt != 4) {
+//        std::cout<<"cnt is " <<cnt<<std::endl;
         local_min = std::min(local_min, SequentialGlobalSearch(fun_num,
-            proc_data[cnt], proc_data[cnt + 2], proc_data[cnt+1], proc_data[cnt+3]));
+            proc_data[4 *cnt], proc_data[4 * cnt + 2], proc_data[4 * cnt+1], proc_data[4 * cnt+3]));
+        ++cnt;
     }
+//    std::cout<<"local min is  " <<local_min<<std::endl;
     MPI_Reduce(&local_min, &global_min, 1, MPI_DOUBLE, MPI_MIN, 0, MPI_COMM_WORLD);
 
     return global_min;
