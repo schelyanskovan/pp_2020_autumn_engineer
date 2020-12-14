@@ -19,7 +19,7 @@ TEST(Parallel_Operation_MPI, Test_Can_Create_Image_50x50) {
     std::vector<int> Arr2(pixes);
     std::vector<int> Arr1(pixes);
     std::vector<float> Kernel = createKernel(radius, sigma);
-    Arr = CreateRandomImg(height, width); 
+    Arr = CreateRandomImg(height, width);
     Arr2 = ParallelFilter(Arr, height, width, radius, sigma, Kernel);
     if (rank == 0) {
         for (int i = 0; i < height; i++) {
