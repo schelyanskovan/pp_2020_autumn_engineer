@@ -36,7 +36,7 @@ std::vector <point> get_random_image(int N, int size) {
 
     std::vector <point> result;
     bool flag = false;
-    int x, y;
+    int64_t x, y;
     for (int i = 0; i < size; i++) {
         x = gen() % N;
         y = gen() % N;
@@ -56,7 +56,7 @@ std::vector <point> get_random_image(int N, int size) {
     return result;
 }
 
-int area_triangle(point a, point b, point c) {
+int64_t area_triangle(point a, point b, point c) {
     return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
 }
 
@@ -68,7 +68,7 @@ std::vector<point> convex_hull_jarvis_sequential(std::vector <point> p) {
     std::vector <int> ip;
     int n = p.size();
     int first, q, next, i;
-    double sign;
+    int64_t sign;
     first = 0;
     for (i = 1; i < n; ++i)
         if (p[i].x < p[first].x || (p[i].x == p[first].x && p[i].y < p[first].y))
@@ -110,7 +110,7 @@ std::vector<point> convex_hull_jarvis_parallel(std::vector <point> p, int vec_si
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     MPI_Datatype dt_point;
-    MPI_Type_contiguous(2, MPI_INT, &dt_point);
+    MPI_Type_contiguous(2 * sizeof(int64_t) / sizeof(int), MPI_INT, &dt_point);
     MPI_Type_commit(&dt_point);
 
     int n = vec_size;

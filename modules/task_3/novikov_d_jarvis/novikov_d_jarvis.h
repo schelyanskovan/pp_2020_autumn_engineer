@@ -7,10 +7,10 @@
 #include <ctime>
 
 struct point {
-    int x;
-    int y;
+    int64_t x;
+    int64_t y;
 
-    point(int x, int y) : x(x), y(y) {}
+    point(int64_t x, int64_t y) : x(x), y(y) {}
 
     point() = default;
 
