@@ -5,6 +5,8 @@
 
 #include "../../../modules/task_3/oganyan_r_global_search/functions.h"
 
+std::pair<std::function<double(dpair)>, std::function<dpair(dpair)>> Cur_fun (int num_fun);
+
 //  Старт градиентного спуска
 inline dpair GetStart(double x_left, double x_right,
                       double y_left, double y_right);
@@ -29,13 +31,13 @@ inline double MakeSimplefx(double x, dpair grad, dpair cur,
 inline double GoldenSelection(double a, double b, double eps, dpair gradient,
                             dpair cur, const std::function<double(dpair)>& func);
 
-d_dpair SequentialGlobalSearch(const std::function<double(dpair)>& func, const std::function<dpair(dpair)>& grad,
+double SequentialGlobalSearch(int num_fun,
                 double x_left, double x_right, double y_left, double y_right,
-                double step = 0.25, double eps = 1e-5);
+                double eps = 1e-5);
 
-d_dpair ParallelGlobalSearch(const std::function<double(dpair)>& func, const std::function<dpair(dpair)>& grad,
-                double x_left, double x_right, double y_left, double y_right,
-                double step = 0.25, double eps = 1e-4);
+double ParallelGlobalSearch(int num_fun,
+                double x_left, double x_right, double y_left, double y_right);
+
 
 
 #endif //PP_2020_AUTUMN_ENGINEER_MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_GLOBAL_SEARCH_H_

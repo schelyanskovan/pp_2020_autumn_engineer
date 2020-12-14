@@ -9,7 +9,7 @@
 using std::cout;
 using std::endl;
 
-void CreateTest(const std::function<double(dpair)>& func, const std::function<dpair(dpair)>& grad,
+void CreateTest(int num_fun,
     double x_left, double x_right, double y_left, double y_right,
     double ans_minimum, dpair ans_pos) {
     int rank;
@@ -25,26 +25,24 @@ void CreateTest(const std::function<double(dpair)>& func, const std::function<dp
 */
     if (rank == 0) {
         time_start = MPI_Wtime();
-        const d_dpair res_seq { SequentialGlobalSearch(func, grad, x_left, x_right, y_left, y_right) };
+        double res_seq { SequentialGlobalSearch(num_fun, x_left, x_right, y_left, y_right) };
         const double time_end_s { MPI_Wtime() };
         cout << "Sequential Time :" << time_end_s - time_start << endl;
         cout<<std::fixed<<std::setprecision(10);
-        cout<< res_seq.x << endl;
-        cout<<res_seq.second.first<< " " << res_seq.second.second<<endl;
-        ASSERT_EQ(1, abs(ans_minimum - res_seq.first) <= 0.15);
+        ASSERT_EQ(1, abs(ans_minimum - res_seq) <= 0.15);
     }
 }
 
 TEST(Parallel_Operations_MPI, Test_first_fun) {
     const std::function<double(dpair)> func { fun_first };
     const std::function<dpair(dpair)> grad { grad_first };
-   CreateTest(func, grad, -3.0, 3.0, -2.0, 6.0, 0.0, {0.0, 0.0});
+   CreateTest(1, -3.0, 3.0, -2.0, 6.0, 0.0, {0.0, 0.0});
 }
 
 TEST(Parallel_Operations_MPI, Test_second_fun) {
     const std::function<double(dpair)> func {fun_second};
     const std::function<dpair(dpair)> grad { grad_second };
-    CreateTest(func, grad, -3.0, 3.0, -2.0, 6.0, -2.0, {0.0, 1.0});
+    CreateTest(2, -3.0, 3.0, -2.0, 6.0, -2.0, {0.0, 1.0});
 }
 /*
 TEST(Parallel_Operations_MPI, Test_third_fun) {
