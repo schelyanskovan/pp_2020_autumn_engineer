@@ -37,7 +37,6 @@ std::vector<float> createKernel(int radius, float sigma) {
     int diam = createDiameter(radius);
     float normalization = 0;
     std::vector<float> kernel(diam * diam);
-	
     for (int i = -radius; i <= radius; i++) {
         for (int j = -radius; j <= radius; j++) {
             int index = (j + radius) + ((i + radius) * diam);
@@ -45,7 +44,6 @@ std::vector<float> createKernel(int radius, float sigma) {
             normalization += kernel[index];
         }
     }
-    
     for (int i = 0; i < pow(diam, 2); i++) {
         kernel[i] = kernel[i] / normalization;
     }
@@ -86,8 +84,7 @@ std::vector<int> ParallelFilterDeep(const std::vector<int>& Arr, int height, int
     std::vector<int> local_result_mas(add * width);
     for (int i = 0; i < add; i++) {
         for (int j = 0; j < width; j++) {
-            local_result_mas[i * width + j] = LocalFilter(Arr, height, width,
-			radius, sigma, Kernel, i + begin, j);
+            local_result_mas[i * width + j] = LocalFilter(Arr, height, width, radius, sigma, Kernel, i + begin, j);
         }
     }
     return local_result_mas;
@@ -131,7 +128,7 @@ std::vector<int> ParallelFilter(const std::vector<int> &Arr, int height, int wid
         b += sendcounts[i];
     }
     local_result_mas = ParallelFilterDeep(Arr, height, width, radius, sigma,
-	Kernel, b, sendcounts[process_rank]);
+ Kernel, b, sendcounts[process_rank]);
     std::vector<int> global_result(pixes);
     int* sendcounts_global = new int[process_number];
     int* displs_global = new int[process_number];
@@ -145,6 +142,6 @@ std::vector<int> ParallelFilter(const std::vector<int> &Arr, int height, int wid
     }
     MPI_Gatherv(&local_result_mas[0], sendcounts_global[process_rank],
         MPI_INT, &global_result[0], sendcounts_global, displs_global, MPI_INT,
-		0, MPI_COMM_WORLD);
-    return global_result; 
+ 0, MPI_COMM_WORLD);
+    return global_result;
 }
