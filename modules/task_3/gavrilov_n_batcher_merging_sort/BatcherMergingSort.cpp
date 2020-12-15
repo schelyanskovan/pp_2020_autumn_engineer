@@ -158,13 +158,13 @@ void Sort(std::vector<int>* data) {
     std::vector<int> localData;
     if (rank == 0) {
         for (int i = 1; i < maxSize; i++) {
-            MPI_Send(data->data() + (countPerProc * i), countPerProc, MPI_INT, i, 0, MPI_COMM_WORLD);
+            MPI_Send(data->data() + (countPerProc * i), countPerProc, MPI_INT, i, 1, MPI_COMM_WORLD);
         }
         localData = std::vector<int>(data->begin(), data->begin() + countPerProc);
     } else if (rank < maxSize) {
         localData = std::vector<int>(countPerProc);
         MPI_Status st;
-        MPI_Recv(localData.data(), countPerProc, MPI_INT, 0, 0, MPI_COMM_WORLD, &st);
+        MPI_Recv(localData.data(), countPerProc, MPI_INT, 0, 1, MPI_COMM_WORLD, &st);
     }
 
     // sort each proc's data
@@ -174,14 +174,14 @@ void Sort(std::vector<int>* data) {
         // making all comparers
         for (size_t i = 0; i < comps.size(); i++) {
             if (rank == comps[i].first) {
-                MPI_Send(localData.data(), countPerProc, MPI_INT, comps[i].second, 0, MPI_COMM_WORLD);
+                MPI_Send(localData.data(), countPerProc, MPI_INT, comps[i].second, 2, MPI_COMM_WORLD);
                 MPI_Status st;
-                MPI_Recv(localData.data(), countPerProc, MPI_INT, comps[i].second, 0, MPI_COMM_WORLD, &st);
+                MPI_Recv(localData.data(), countPerProc, MPI_INT, comps[i].second, 3, MPI_COMM_WORLD, &st);
             } else if (rank == comps[i].second) {
                 MPI_Status st;
 
                 std::vector<int> recvData(countPerProc);
-                MPI_Recv(recvData.data(), countPerProc, MPI_INT, comps[i].first, 0, MPI_COMM_WORLD, &st);
+                MPI_Recv(recvData.data(), countPerProc, MPI_INT, comps[i].first, 2, MPI_COMM_WORLD, &st);
 
                 std::vector<int> tmp(countPerProc * 2);
 
@@ -191,7 +191,7 @@ void Sort(std::vector<int>* data) {
                     else
                         tmp[l] = recvData[k++];
                 }
-                MPI_Send(tmp.data(), countPerProc, MPI_INT, comps[i].first, 0, MPI_COMM_WORLD);
+                MPI_Send(tmp.data(), countPerProc, MPI_INT, comps[i].first, 3, MPI_COMM_WORLD);
                 for (size_t j = 0; j < countPerProc; j++) {
                     localData[j] = tmp[j + countPerProc];
                 }
@@ -202,10 +202,10 @@ void Sort(std::vector<int>* data) {
         if (rank == 0) {
             for (int i = 1; i < maxSize; i++) {
                 MPI_Status st;
-                MPI_Recv(data->data() + (countPerProc * i), countPerProc, MPI_INT, i, 0, MPI_COMM_WORLD, &st);
+                MPI_Recv(data->data() + (countPerProc * i), countPerProc, MPI_INT, i, 4, MPI_COMM_WORLD, &st);
             }
         } else if (rank < maxSize) {
-            MPI_Send(localData.data(), countPerProc, MPI_INT, 0, 0, MPI_COMM_WORLD);
+            MPI_Send(localData.data(), countPerProc, MPI_INT, 0, 4, MPI_COMM_WORLD);
         }
     }
 
