@@ -18,7 +18,7 @@ std::pair<std::function<double(dpair)>, std::function<dpair(dpair)>> Cur_fun(int
   }
 }
 
-inline dpair GetStart(double x_left, double x_right,
+dpair GetStart(double x_left, double x_right,
                       double y_left, double y_right) {
   dpair pos;
   std::random_device rd;
@@ -30,24 +30,24 @@ inline dpair GetStart(double x_left, double x_right,
   return pos;
 }
 
-inline bool IsExtremum(const dpair& last, const dpair& cur,
+bool IsExtremum(const dpair& last, const dpair& cur,
         const std::function<double(dpair)>& func, const double& eps) {
   return std::abs(func(cur) - func(last)) < eps;
 }
 
-inline bool IsInside(dpair cur, double x_left, double x_right,
+bool IsInside(dpair cur, double x_left, double x_right,
                      double y_left, double y_right) {
     return !(cur.x < x_left || cur.x < x_right || cur.y < y_left || cur.y >y_right);
 }
 
-inline dpair Calculate(dpair cur, dpair grad, double step) {
+dpair Calculate(dpair cur, dpair grad, double step) {
   dpair new_cur;
   new_cur.x = cur.x - step * grad.x;
   new_cur.y = cur.y - step * grad.y;
   return new_cur;
 }
 
-inline double MakeSimplefx(double x, dpair grad, dpair cur, const std::function<double(dpair)>& func) {
+double MakeSimplefx(double x, dpair grad, dpair cur, const std::function<double(dpair)>& func) {
   dpair buffer;
 
   buffer.x = cur.x - x * grad.x;
@@ -56,7 +56,7 @@ inline double MakeSimplefx(double x, dpair grad, dpair cur, const std::function<
   return func(buffer);
 }
 
-inline double GoldenSelection(double a, double b, double eps, dpair gradient, dpair cur,
+double GoldenSelection(double a, double b, double eps, dpair gradient, dpair cur,
             const std::function<double(dpair)>& func) {
   const double fi = 1.6180339887;
   double x1, x2;

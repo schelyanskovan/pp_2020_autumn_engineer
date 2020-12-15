@@ -9,27 +9,27 @@
 std::pair<std::function<double(dpair)>, std::function<dpair(dpair)>> Cur_fun(int num_fun);
 
 //  Старт градиентного спуска
-inline dpair GetStart(double x_left, double x_right,
+dpair GetStart(double x_left, double x_right,
                       double y_left, double y_right);
 
 //  Проверка является ли точка экстремумом
-inline bool IsExtremum(const dpair& last, const dpair& cur,
+bool IsExtremum(const dpair& last, const dpair& cur,
                 const std::function<double(dpair)>& func, const double& eps);
 
 //  Вышли ли за пределы
-inline bool IsInside(dpair cur, double x_left, double x_right,
+bool IsInside(dpair cur, double x_left, double x_right,
                      double y_left, double y_right);
 
 //  Вычисление новой точки
-inline dpair Calculate(dpair cur, dpair grad, double step);
+dpair Calculate(dpair cur, dpair grad, double step);
 
 //  Вычисление одномерной функции для нахождения шага методом золотого сечения
-inline double MakeSimplefx(double x, dpair grad, dpair cur,
+double MakeSimplefx(double x, dpair grad, dpair cur,
                 const std::function<double(dpair)>& func);
 
 
 //  Вычисление нового шага методом золотого сечения
-inline double GoldenSelection(double a, double b, double eps, dpair gradient,
+double GoldenSelection(double a, double b, double eps, dpair gradient,
                             dpair cur, const std::function<double(dpair)>& func);
 
 double SequentialGlobalSearch(int num_fun,
