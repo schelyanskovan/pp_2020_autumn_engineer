@@ -43,8 +43,9 @@ TEST(Parallel_Operations_MPI, Sorting_Right) {
     Sort(&data);
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    if (rank == 0)
+    if (rank == 0) {
         ASSERT_TRUE(IsSorted(data));
+    }
 }
 
 TEST(Parallel_Operations_MPI, Sort_By_Num_Place_Rang10) {
@@ -70,26 +71,28 @@ TEST(Parallel_Operations_MPI, Sort_By_Num_Place_Rang2) {
 TEST(Parallel_Operations_MPI, Sorting_Right_Even_If_Bad_Size) {
     int size;
     MPI_Comm_size(MPI_COMM_WORLD, &size);
-    for (size_t i = 1; i < size; i++) {
+    for (int i = 1; i < size; i++) {
         std::vector<int> data = GetRandomVector(size * 1000 + size - i);
         ASSERT_NO_THROW(Sort(&data));
         int rank;
         MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-        if (rank == 0)
+        if (rank == 0) {
             ASSERT_TRUE(IsSorted(data));
+        }
     }
 }
 
 TEST(Parallel_Operations_MPI, Sorting_Right_Even_If_Bad_Size2) {
     int size;
     MPI_Comm_size(MPI_COMM_WORLD, &size);
-    for (size_t i = 1; i <= size; i++) {
+    for (int i = 1; i <= size; i++) {
         std::vector<int> data = GetRandomVector(size - 1);
         ASSERT_NO_THROW(Sort(&data));
         int rank;
         MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-        if (rank == 0)
+        if (rank == 0) {
             ASSERT_TRUE(IsSorted(data));
+        }
     }
 }
 
