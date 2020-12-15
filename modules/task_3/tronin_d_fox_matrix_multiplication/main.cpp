@@ -15,25 +15,26 @@ void CreateTest(size_t size) {
     if (static_cast<int>(sqrt(comm_size))
         * static_cast<int>(sqrt(comm_size))
         != comm_size) {
+        LOG_INFO << "Wrong number of processes\n";
         return;
     }
-    std::vector<double> left, right, sequential;
+    std::vector<double> left, right, sequential(size*size, 0);
     if (comm_rank == 0) {
         left = getRandomVector(size);
         right = getRandomVector(size);
     }
     double seq_start, seq_stop;
     if (comm_rank == 0) {
-        seq_start = MPI_Wtime();
+        seq_start = std::clock();
         sequential = SequentialMultiplication(left, right, size);
-        seq_stop = MPI_Wtime();
+        seq_stop = std::clock();
     }
     MPI_Barrier(MPI_COMM_WORLD);
-    auto par_start = MPI_Wtime();
+    auto par_start = std::clock();
     MPI_Barrier(MPI_COMM_WORLD);
     auto answer = ParallelFoxMultiplication(left, right, size);
     MPI_Barrier(MPI_COMM_WORLD);
-    auto par_stop = MPI_Wtime();
+    auto par_stop = std::clock();
     if (comm_rank == 0) {
         for (size_t row = 0; row < size; ++row) {
             for (size_t column = 0; column < size; ++column) {
@@ -45,9 +46,9 @@ void CreateTest(size_t size) {
         }
         LOG_INFO << "Size of the matrix " << size << '\n';
         LOG_INFO << "Sequential method "
-                 << seq_stop - seq_start << '\n';
+                 << static_cast<double>(seq_stop - seq_start) / CLOCKS_PER_SEC << '\n';
         LOG_INFO << "Parallel method "
-                 << par_stop - par_start << '\n';
+                 << static_cast<double>(par_stop - par_start) / CLOCKS_PER_SEC << '\n';
     }
 }
 
@@ -63,9 +64,11 @@ TEST(FoxMultiplication, Medium) {
     CreateTest(324);
 }
 
+
 TEST(FoxMultiplication, Big) {
-    CreateTest(648);
+    CreateTest(930);
 }
+
 TEST(FoxMultiplication, Large) {
     CreateTest(1296);
 }

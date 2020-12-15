@@ -8,33 +8,34 @@ std::vector<double> getRandomVector(size_t size) {
     std::random_device random_device;
     std::mt19937 rand_gen(random_device());
     std::uniform_real_distribution<double> dist(-1000, 1000);
-    std::vector<double> vector(size*size);
+    std::vector<double> vector(size * size);
 
     for (size_t i = 0; i < size; ++i) {
         for (size_t j = 0; j < size; ++j) {
-            vector[i*size + j] = dist(rand_gen);
+            vector[i * size + j] = dist(rand_gen);
         }
     }
 
     return vector;
 }
 
-std::vector<double> SequentialMultiplication(const std::vector<double> lhs,
-                                             const std::vector<double> rhs,
-                                             size_t n) {
+std::vector<double> SequentialMultiplication(const std::vector<double>& lhs,
+                              const std::vector<double>& rhs,
+                              size_t n) {
     std::vector<double> result_matrix(n * n, 0);
     for (size_t row = 0; row < n; ++row) {
         for (size_t column = 0; column < n; ++column) {
             for (size_t index = 0; index < n; ++index) {
-                result_matrix[row * n + column] += lhs[row * n + index] * rhs[index * n + column];
+                result_matrix[row * n + column] +=
+                    lhs[row * n + index] * rhs[index * n + column];
             }
         }
     }
     return result_matrix;
 }
 
-std::vector<double> ParallelFoxMultiplication(const std::vector<double> lhs,
-                                              const std::vector<double> rhs,
+std::vector<double> ParallelFoxMultiplication(const std::vector<double>& lhs,
+                                              const std::vector<double>& rhs,
                                               size_t n) {
     int comm_size, comm_rank;
     MPI_Comm_size(MPI_COMM_WORLD, &comm_size);
@@ -146,7 +147,8 @@ std::vector<double> ParallelFoxMultiplication(const std::vector<double> lhs,
                   source_subgrid_comm_rank,
                   row_comm);
 
-        std::vector<double> current_multiply = SequentialMultiplication(
+        std::vector<double> current_multiply =
+            SequentialMultiplication(
             tmp,
             right_matrix_local,
             block_size);
