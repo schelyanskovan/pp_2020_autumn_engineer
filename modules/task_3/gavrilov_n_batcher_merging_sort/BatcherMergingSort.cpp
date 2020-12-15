@@ -3,14 +3,15 @@
 #include <utility>
 #include <algorithm>
 #include <vector>
+#include <cmath>
 #include "../../modules/task_3/gavrilov_n_batcher_merging_sort/BatcherMergingSort.h"
 
 int8_t GetDigit(int value, uint8_t digidNum, uint8_t rang) {
     if (rang <= 1)
         throw "rang must be more than 1";
 
-    int powRang = std::pow(rang, digidNum);
-    int powRangNext = std::pow(rang, digidNum + 1.0);
+    int powRang = static_cast<int>(pow(rang, digidNum));
+    int powRangNext = static_cast<int>(pow(rang, digidNum + 1.0));
 
     return value % powRangNext / powRang;
 }
@@ -36,7 +37,7 @@ void SortByDigid(std::vector<int>* data, uint8_t digitNum, uint8_t rang) {
         throw "rang must be more than 1";
     std::vector<std::vector<int>> vectorsByDigits(rang * 2 - 1);
 
-    for (size_t i = 0; i < data.size(); i++) {
+    for (size_t i = 0; i < data->size(); i++) {
         int8_t digit = GetDigit((*data)[i], digitNum, rang);
         vectorsByDigits[digit + rang - 1].push_back((*data)[i]);
     }
@@ -60,7 +61,7 @@ void SortByNumPlace(std::vector<int>* data, uint8_t rang) {
         vectorsByDigits[digit + rang - 1].push_back((*data)[i]);
 
         uint8_t numOfDigits = GetNumOfDigits((*data)[i], rang);
-        maxNumOfDigits = max(maxNumOfDigits, numOfDigits);
+        maxNumOfDigits = std::max(maxNumOfDigits, numOfDigits);
     }
 
     data->clear();
@@ -72,7 +73,7 @@ void SortByNumPlace(std::vector<int>* data, uint8_t rang) {
 }
 
 void SplitEvenOdd(const std::vector<int>& from, std::vector<int>* destEven, std::vector<int>* destOdd) {
-    for (int i = 0; i < from.size() / 2; i++) {
+    for (size_t i = 0; i < from.size() / 2; i++) {
         destEven->push_back(from[i * 2]);
         destOdd->push_back(from[i * 2 + 1]);
     }
@@ -93,20 +94,20 @@ void BatcherMerge(std::vector<int> procsLeft, std::vector<int> procsRight, std::
     std::vector<int> procsRightOdd, procsRightEven;
     std::vector<int> procsResult;
 
-    SplitEvenOdd(procsLeft, procsLeftEven, procsLeftOdd);
-    SplitEvenOdd(procsRight, procsRightEven, procsRightOdd);
+    SplitEvenOdd(procsLeft, &procsLeftEven, &procsLeftOdd);
+    SplitEvenOdd(procsRight, &procsRightEven, &procsRightOdd);
 
     BatcherMerge(procsLeftOdd, procsRightOdd, comps);
     BatcherMerge(procsLeftEven, procsRightEven, comps);
 
     std::vector<std::vector<int>> vecs{ procsLeft, procsRight };
-    ConcatVectors(vecs, procsResult);
+    ConcatVectors(vecs, &procsResult);
 
-    for (int i = 1; i + 1 < procsResult.size(); i += 2) {
-        comps.push_back(pair(procsResult[i], procsResult[i + 1]));
+    for (size_t i = 1; i + 1 < procsResult.size(); i += 2) {
+        comps->push_back(std::pair(procsResult[i], procsResult[i + 1]));
     }
 }
-void BatcherSplitNMerge(std::vector<int> procs, std::vector<pair<int, int>>* comps) {
+void BatcherSplitNMerge(std::vector<int> procs, std::vector<std::pair<int, int>>* comps) {
     if (procs.size() == 1) {
         return;
     }
@@ -141,7 +142,7 @@ void Sort(std::vector<int>* data) {
     std::vector<std::pair<int, int>> comps = Batcher(size);
 
     // calculating how many of data will owns each proc
-    int countPerProc;
+    size_t countPerProc;
     if (rank == 0) {
         while (data->size() % size != 0) {
             data->push_back(INT_MAX);
@@ -165,7 +166,7 @@ void Sort(std::vector<int>* data) {
     }
 
     // sort each proc's data
-    SortByNumPlace(localData);
+    SortByNumPlace(&localData);
 
     if (size > 1) {
         // making all comparers
@@ -176,7 +177,7 @@ void Sort(std::vector<int>* data) {
                 MPI_Recv(localData.data(), countPerProc, MPI_INT, comps[i].second, 0, MPI_COMM_WORLD, &st);
             } else if (rank == comps[i].second) {
                 MPI_Status st;
-                
+
                 std::vector<int> recvData(countPerProc);
                 MPI_Recv(recvData.data(), countPerProc, MPI_INT, comps[i].first, 0, MPI_COMM_WORLD, &st);
 
@@ -199,7 +200,7 @@ void Sort(std::vector<int>* data) {
         if (rank == 0) {
             for (size_t i = 1; i < size; i++) {
                 MPI_Status st;
-                MPI_Recv(data.data() + (countPerProc * i), countPerProc, MPI_INT, i, 0, MPI_COMM_WORLD, &st);
+                MPI_Recv(data->data() + (countPerProc * i), countPerProc, MPI_INT, i, 0, MPI_COMM_WORLD, &st);
             }
         } else {
             MPI_Send(localData.data(), countPerProc, MPI_INT, 0, 0, MPI_COMM_WORLD);
@@ -211,6 +212,6 @@ void Sort(std::vector<int>* data) {
         std::copy(localData.begin(), localData.end(), data->begin());
 
         // erasing added vars;
-        data.erase(data->begin() + realSize, data->end());
+        data->erase(data->begin() + realSize, data->end());
     }
 }

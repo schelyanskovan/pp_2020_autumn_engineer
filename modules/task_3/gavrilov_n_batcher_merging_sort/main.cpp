@@ -9,11 +9,12 @@
 #include <vector>
 #include <iostream>
 #include <random>
+#include <string>
 #include <ctime>
 
-bool IsSorted(std::vector<int>* data) {
-    for (size_t i = 0; i < data->size()-1; i++) {
-        if ((*data)[i] > (*data)[i + 1])
+bool IsSorted(const std::vector<int>& data) {
+    for (size_t i = 0; i < data.size()-1; i++) {
+        if (data[i] > data[i + 1])
             return false;
     }
     return true;
@@ -33,12 +34,12 @@ std::vector<int> GetRandomVector(size_t size) {
 
 TEST(Parallel_Operations_MPI, No_Throw) {
     std::vector<int> data = GetRandomVector(10000);
-    ASSERT_NO_THROW(Sort(data));
+    ASSERT_NO_THROW(Sort(&data));
 }
 
 TEST(Parallel_Operations_MPI, Sorting_Right) {
     std::vector<int> data = GetRandomVector(10000);
-    Sort(data);
+    Sort(&data);
     ASSERT_TRUE(IsSorted(data));
 }
 
