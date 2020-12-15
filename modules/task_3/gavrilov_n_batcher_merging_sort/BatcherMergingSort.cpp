@@ -6,6 +6,8 @@
 #include <cmath>
 #include "../../modules/task_3/gavrilov_n_batcher_merging_sort/BatcherMergingSort.h"
 
+#define MY_INT_MAX 2147483647
+
 int8_t GetDigit(int value, uint8_t digidNum, uint8_t rang) {
     if (rang <= 1)
         throw "rang must be more than 1";
@@ -83,10 +85,10 @@ void SplitEvenOdd(const std::vector<int>& from, std::vector<int>* destEven, std:
 }
 void BatcherMerge(std::vector<int> procsLeft, std::vector<int> procsRight, std::vector<std::pair<int, int>>* comps) {
     int procsCount = procsLeft.size() + procsRight.size();
-    if (procsCount == 1) {
+    if (procsCount <= 1) {
         return;
     } else if (procsCount == 2) {
-        comps->push_back(std::pair(procsLeft[0], procsRight[0]));
+        comps->push_back(std::pair<int, int>(procsLeft[0], procsRight[0]));
         return;
     }
 
@@ -104,11 +106,11 @@ void BatcherMerge(std::vector<int> procsLeft, std::vector<int> procsRight, std::
     ConcatVectors(vecs, &procsResult);
 
     for (size_t i = 1; i + 1 < procsResult.size(); i += 2) {
-        comps->push_back(std::pair(procsResult[i], procsResult[i + 1]));
+        comps->push_back(std::pair<int, int>(procsResult[i], procsResult[i + 1]));
     }
 }
 void BatcherSplitNMerge(std::vector<int> procs, std::vector<std::pair<int, int>>* comps) {
-    if (procs.size() == 1) {
+    if (procs.size() <= 1) {
         return;
     }
 
@@ -138,28 +140,28 @@ void Sort(std::vector<int>* data) {
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+    int maxSize = std::min(size, static_cast<int>(data->size()));
     // calculating comparers
-    std::vector<std::pair<int, int>> comps = Batcher(size);
+    std::vector<std::pair<int, int>> comps = Batcher(maxSize);
 
     // calculating how many of data will owns each proc
     size_t countPerProc;
     if (rank == 0) {
         while (data->size() % size != 0) {
-            data->push_back(INT_MAX);
+            data->push_back(MY_INT_MAX);
         }
         countPerProc = data->size() / size;
     }
     MPI_Bcast(&countPerProc, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
-
     // splitting data by procs
     std::vector<int> localData;
     if (rank == 0) {
-        for (size_t i = 1; i < size; i++) {
+        for (int i = 1; i < maxSize; i++) {
             MPI_Send(data->data() + (countPerProc * i), countPerProc, MPI_INT, i, 0, MPI_COMM_WORLD);
         }
         localData = std::vector<int>(data->begin(), data->begin() + countPerProc);
-    } else {
+    } else if (rank < maxSize) {
         localData = std::vector<int>(countPerProc);
         MPI_Status st;
         MPI_Recv(localData.data(), countPerProc, MPI_INT, 0, 0, MPI_COMM_WORLD, &st);
@@ -198,11 +200,11 @@ void Sort(std::vector<int>* data) {
 
         // recieving data from all procs to main one
         if (rank == 0) {
-            for (size_t i = 1; i < size; i++) {
+            for (int i = 1; i < maxSize; i++) {
                 MPI_Status st;
                 MPI_Recv(data->data() + (countPerProc * i), countPerProc, MPI_INT, i, 0, MPI_COMM_WORLD, &st);
             }
-        } else {
+        } else if (rank < maxSize) {
             MPI_Send(localData.data(), countPerProc, MPI_INT, 0, 0, MPI_COMM_WORLD);
         }
     }
