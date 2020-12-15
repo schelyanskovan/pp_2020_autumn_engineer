@@ -1,2 +1,0 @@
-# Empty dependencies file for bourmistrova_e_matrix_elem_sum_mpi_lib.
-# This may be replaced when dependencies are built.
