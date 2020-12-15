@@ -26,7 +26,7 @@ void CreateTest(int num_fun,
         double res_seq { SequentialGlobalSearch(num_fun, x_left, x_right, y_left, y_right) };
         const double time_end_s { MPI_Wtime() };
         cout << "-#-#-#-#-#-# Sequential Time :" << time_end_s - time_start << " -#-#-#-#-#-#"<<endl;
-     cout<<res_seq<<endl;
+        cout<<res_seq<<endl;
         ASSERT_EQ(1, abs(ans_minimum - res_par) <= 0.15);
     }
 }
@@ -54,14 +54,16 @@ TEST(Parallel_Operations_MPI, Test_third_fun) {
 TEST(Parallel_Operations_MPI, Test_forth_fun) {
     const std::function<double(dpair)> func {fun_forth};
     const std::function<dpair(dpair)> grad { grad_forth };
-    CreateTest(4, -2.0, 3.0, -2.0, 3.0, 4.0, {1.0, 0.5});
+    CreateTest(4, -2.0, 3.0, -2.0, 3.0, -0.125, {1.0, 0.5});
 
 }
-/*
-TEST(Parallel_Operations_MPI, Test_large) {
 
+TEST(Parallel_Operations_MPI, Test_fifth_fun) {
+    const std::function<double(dpair)> func {fun_fifth};
+    const std::function<dpair(dpair)> grad { grad_fifth };
+    CreateTest(5, -10.0, 10.0, -20.0, 30.0, 0.0, {0.0, 0.0});
 }
-*/
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     MPI_Init(&argc, &argv);
