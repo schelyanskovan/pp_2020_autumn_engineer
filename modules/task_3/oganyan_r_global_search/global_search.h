@@ -3,9 +3,10 @@
 #ifndef MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_GLOBAL_SEARCH_H_
 #define MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_GLOBAL_SEARCH_H_
 
+#include <utility>
 #include "../../../modules/task_3/oganyan_r_global_search/functions.h"
 
-std::pair<std::function<double(dpair)>, std::function<dpair(dpair)>> Cur_fun (int num_fun);
+std::pair<std::function<double(dpair)>, std::function<dpair(dpair)>> Cur_fun(int num_fun);
 
 //  Старт градиентного спуска
 inline dpair GetStart(double x_left, double x_right,
@@ -32,7 +33,7 @@ inline double GoldenSelection(double a, double b, double eps, dpair gradient,
                             dpair cur, const std::function<double(dpair)>& func);
 
 double SequentialGlobalSearch(int num_fun,
-                double x_left, double x_right, double y_left, double y_right,
+                double x_left, double x_right, double y_left, double y_right, int repeat = 2,
                 double eps = 1e-5);
 
 double ParallelGlobalSearch(int num_fun,
@@ -40,4 +41,4 @@ double ParallelGlobalSearch(int num_fun,
 
 
 
-#endif //  MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_GLOBAL_SEARCH_H_
+#endif  //  MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_GLOBAL_SEARCH_H_

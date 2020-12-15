@@ -1,12 +1,13 @@
 //  Copyright by Oganyan Robert 2020
 
-#include <cmath>
+#include "../../../modules/task_3/oganyan_r_global_search/global_search.h"
 #include <mpi.h>
 #include <vector>
 #include <random>
-#include "../../../modules/task_3/oganyan_r_global_search/global_search.h"
+#include <utility>
+#include <algorithm>
 
-std::pair<std::function<double(dpair)>, std::function<dpair(dpair)>> Cur_fun (int num_fun) {
+std::pair<std::function<double(dpair)>, std::function<dpair(dpair)>> Cur_fun(int num_fun) {
   switch (num_fun) {
     case 1:return {std::function<double(dpair)>(fun_first), std::function<dpair(dpair)>(grad_first)};
     case 2:return {std::function<double(dpair)>(fun_second), std::function<dpair(dpair)>(grad_second)};
@@ -15,7 +16,6 @@ std::pair<std::function<double(dpair)>, std::function<dpair(dpair)>> Cur_fun (in
     case 5:return {std::function<double(dpair)>(fun_fifth), std::function<dpair(dpair)>(grad_fifth)};
     default:return {std::function<double(dpair)>(fun_first), std::function<dpair(dpair)>(grad_first)};
   }
-
 }
 
 inline dpair GetStart(double x_left, double x_right,
@@ -27,8 +27,6 @@ inline dpair GetStart(double x_left, double x_right,
   pos.x = dis(gen);
   dis = std::uniform_real_distribution< >(y_left, y_right);
   pos.y = dis(gen);
-//    std::cout<<"random start: "<<std::endl;
-//    std::cout<<pos.x<< " "<<pos.y<<std::endl;
   return pos;
 }
 
@@ -60,7 +58,6 @@ inline double MakeSimplefx(double x, dpair grad, dpair cur, const std::function<
 
 inline double GoldenSelection(double a, double b, double eps, dpair gradient, dpair cur,
             const std::function<double(dpair)>& func) {
-
   const double fi = 1.6180339887;
   double x1, x2;
   double y1, y2;
@@ -89,35 +86,75 @@ inline double GoldenSelection(double a, double b, double eps, dpair gradient, dp
 }
 
 double SequentialGlobalSearch(int fun_num, double x_left, double x_right,
-                double y_left, double y_right, double eps) {
+                double y_left, double y_right, int repeat, double eps) {
     auto cur_pair = Cur_fun(fun_num);
     auto func { cur_pair.x };
     auto grad { cur_pair.y };
-    dpair cur_pos { GetStart(x_left, x_right, y_left, y_right)};
-    dpair last_pos { cur_pos };
-    bool out_of_borders { false};
-    bool extremum_done { false };
 
-    do {
+    //  Для параллельного метода
+    if (repeat == 2) {
+      dpair cur_pos {x_left, y_left};
+      dpair last_pos { cur_pos };
+      bool out_of_borders { false};
+      bool extremum_done { false };
+      double paral_ans {1e9};
+      while (repeat) {
+        do {
+          last_pos = cur_pos;
+          auto gradient_vec{grad(cur_pos)};
+          double new_step{GoldenSelection(0, 0.1, eps, gradient_vec, cur_pos, func)};
+          cur_pos = Calculate(cur_pos, gradient_vec, new_step);
+
+          out_of_borders = IsInside(cur_pos, x_left, x_right, y_left, y_right);
+          if (out_of_borders) {
+            break;
+          }
+
+          extremum_done = IsExtremum(last_pos, cur_pos, func, eps);
+          if (extremum_done) {
+            break;
+          }
+        } while (true);
+        --repeat;
+        if (extremum_done) {
+          paral_ans = std::min(paral_ans, func(cur_pos));
+        }
+        cur_pos = {x_right, y_right};
         last_pos = cur_pos;
-        auto gradient_vec { grad(cur_pos) };
-        double new_step { GoldenSelection(0,0.1,eps,gradient_vec,cur_pos, func)};
+      }
+      return paral_ans;
+    }
+
+    //  Для последовательного метода
+    double seq_ans { 1e9 };
+    while (repeat) {
+      dpair cur_pos{GetStart(x_left, x_right, y_left, y_right)};
+      dpair last_pos{cur_pos};
+      bool out_of_borders{false};
+      bool extremum_done{false};
+      do {
+        last_pos = cur_pos;
+        auto gradient_vec{grad(cur_pos)};
+        double new_step{GoldenSelection(0, 0.1, eps, gradient_vec, cur_pos, func)};
         cur_pos = Calculate(cur_pos, gradient_vec, new_step);
 
         out_of_borders = IsInside(cur_pos, x_left, x_right, y_left, y_right);
-        if (out_of_borders) break;
+        if (out_of_borders) {
+          break;
+        }
 
         extremum_done = IsExtremum(last_pos, cur_pos, func, eps);
-        if (extremum_done) break;
+        if (extremum_done) {
+          break;
+        }
+      } while (true);
 
-    } while (true);
-
-    if (out_of_borders || !extremum_done) {
-        return 1e9;
+      if (extremum_done) {
+        seq_ans = std::min(seq_ans, func(cur_pos));
+      }
+      --repeat;
     }
-
-    return func(cur_pos);
-
+    return seq_ans;
 }
 
 double ParallelGlobalSearch(int fun_num,
@@ -128,10 +165,9 @@ double ParallelGlobalSearch(int fun_num,
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   double global_min = 1e9;
-
-
-  //  Заполнение вектора для отправки данных
   std::vector<double> to_send;
+
+  //  Подготовка данных для рассылки
   if (rank == 0) {
     double distx = x_right - x_left;
     double disty = y_right - y_left;
@@ -139,11 +175,9 @@ double ParallelGlobalSearch(int fun_num,
     double deltay = disty / size;
     size_t size_vec = 4 * size * 4;
     to_send.resize(size_vec);
-
     double cur_x = x_left;
     double cur_y = y_left;
     for (size_t i = 0; i < size_vec / 4; ++i) {
-//            std::cout << "Sending to  " << i << " rank" <<std::endl;
       to_send[4 * i] = cur_x;
       to_send[4 * i + 1] = cur_y;
       cur_x += deltax;
@@ -153,23 +187,19 @@ double ParallelGlobalSearch(int fun_num,
         cur_x = x_left;
         cur_y += deltay;
       }
-//            std::cout << " Left x = " << to_send[4*i]<< " ";
-//            std::cout << " Right x = " << to_send[4*i + 2]<< " ";
-//            std::cout << " Left y = " << to_send[4*i + 1]<< " ";
-//            std::cout << " Right y = " << to_send[4*i + 3]<< " ";
     }
   }
 
+    //  Рассылка данных
   if (rank == 0) {
-    // Отпрвка данных
     int cur_step = 0;
     for (int i = 1; i < rank; ++i) {
       MPI_Send(&to_send[0] + cur_step, 16, MPI_DOUBLE, i, 0, MPI_COMM_WORLD);
       cur_step += 16;
     }
-//        std::cout<<"Sending is done" << std::endl;
   }
 
+  //  Принятие данных
   std::vector<double> proc_data(16);
   if (rank == 0) {
     size_t j = 0;
@@ -178,33 +208,21 @@ double ParallelGlobalSearch(int fun_num,
       proc_data[j++] = to_send[i];
     }
   } else {
-//        MPI_Status status;
-//        std::cout<<"Before receiving" << std::endl;
     MPI_Request req;
     MPI_Irecv(&proc_data[0], 16, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, &req);
-
-//        std::cout<<"Recieved is done" << std::endl;
   }
-//    std::cout << "Current task is " << rank<< std::endl;
 
-//    std::cout<<std::endl;
 
+  //  Расчеты
   double local_min = 1e9;
   int cnt = 0;
   while (cnt != 4) {
-//        std::cout<<"cnt is " <<cnt<<std::endl;
     local_min = std::min(local_min, SequentialGlobalSearch(fun_num,
         proc_data[4 * cnt], proc_data[4 * cnt + 2],
         proc_data[4 * cnt + 1], proc_data[4 * cnt + 3]));
     ++cnt;
   }
-//    std::cout<<"local min is  " <<local_min<<std::endl;
   MPI_Reduce(&local_min, &global_min, 1, MPI_DOUBLE, MPI_MIN, 0, MPI_COMM_WORLD);
 
   return global_min;
-
 }
-
-
-
-//inline StepChange()

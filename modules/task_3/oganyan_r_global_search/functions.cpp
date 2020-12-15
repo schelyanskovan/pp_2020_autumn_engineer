@@ -1,8 +1,6 @@
 
 //  Copyright by Oganyan Robert 2020
 
-
-#include <cmath>
 #include "../../../modules/task_3/oganyan_r_global_search/functions.h"
 
 //  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
@@ -54,11 +52,12 @@ extern inline dpair grad_forth(dpair coord) {
 //  -#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
 
 extern inline double fun_fifth(dpair coord) {
-    return coord.x * coord.x * coord.x + coord.x * coord.y * coord.y + coord.x * coord.x + coord.y * coord.y;
+    return std::pow(coord.x * coord.x + coord.y - 11, 2) + std::pow(coord.x + coord.y * coord.y -7, 2);
 }
 
 extern inline dpair grad_fifth(dpair coord) {
-    return { 3 *coord.x * coord.x  + coord.y * coord.y + 2 * coord.x, 2 * coord.x * coord.y  + 2 * coord.y  };
+    return { 4 * coord.x * (coord.x * coord.x + coord.y - 11) + 2 * coord.x + 2 * coord.y * coord.y -14,
+             2 * coord.x * coord.x  + 4 * coord.y * (coord.x + coord.y * coord.y - 7) + 2 * coord.y - 22 };
 }
 
 

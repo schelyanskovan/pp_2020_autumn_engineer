@@ -3,6 +3,7 @@
 #ifndef MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_FUNCTIONS_H_
 #define MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_FUNCTIONS_H_
 
+#include <cmath>
 #include <functional>
 #include <utility>
 
@@ -10,9 +11,6 @@
 #define y second
 
 using dpair = std::pair<double, double>;
-using d_dpair = std::pair<double, dpair>;
-
-constexpr d_dpair NOT_FOUND = {100000000.0, {0, 0}};
 
 extern inline double fun_first(dpair coord);
 extern inline dpair grad_first(dpair coord);
@@ -29,4 +27,4 @@ inline dpair grad_forth(dpair coord);
 inline double fun_fifth(dpair coord);
 inline dpair grad_fifth(dpair coord);
 
-#endif //  MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_FUNCTIONS_H_
+#endif  //  MODULES_TASK_3_OGANYAN_R_GLOBAL_SEARCH_FUNCTIONS_H_
