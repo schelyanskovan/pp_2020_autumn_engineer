@@ -64,7 +64,7 @@ TEST(Parallel_Operations_MPI, Test_getSequentialMooreAlgorithm_Correct) {
         int* shortest_ways = new int[count_of_vertex];
         getSequentialMooreAlgorithm(graph, count_of_vertex, shortest_ways, 0);
         int ref_shortest_ways[] = {0, 2, 3};
-        for (size_t i = 0; i < count_of_vertex; i++) {
+        for (int i = 0; i < count_of_vertex; i++) {
             ASSERT_EQ(ref_shortest_ways[i], shortest_ways[i]);
         }
         delete[] shortest_ways;
@@ -84,7 +84,7 @@ TEST(Parallel_Operations_MPI, Test_getParallelMooreAlgorithm_Correct) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     if (rank == 0) {
-        for (size_t i = 0; i < count_of_vertex; i++) {
+        for (int i = 0; i < count_of_vertex; i++) {
             ASSERT_EQ(ref_shortest_ways[i], shortest_ways[i]);
         }
     }
@@ -110,7 +110,7 @@ TEST(Parallel_Operations_MPI, Test_Parallel_And_Sequential_Has_Same_Result_Stati
     int ref_shortest_ways[] = {0, 1000, 22};
 
     if (rank == 0) {
-        for (size_t i = 0; i < count_of_vertex; i++) {
+        for (int i = 0; i < count_of_vertex; i++) {
             ASSERT_EQ(ref_shortest_ways[i], shortest_ways_seq[i]);
             ASSERT_EQ(ref_shortest_ways[i], shortest_ways_par[i]);
         }
@@ -139,7 +139,7 @@ TEST(Parallel_Operations_MPI, Test_Parallel_And_Sequential_Has_Same_Result_Stati
     int ref_shortest_ways[] = {0, 24, 22, 28};
 
     if (rank == 0) {
-        for (size_t i = 0; i < count_of_vertex; i++) {
+        for (int i = 0; i < count_of_vertex; i++) {
             ASSERT_EQ(ref_shortest_ways[i], shortest_ways_seq[i]);
             ASSERT_EQ(ref_shortest_ways[i], shortest_ways_par[i]);
         }
@@ -168,7 +168,7 @@ TEST(Parallel_Operations_MPI, Test_Parallel_And_Sequential_Has_Same_Result_Stati
     int ref_shortest_ways[] = {0, 24, 22, 25};
 
     if (rank == 0) {
-        for (size_t i = 0; i < count_of_vertex; i++) {
+        for (int i = 0; i < count_of_vertex; i++) {
             ASSERT_EQ(ref_shortest_ways[i], shortest_ways_seq[i]);
             ASSERT_EQ(ref_shortest_ways[i], shortest_ways_par[i]);
         }
@@ -197,7 +197,7 @@ TEST(Parallel_Operations_MPI, Test_Parallel_And_Sequential_Has_Same_Result_Stati
     int ref_shortest_ways[] = {0, 2, 5, 1000, 1000};
 
     if (rank == 0) {
-        for (size_t i = 0; i < count_of_vertex; i++) {
+        for (int i = 0; i < count_of_vertex; i++) {
             ASSERT_EQ(ref_shortest_ways[i], shortest_ways_seq[i]);
             ASSERT_EQ(ref_shortest_ways[i], shortest_ways_par[i]);
         }
@@ -225,7 +225,7 @@ TEST(Parallel_Operations_MPI, Test_Parallel_And_Sequential_Has_Same_Result_Rando
     getParallelMooreAlgorithm(graph, count_of_vertex, shortest_ways_par, 0);
 
     if (rank == 0) {
-        for (size_t i = 0; i < count_of_vertex; i++) {
+        for (int i = 0; i < count_of_vertex; i++) {
             ASSERT_EQ(shortest_ways_seq[i], shortest_ways_par[i]);
         }
     }
@@ -267,7 +267,7 @@ TEST(Parallel_Operations_MPI, DISABLED_Test_Compare_Performance_Parallel_And_Seq
             std::cout << "[ INFO     ] Time squential moore: " << time_seq <<"\n";
         }
             ASSERT_TRUE(time_par < time_seq);
-        for (size_t i = 0; i < count_of_vertex; i++) {
+        for (int i = 0; i < count_of_vertex; i++) {
             ASSERT_EQ(shortest_ways_seq[i], shortest_ways_par[i]);
         }
     }

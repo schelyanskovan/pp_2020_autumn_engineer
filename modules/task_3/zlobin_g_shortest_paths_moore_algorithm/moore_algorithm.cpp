@@ -6,14 +6,14 @@
 #include "../../../modules/task_3/zlobin_g_shortest_paths_moore_algorithm/moore_algorithm.h"
 
 
-void fillGraphWithRandomValues(int* graph_to_fill, size_t size) {
+void fillGraphWithRandomValues(int* graph_to_fill, int size) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> uniform_dis(1, MAX_VALUE);
 
-    for (size_t i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         graph_to_fill[i * size + i] = 0;
-        for (size_t j = i + 1; j < size; j++) {
+        for (int j = i + 1; j < size; j++) {
             int weight = uniform_dis(gen);
             graph_to_fill[i * size + j] = (static_cast<double>(weight) / MAX_VALUE > EDGE_PROB) ?
                 MAX_VALUE * (size + 1) : weight;
@@ -24,17 +24,17 @@ void fillGraphWithRandomValues(int* graph_to_fill, size_t size) {
     }
 }
 
-void getSequentialMooreAlgorithm(int* graph, size_t size, int* shortest_ways, size_t begin_vertex) {
+void getSequentialMooreAlgorithm(int* graph, int size, int* shortest_ways, int begin_vertex) {
     int max_value = *std::max_element(graph, graph + size * size);
-    for (size_t i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         shortest_ways[i] = max_value * (size + 1);
     }
     shortest_ways[begin_vertex] = 0;
     int was_changed;
-    for (size_t i = 0; i < size - 1; i++) {
+    for (int i = 0; i < size - 1; i++) {
         was_changed = 0;
-        for (size_t v = 0; v < size; v++) {
-            for (size_t u = 0; u < size; u++) {
+        for (int v = 0; v < size; v++) {
+            for (int u = 0; u < size; u++) {
                 if (shortest_ways[v] > shortest_ways[u] + graph[u * size + v]) {
                     shortest_ways[v] = shortest_ways[u] + graph[u * size + v];
                     was_changed = 1;
@@ -47,8 +47,8 @@ void getSequentialMooreAlgorithm(int* graph, size_t size, int* shortest_ways, si
     }
 }
 
-void getParallelMooreAlgorithm(int* graph, size_t size, int* shortest_ways, size_t begin_vertex) {
-    size_t loc_begin, loc_end;
+void getParallelMooreAlgorithm(int* graph, int size, int* shortest_ways, int begin_vertex) {
+    int loc_begin, loc_end;
 
     int num_processes, rank;
     MPI_Comm_size(MPI_COMM_WORLD, &num_processes);
@@ -63,16 +63,16 @@ void getParallelMooreAlgorithm(int* graph, size_t size, int* shortest_ways, size
 
     int* loc_shortest_ways = new int[size];
     int max_value = *std::max_element(graph, graph + size * size);
-    for (size_t i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         loc_shortest_ways[i] = max_value * (size + 1);
     }
     loc_shortest_ways[begin_vertex] = 0;
 
     int was_changed;
-    for (size_t i = 0; i < size - 1; i++) {
+    for (int i = 0; i < size - 1; i++) {
         was_changed = 0;
-        for (size_t v = loc_begin; v < loc_end; v++) {
-            for (size_t u = 0; u < size; u++) {
+        for (int v = loc_begin; v < loc_end; v++) {
+            for (int u = 0; u < size; u++) {
                 if (loc_shortest_ways[v] > loc_shortest_ways[u] + graph[u * size + v]) {
                     loc_shortest_ways[v] = loc_shortest_ways[u] + graph[u * size + v];
                     was_changed = 1;
