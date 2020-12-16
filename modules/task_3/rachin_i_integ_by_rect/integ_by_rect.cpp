@@ -55,7 +55,6 @@ double getParallelInteg(double f(double x, double y, double z),
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     int delta = pz / size;
-    int tail = pz % size;
     for (int i = 0; i < px; i++) {
         for (int j = 0; j < py; j++) {
             if (rank != size - 1) {
