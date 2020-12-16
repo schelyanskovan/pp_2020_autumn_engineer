@@ -1,6 +1,7 @@
 // Copyright 2020 Igor Rukhovich
 #include "../../modules/task_3/rukhovich_i_radix_sort_batcher/radix_sort_batcher.h"
 #include <mpi.h>
+#include <cstring>
 #include <utility>
 #include <vector>
 
@@ -75,7 +76,9 @@ template<> void radix_sort(DoubleIt first, DoubleIt last) {
     std::vector<std::bitset<64>> bits(last - first);
     auto it = first;
     for (size_t i = 0u; i < bits.size(); ++it, ++i) {
-        bits[i] = reinterpret_cast<uint64_t &>(*it);
+        uint64_t int_repr;
+        std::memcpy(&int_repr, &*it, 8u);
+        bits[i] = int_repr;
     }
 
     bitwise_sort(bits.begin(), bits.end());
@@ -83,7 +86,7 @@ template<> void radix_sort(DoubleIt first, DoubleIt last) {
     it = first;
     for (size_t i = 0; i < bits.size(); ++it, ++i) {
         uint64_t num = bits[i].to_ullong();
-        *it = reinterpret_cast<double &>(num);
+        std::memcpy(&*it, &num, 8u);
     }
 }
 
