@@ -79,7 +79,7 @@ std::vector<int> Parallel_sort(std::vector<int> vect) {
     int count;  //  number of used processes for do{}while loop
     int tag = 0;  //  tag for send/recv operations
     int counter = 0;
-	int countProc;
+    int countProc;
 
     while (tmp_size_count > 0) {
         tmp_size_count = tmp_size_count / 2;
