@@ -1,7 +1,7 @@
 // Copyright 2020 Igor Rukhovich
-#include <algorithm>
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
+#include <algorithm>
 #include <vector>
 #include "./radix_sort_batcher.h"
 
@@ -39,7 +39,7 @@ TEST(RadixSortBatcherMerge, test_radix_empty) {
     if (rank == 0) {
         std::vector<double> array(0u);
         std::vector<double> array_cpy(array);
-        
+
         radix_sort(array.begin(), array.end());
         std::sort(array_cpy.begin(), array_cpy.end());
 
@@ -50,7 +50,7 @@ TEST(RadixSortBatcherMerge, test_radix_empty) {
 TEST(RadixSortBatcherMerge, test_radix_one_element) {
     std::vector<double> array = random_double_array(1u);
     std::vector<double> array_cpy(array);
-    
+
     radix_sort(array.begin(), array.end());
     std::sort(array_cpy.begin(), array_cpy.end());
 
@@ -60,10 +60,10 @@ TEST(RadixSortBatcherMerge, test_radix_one_element) {
 TEST(RadixSortBatcherMerge, test_radix_few_elements) {
     std::vector<double> array = random_double_array(10u);
     std::vector<double> array_cpy(array);
-    
+
     radix_sort(array.begin(), array.end());
     std::sort(array_cpy.begin(), array_cpy.end());
-    
+
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
@@ -73,7 +73,7 @@ TEST(RadixSortBatcherMerge, test_radix_few_elements) {
 TEST(RadixSortBatcherMerge, test_radix_lots_of_elements) {
     std::vector<double> array = random_double_array(10000u);
     std::vector<double> array_cpy(array);
-    
+
     radix_sort(array.begin(), array.end());
     std::sort(array_cpy.begin(), array_cpy.end());
 
@@ -85,7 +85,7 @@ TEST(RadixSortBatcherMerge, test_batcher_empty) {
 }
 
 TEST(RadixSortBatcherMerge, test_batcher_one_element) {
-    check_par_radix_batcher(1u);        
+    check_par_radix_batcher(1u);
 }
 
 TEST(RadixSortBatcherMerge, test_batcher_few_elements) {
