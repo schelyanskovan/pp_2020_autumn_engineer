@@ -215,7 +215,6 @@ template<typename T>
 void batcher_sort(MPI_Comm comm, std::vector<T> *data, int count_items) {
     std::vector<T> recv_buf(count_items);
     int size = get_world_size(comm);
-    int rank = get_rank(comm);
 
     for (int p = 1; p < size; p *= 2) {
         for (int k = p; k >= 1; k /= 2) {
