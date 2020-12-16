@@ -97,16 +97,22 @@ void odd_even_merge(DoubleIt first, DoubleIt last) {
     std::vector<double> arr_cpy(size);
 
     for (size_t i = 0u; i < half; ++i) {
-        arr_cpy[i << 1u] = *(first + i);
-        arr_cpy[(i << 1u) + 1u] = *(first + i + half);
+        arr_cpy[i] = *(first + (i << 1u));
+        arr_cpy[i + half] = *(first + (i << 1u) + 1u);
     }
 
     odd_even_merge(arr_cpy.begin(), arr_cpy.begin() + half);
     odd_even_merge(arr_cpy.begin() + half, arr_cpy.begin() + size);
 
     for (size_t i = 0u; i < half; ++i) {
-        *(first + i) = arr_cpy[i << 1u];
-        *(first + i + half) = arr_cpy[(i << 1u) + 1u];
+        *(first + (i << 1u)) = arr_cpy[i];
+        *(first + (i << 1u) + 1u) = arr_cpy[i + half];
+    }
+
+    for (size_t i = 1u; i + 1 < size; i += 2) {
+        if (*(first + i) > *(first + i + 1)) {
+            std::swap(*(first + i), *(first + i + 1));
+        }
     }
 }
 
@@ -118,16 +124,23 @@ template<> void par_radix_sort_batcher(DoubleIt first, DoubleIt last) {
 
     uint64_t size = (rank == 0) ? static_cast<uint64_t>(last - first) : 0u;
     MPI_Bcast(&size, 1, MPI_UNSIGNED_LONG_LONG, 0, MPI_COMM_WORLD);
+    if (size == 0) {
+        return;
+    }
+    if (size < static_cast<uint64_t>(num_proc)) {
+        if (rank == 0) radix_sort(first, last);
+        return;
+    }
 
     std::vector<int> sendcounts(num_proc, size / num_proc), displs(num_proc);
     sendcounts.back() += size % num_proc;
-    for (size_t i = 0; i < static_cast<size_t>(size); ++i) {
+    for (size_t i = 0; i < static_cast<size_t>(num_proc); ++i) {
         displs[i] = (size / num_proc) * i;
     }
 
-    size_t pow = 0;
-    while (1u << pow < sendcounts[rank]) ++pow;
-    std::vector<double> arr_part(1u << pow, HUGE_VAL);
+    int pow = 0;
+    while (1 << pow < static_cast<int>(size) / num_proc + static_cast<int>(size) % num_proc) ++pow;
+    std::vector<double> arr_part(1 << pow, HUGE_VAL);
 
     MPI_Scatterv(&*first, sendcounts.data(), displs.data(), MPI_DOUBLE,
                  arr_part.data(), sendcounts[rank], MPI_DOUBLE,
@@ -138,8 +151,15 @@ template<> void par_radix_sort_batcher(DoubleIt first, DoubleIt last) {
     int thread_power = 1;
     while (true) {
         if (rank % (thread_power << 1) == 0) {
-            if (num_proc < rank + thread_power) {
-                ++thread_power;
+            if (num_proc <= rank + thread_power) {
+                if (rank == 0) {
+                    break;
+                }
+                thread_power <<= 1;
+                arr_part.resize(arr_part.size() << 1u);
+                for (size_t i = arr_part.size() >> 1u; i < arr_part.size(); ++i) {
+                    arr_part[i] = HUGE_VAL;
+                }
                 continue;
             }
             size_t cur_size = arr_part.size();
@@ -147,7 +167,7 @@ template<> void par_radix_sort_batcher(DoubleIt first, DoubleIt last) {
             MPI_Recv(arr_part.data() + cur_size, cur_size, MPI_DOUBLE,
                      rank + thread_power, 0, MPI_COMM_WORLD, &status);
             odd_even_merge(arr_part.begin(), arr_part.end());
-            ++thread_power;
+            thread_power <<= 1;
         } else {
             MPI_Send(arr_part.data(), arr_part.size(), MPI_DOUBLE,
                      rank - thread_power, 0, MPI_COMM_WORLD);

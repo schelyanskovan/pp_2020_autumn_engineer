@@ -2,6 +2,7 @@
 #ifndef MODULES_TASK_3_RUKHOVICH_I_RADIX_SORT_BATCHER_RADIX_SORT_BATCHER_H_
 #define MODULES_TASK_3_RUKHOVICH_I_RADIX_SORT_BATCHER_RADIX_SORT_BATCHER_H_
 #include <bitset>
+#include <iostream>
 #include <random>
 #include <vector>
 

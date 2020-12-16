@@ -13,15 +13,23 @@ void check_arrays(const std::vector<T>& lhs, const std::vector<T>& rhs) {
     }
 }
 
-void check_par_radix_batcher(size_t num_iterations, size_t num_elements) {
-    for (size_t i = 0u; i < num_iterations; ++i) {
-        std::vector<double> array = random_double_array(num_elements);
-        std::vector<double> array_cpy(array);
-        
-        par_radix_sort_batcher(array.begin(), array.end());
-        std::sort(array_cpy.begin(), array_cpy.end());
+void check_par_radix_batcher(size_t num_elements, size_t num_iterations = 10u) {
+    int rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-        check_arrays(array, array_cpy);
+    for (size_t i = 0u; i < num_iterations; ++i) {
+        std::vector<double> array, array_cpy;
+        if (rank == 0) {
+            array = random_double_array(num_elements);
+            array_cpy = array;
+        }
+
+        par_radix_sort_batcher(array.begin(), array.end());
+
+        if (rank == 0) {
+            std::sort(array_cpy.begin(), array_cpy.end());
+            check_arrays(array, array_cpy);
+        }
     }
 }
 
@@ -58,7 +66,6 @@ TEST(RadixSortBatcherMerge, test_radix_few_elements) {
     
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::cout << "rank: " << rank << ", value: " << array[5] << '\n';
 
     check_arrays(array, array_cpy);
 }
@@ -74,37 +81,20 @@ TEST(RadixSortBatcherMerge, test_radix_lots_of_elements) {
 }
 
 TEST(RadixSortBatcherMerge, test_batcher_empty) {
-    int rank;
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    if (rank == 0) {
-        check_par_radix_batcher(1u, 0u);
-    }
+    check_par_radix_batcher(0u, 1u);
 }
 
 TEST(RadixSortBatcherMerge, test_batcher_one_element) {
-    int rank;
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    if (rank == 0) {
-        check_par_radix_batcher(10u, 1u);        
-    }
+    check_par_radix_batcher(1u);        
 }
 
 TEST(RadixSortBatcherMerge, test_batcher_few_elements) {
-    int rank;
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    if (rank == 0) {
-        check_par_radix_batcher(10u, 10u);        
-    }
+    check_par_radix_batcher(10u);
 }
 
 TEST(RadixSortBatcherMerge, test_batcher_lots_of_elements) {
-    int rank;
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    if (rank == 0) {
-        check_par_radix_batcher(10u, 10000u);        
-    }
+    check_par_radix_batcher(10000u);
 }
-
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
