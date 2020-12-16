@@ -37,7 +37,6 @@ void test_sort_with(std::vector<T> source, std::vector<T> expected) {
     int world_size, rank;
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Comm comm = MPI_COMM_WORLD;
 
     std::vector<T> result = getParallelOperations<T>(source);
 
@@ -163,7 +162,6 @@ TEST(Parallel_Operations_MPI, Test_sort_Batcher_ALotOfDoubleElements) {
     int world_size, rank;
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Comm comm = MPI_COMM_WORLD;
 
     double t1, t2;
     if (rank == 0) {
