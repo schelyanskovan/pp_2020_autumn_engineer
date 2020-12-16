@@ -25,7 +25,6 @@ std::vector<int> gen_input(int sz) {
     return vect;
 }
 std::vector<int> Sequential_Shell(std::vector<int> vec) {
-    int diap = vec.size() / 2;
     int length = vec.size();
     int h = 1;
     while (h < length / 3) {
@@ -83,7 +82,7 @@ std::vector<int> Parallel_sort(std::vector<int> vect) {
 
     while (tmp_size_count > 0) {
         tmp_size_count = tmp_size_count / 2;
-        countProc = tmp_size_count % ProcNum;
+        countProc = tmp_size_count % totnodes;
         if (tmp_size_count < totnodes) {
             count = tmp_size_count;
         } else {
