@@ -25,12 +25,10 @@ typedef std::vector<std::bitset<64>>::iterator BitsetIt;
 void bitwise_sort_mod(BitsetIt first, BitsetIt last, size_t bit, bool positive);
 void bitwise_sort(BitsetIt first, BitsetIt last);
 
-template <class RandomIt>
-void radix_sort(RandomIt first, RandomIt last);
+void radix_sort(DoubleIt first, DoubleIt last);
 
 void odd_even_merge(DoubleIt first, DoubleIt last);
 
-template <class RandomIt>
-void par_radix_sort_batcher(RandomIt first, RandomIt last);
+void par_radix_sort_batcher(std::vector<double>& array);
 
 #endif  // MODULES_TASK_3_RUKHOVICH_I_RADIX_SORT_BATCHER_RADIX_SORT_BATCHER_H_

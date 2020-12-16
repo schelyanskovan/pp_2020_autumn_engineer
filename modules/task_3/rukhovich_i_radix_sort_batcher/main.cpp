@@ -24,7 +24,7 @@ void check_par_radix_batcher(size_t num_elements, size_t num_iterations = 10u) {
             array_cpy = array;
         }
 
-        par_radix_sort_batcher(array.begin(), array.end());
+        par_radix_sort_batcher(array);
 
         if (rank == 0) {
             std::sort(array_cpy.begin(), array_cpy.end());
