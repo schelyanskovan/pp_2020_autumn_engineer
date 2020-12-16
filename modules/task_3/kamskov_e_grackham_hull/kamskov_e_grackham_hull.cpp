@@ -26,7 +26,7 @@ struct Comparator {
 std::vector<Point> greckham_seq(std::vector < Point > p) {
     std::vector <int> positions;
     int n = p.size();
-    i, k = 0;
+    int i, k = 0;
     first = p[0];
     for (i = 1; i < n; ++i)
         if (first.x > p[i].x || (first.x == p[i].x && first.y > p[i].y)) {
