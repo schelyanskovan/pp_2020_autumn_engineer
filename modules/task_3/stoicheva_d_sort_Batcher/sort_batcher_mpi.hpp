@@ -13,12 +13,15 @@ extern std::vector<T> getSequentialOperations(const std::vector<T> source);
 template<typename T>
 extern std::vector<T> getParallelOperations(const std::vector<T> source);
 
-void print_vector(const std::vector<int> vector, const size_t size, const std::string prefix = {},
-    const std::string label = {}, std::ostream &out = std::cout);
+template <typename T>
+extern int compare(const void * a, const void * b);
+
+void print_vector(const std::vector<int> vector, const size_t count, const std::string line_prefix = {},
+    const std::string vector_label = {}, bool one_line = false, std::ostream &out = std::cout);
 
 template<typename T>
-void print_vector(const std::vector<T> vector, const size_t size, const std::string prefix = {},
-    const std::string label = {}, std::ostream &out = std::cout);
+void print_vector(const std::vector<T> vector, const size_t count, const std::string line_prefix = {},
+    const std::string vector_label = {}, bool one_line = false, std::ostream &out = std::cout);
 
 // GLOBAL VARIABLES
 extern int my_mpiRoot;
