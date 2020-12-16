@@ -13,6 +13,18 @@ void check_arrays(const std::vector<T>& lhs, const std::vector<T>& rhs) {
     }
 }
 
+void check_par_radix_batcher(size_t num_iterations, size_t num_elements) {
+    for (size_t i = 0u; i < num_iterations; ++i) {
+        std::vector<double> array = random_double_array(num_elements);
+        std::vector<double> array_cpy(array);
+        
+        par_radix_sort_batcher(array.begin(), array.end());
+        std::sort(array_cpy.begin(), array_cpy.end());
+
+        check_arrays(array, array_cpy);
+    }
+}
+
 TEST(RadixSortBatcherMerge, test_radix_empty) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -60,6 +72,39 @@ TEST(RadixSortBatcherMerge, test_radix_lots_of_elements) {
 
     check_arrays(array, array_cpy);
 }
+
+TEST(RadixSortBatcherMerge, test_batcher_empty) {
+    int rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    if (rank == 0) {
+        check_par_radix_batcher(1u, 0u);
+    }
+}
+
+TEST(RadixSortBatcherMerge, test_batcher_one_element) {
+    int rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    if (rank == 0) {
+        check_par_radix_batcher(10u, 1u);        
+    }
+}
+
+TEST(RadixSortBatcherMerge, test_batcher_few_elements) {
+    int rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    if (rank == 0) {
+        check_par_radix_batcher(10u, 10u);        
+    }
+}
+
+TEST(RadixSortBatcherMerge, test_batcher_lots_of_elements) {
+    int rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    if (rank == 0) {
+        check_par_radix_batcher(10u, 10000u);        
+    }
+}
+
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);

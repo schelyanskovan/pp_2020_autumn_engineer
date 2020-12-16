@@ -28,6 +28,8 @@ void bitwise_sort(BitsetIt first, BitsetIt last);
 template <class RandomIt>
 void radix_sort(RandomIt first, RandomIt last);
 
+void odd_even_merge(DoubleIt first, DoubleIt last);
+
 template <class RandomIt>
 void par_radix_sort_batcher(RandomIt first, RandomIt last);
 
