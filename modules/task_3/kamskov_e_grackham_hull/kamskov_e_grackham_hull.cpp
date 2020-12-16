@@ -63,9 +63,9 @@ std::vector<Point> greckham_seq(std::vector < Point > p) {
         vec[i] = p[positions[i]];
     }
     end = first;
-    for (i = 1; i < vec.size(); ++i)
-        if (end.x < vec[i].x || (end.x == vec[i].x && end.y < vec[i].y)) {
-            end = vec[i];
+    for (size_t j = 1; j < vec.size(); ++j)
+        if (end.x < vec[j].x || (end.x == vec[j].x && end.y < vec[j].y)) {
+            end = vec[j];
         }
 
     return vec;
