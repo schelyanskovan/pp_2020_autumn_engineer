@@ -32,6 +32,11 @@ std::vector<int> GetRandomVector(size_t size) {
     return result;
 }
 
+TEST(Parallel_Operations_MPI, No_Throw) {
+    std::vector<int> data = GetRandomVector(10000);
+    ASSERT_NO_THROW(Sort(&data));
+}
+
 TEST(Parallel_Operations_MPI, Sorting_Right) {
     std::vector<int> data = GetRandomVector(10000);
     Sort(&data);
