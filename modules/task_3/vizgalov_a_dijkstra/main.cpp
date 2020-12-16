@@ -27,7 +27,7 @@ TEST(Dijkstra, Dijkstra_Sequential_100) {
         ASSERT_NO_THROW(dijkstraSequential(graph, 0));
         double t1 = MPI_Wtime();
 
-        std::cout << "\nDijkstra Sequential time (graph size 100): " << (t1 - t0) << "\n" << std::endl;
+        std::cout << "\nSequential time (graph size 100): " << (t1 - t0) << "\n" << std::endl;
     }
 }
 
@@ -42,7 +42,7 @@ TEST(Dijkstra, Dijkstra_Sequential_1000) {
         ASSERT_NO_THROW(dijkstraSequential(graph, 0));
         double t1 = MPI_Wtime();
 
-        std::cout << "\nDijkstra Sequential time (graph size 1000): " << (t1 - t0) << "\n" << std::endl;
+        std::cout << "\nSequential time (graph size 1000): " << (t1 - t0) << "\n" << std::endl;
     }
 }
 
@@ -60,7 +60,7 @@ TEST(Dijkstra, Dijkstra_Parallel_100) {
     double t1 = MPI_Wtime();
 
     if (rank == 0) {
-        std::cout << "\nDijkstra Parallel time (graph size 100): " << (t1 - t0) << "\n" << std::endl;
+        std::cout << "\nParallel time (graph size 100): " << (t1 - t0) << "\n" << std::endl;
     }
 }
 
@@ -78,7 +78,7 @@ TEST(Dijkstra, Dijkstra_Parallel_1000) {
     double t1 = MPI_Wtime();
 
     if (rank == 0) {
-        std::cout << "\nDijkstra Parallel time (graph size 1000): " << (t1 - t0) << "\n" << std::endl;
+        std::cout << "\nParallel time (graph size 1000): " << (t1 - t0) << "\n" << std::endl;
     }
 }
 
