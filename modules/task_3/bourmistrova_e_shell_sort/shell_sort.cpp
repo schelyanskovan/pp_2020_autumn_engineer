@@ -79,9 +79,11 @@ std::vector<int> Parallel_sort(std::vector<int> vect) {
     int count;  //  number of used processes for do{}while loop
     int tag = 0;  //  tag for send/recv operations
     int counter = 0;
+	int countProc;
 
     while (tmp_size_count > 0) {
         tmp_size_count = tmp_size_count / 2;
+        countProc = tmp_size_count % ProcNum;
         if (tmp_size_count < totnodes) {
             count = tmp_size_count;
         } else {
@@ -91,6 +93,8 @@ std::vector<int> Parallel_sort(std::vector<int> vect) {
         counter = 0;
         lvect_size = vect_size / tmp_size_count;
         do {
+            if (counter + countProc == tmp_size_count)
+                count = countProc;
             for (int proc = 0; proc < count; proc++) {
                 if (mynode == 0) {
                     local_vect.clear();
@@ -128,6 +132,8 @@ std::vector<int> Parallel_sort(std::vector<int> vect) {
 
         if (mynode == 0) {
             do {
+                if (counter + countProc == tmp_size_count)
+                    count = countProc;
                 for (int proc = 1; proc < count; proc++) {
                     MPI_Status status;
                     MPI_Recv(&local_vect[0], lvect_size, MPI_INT, proc,
