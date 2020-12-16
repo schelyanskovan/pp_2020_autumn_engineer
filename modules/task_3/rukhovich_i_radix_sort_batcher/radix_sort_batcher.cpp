@@ -76,8 +76,9 @@ template<> void radix_sort(DoubleIt first, DoubleIt last) {
     std::vector<std::bitset<64>> bits(last - first);
     auto it = first;
     for (size_t i = 0u; i < bits.size(); ++it, ++i) {
+        double double_repr = *it;
         uint64_t int_repr;
-        std::memcpy(&int_repr, &*it, 8u);
+        std::memcpy(&int_repr, &double_repr, 8u);
         bits[i] = int_repr;
     }
 
@@ -85,8 +86,10 @@ template<> void radix_sort(DoubleIt first, DoubleIt last) {
 
     it = first;
     for (size_t i = 0; i < bits.size(); ++it, ++i) {
-        uint64_t num = bits[i].to_ullong();
-        std::memcpy(&*it, &num, 8u);
+        double double_repr;
+        uint64_t int_repr = bits[i].to_ullong();
+        std::memcpy(&double_repr, &int_repr, 8u);
+        *it = double_repr;
     }
 }
 
