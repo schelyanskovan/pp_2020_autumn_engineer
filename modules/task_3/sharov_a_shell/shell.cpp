@@ -37,8 +37,7 @@ std::vector<int> merge(std::vector<int> a, std::vector<int> b) {
         if (a[i] <= b[j]) {
             c[k] = a[i];
             i++;
-        }
-        else {
+        } else {
             c[k] = b[j];
             j++;
         }
@@ -90,15 +89,13 @@ std::vector<int> parallelsortshell(std::vector<int> vec, int n) {
 
     if (rank == 0) {
         localVec = std::vector<int>(delta + k);
-    }
-    else {
+    } else {
         localVec = std::vector<int>(delta);
     }
 
     if (rank == 0) {
         localVec = std::vector<int>(vec.begin(), vec.begin() + delta + k);
-    }
-    else {
+    } else {
         MPI_Status status;
         MPI_Recv(localVec.data(), delta, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
     }
@@ -133,3 +130,4 @@ std::vector<int> parallelsortshell(std::vector<int> vec, int n) {
     }
     return localVec;
 }
+
