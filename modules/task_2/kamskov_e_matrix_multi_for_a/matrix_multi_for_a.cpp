@@ -4,7 +4,7 @@
 #include <vector>
 #include <random>
 #include <ctime>
-#include "./matrix_multi_for_a.h"
+#include "../../../modules/task_2/kamskov_e_matrix_multi_for_a/matrix_multi_for_a.h"
 
 
 std::vector<int> getRandomMatrix(int rows, int columns) {

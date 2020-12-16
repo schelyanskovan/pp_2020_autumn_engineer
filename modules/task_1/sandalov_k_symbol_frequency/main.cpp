@@ -7,7 +7,7 @@
 
 TEST(Parallel_Operations_MPI, create_random_string) {
     std::string global_string;
-    const int string_size = 1000;
+    const int string_size = 100;
     int proc_rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &proc_rank);
 
@@ -42,7 +42,7 @@ TEST(Parallel_Operations_MPI, test_comparison) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     std::string global_string;
-    const int string_size = 100;
+    const int string_size = 10;
     if (rank == 0) {
         global_string = getRandomString(string_size);
     }
@@ -57,7 +57,7 @@ TEST(Parallel_Operations_MPI, test_comparison_with_big_string_size) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     std::string global_string;
-    const int string_size = 1000000;
+    const int string_size = 10000;
     if (rank == 0) {
         global_string = getRandomString(string_size);
     }
