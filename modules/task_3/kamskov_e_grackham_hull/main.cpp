@@ -57,7 +57,6 @@ TEST(Parallel_Operations_MPI, Test_task_15) {
     vector1 = greckham_par(vector, points_size);
 
     if (proc == 0) {
-        int j;
         std::cout << "Grackham parallel:" << MPI_Wtime() - time << std::endl;
         time = MPI_Wtime();
         vector2 = greckham_seq(vector);
