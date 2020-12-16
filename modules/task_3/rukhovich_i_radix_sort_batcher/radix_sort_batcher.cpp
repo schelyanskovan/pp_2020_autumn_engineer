@@ -124,19 +124,19 @@ void odd_even_merge(DoubleIt first, DoubleIt last) {
     }
 }
 
-void par_radix_sort_batcher(std::vector<double>& array) {
+void par_radix_sort_batcher(std::vector<double>* array) {
     int num_proc, rank;
     MPI_Comm_size(MPI_COMM_WORLD, &num_proc);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Status status;
 
-    uint64_t size = (rank == 0) ? array.size() : 0u;
+    uint64_t size = (rank == 0) ? array->size() : 0u;
     MPI_Bcast(&size, 1, MPI_UNSIGNED_LONG_LONG, 0, MPI_COMM_WORLD);
     if (size == 0) {
         return;
     }
     if (size < static_cast<uint64_t>(num_proc)) {
-        if (rank == 0) radix_sort(array.begin(), array.end());
+        if (rank == 0) radix_sort(array->begin(), array->end());
         return;
     }
 
@@ -150,7 +150,7 @@ void par_radix_sort_batcher(std::vector<double>& array) {
     while (1 << pow < static_cast<int>(size) / num_proc + static_cast<int>(size) % num_proc) ++pow;
     std::vector<double> arr_part(1 << pow, HUGE_VAL);
 
-    MPI_Scatterv(array.data(), sendcounts.data(), displs.data(), MPI_DOUBLE,
+    MPI_Scatterv(array->data(), sendcounts.data(), displs.data(), MPI_DOUBLE,
                  arr_part.data(), sendcounts[rank], MPI_DOUBLE,
                  0, MPI_COMM_WORLD);
 
@@ -185,7 +185,7 @@ void par_radix_sort_batcher(std::vector<double>& array) {
 
     if (rank == 0) {
         for (size_t i = 0; i < size; ++i) {
-            array[i] = arr_part[i];
+            (*array)[i] = arr_part[i];
         }
     }
 }

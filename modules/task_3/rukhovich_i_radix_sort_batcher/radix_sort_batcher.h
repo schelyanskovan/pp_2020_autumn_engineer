@@ -29,6 +29,6 @@ void radix_sort(DoubleIt first, DoubleIt last);
 
 void odd_even_merge(DoubleIt first, DoubleIt last);
 
-void par_radix_sort_batcher(std::vector<double>& array);
+void par_radix_sort_batcher(std::vector<double>* array);
 
 #endif  // MODULES_TASK_3_RUKHOVICH_I_RADIX_SORT_BATCHER_RADIX_SORT_BATCHER_H_
