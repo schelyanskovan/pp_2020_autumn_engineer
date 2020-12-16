@@ -4,7 +4,6 @@
 #include <cmath>
 #include <memory>
 #include <stdexcept>
-#include <vector>
 
 
 QuadraticPolynomial::QuadraticPolynomial(double a, double b, double c) : a(a), b(b), c(c) {}
