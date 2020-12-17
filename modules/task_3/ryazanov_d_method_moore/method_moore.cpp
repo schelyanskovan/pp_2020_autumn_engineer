@@ -1,69 +1,116 @@
-// Copyright 2018 Nesterov Alexander
+// Copyright 2020 Dmitriy Ryazanov
 #include <mpi.h>
-#include <vector>
-#include <string>
-#include <random>
 #include <ctime>
-#include <algorithm>
-#include "../../../modules/test_tasks/test_mpi/ops_mpi.h"
+#include <iostream>
+#include <random>
+#include <vector>
+#include "../../modules/task_3/ryazanov_d_method_moore/method_moore.h"
 
 
-std::vector<int> getRandomVector(int sz) {
-    std::mt19937 gen;
-    gen.seed(static_cast<unsigned int>(time(0)));
-    std::vector<int> vec(sz);
-    for (int  i = 0; i < sz; i++) { vec[i] = gen() % 100; }
-    return vec;
+
+std::vector<int> CreateGraph(int size) {
+  std::mt19937 rand_r;
+  rand_r.seed(static_cast<unsigned int>(time(0)));
+  int edges = size;
+  std::vector<int> graph(size * edges);
+  const int max_point = 99999999;
+
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < edges; j++) {
+      graph[i + (j * edges)] = (rand_r() % 100);
+      if (graph[i + (j * edges)] == 0) {
+        graph[i + (j * edges)] = max_point;
+      }
+      if (i == j) {
+        graph[i + (j * edges)] = 0;
+      }
+    }
+  }
+  return graph;
 }
 
-int getSequentialOperations(std::vector<int> vec, std::string ops) {
-    const int  sz = vec.size();
-    int reduction_elem = 0;
-    if (ops == "+") {
-        for (int  i = 0; i < sz; i++) {
-            reduction_elem += vec[i];
+std::vector<int> MethodMoore(std::vector<int>* graph) {
+  const int max_point = 99999999;
+  int size = static_cast<int>(sqrt(static_cast<int>(graph->size())));
+  std::vector<int> result(size, max_point);
+  if (size < 1) {
+    throw "Error";
+  }
+  result[0] = 0;
+  for (int i = 0; i < size - 1; i++) {
+    for (int j = 0; j < size; j++) {
+      for (int k = 0; k < size; k++) {
+        if (result[j] < max_point && ((*graph)[k + (j * size)] < max_point)) {
+          if (result[k] > result[j] + (*graph)[k + (j * size)]) {
+            result[k] = result[j] + (*graph)[k + (j * size)];
+          }
         }
-    } else if (ops == "-") {
-        for (int  i = 0; i < sz; i++) {
-            reduction_elem -= vec[i];
-        }
-    } else if (ops == "max") {
-        reduction_elem = vec[0];
-        for (int  i = 1; i < sz; i++) {
-            reduction_elem = std::max(reduction_elem, vec[i]);
-        }
+      }
     }
-    return reduction_elem;
+  }
+  return result;
 }
 
-int getParallelOperations(std::vector<int> global_vec,
-                          int count_size_vector, std::string ops) {
-    int size, rank;
-    MPI_Comm_size(MPI_COMM_WORLD, &size);
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    const int delta = count_size_vector / size;
+std::vector<int> MethodMooreP(std::vector<int>* graph) {
+  const int max_point = 99999999;
+  int size = static_cast<int>(sqrt(static_cast<int>(graph->size())));
+  if (size < 1) {
+    throw "Error";
+  }
+  std::vector<int> result(size, max_point);
+  result[0] = 0;
 
-    if (rank == 0) {
-        for (int proc = 1; proc < size; proc++) {
-            MPI_Send(&global_vec[0] + proc * delta, delta,
-                        MPI_INT, proc, 0, MPI_COMM_WORLD);
-        }
+
+  int rank = -1;
+  int proc = -1;
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &proc);
+
+  int step = size / proc;
+  std::vector<int> distanceproc((step + (rank < (size % proc) ? 1 : 0)), max_point);
+  std::vector<int> procgaraph((step + (rank < (size % proc) ? 1 : 0)) * size);
+
+  std::vector<int> sendcounts(proc);
+  std::vector<int> displs(proc);
+  std::vector<int> sendcounts_dist(proc);
+  std::vector<int> displs_dist(proc);
+
+  displs[0] = 0;
+  displs_dist[0] = 0;
+  for (int i = 0; i < proc; i++) {
+    sendcounts[i] = (step + (i < (size % proc) ? 1 : 0)) * size;
+    sendcounts_dist[i] = step + (i < size % proc ? 1 : 0);
+    if (i > 0) {
+      displs[i] = (displs[(i - 1)] + sendcounts[(i - 1)]);
+      displs_dist[i] = displs_dist[(i - 1)] + sendcounts_dist[(i - 1)];
     }
+  }
 
-    std::vector<int> local_vec(delta);
-    if (rank == 0) {
-        local_vec = std::vector<int>(global_vec.begin(),
-                                     global_vec.begin() + delta);
-    } else {
-        MPI_Status status;
-        MPI_Recv(&local_vec[0], delta, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
+  int root_proc = -1;
+  for (int i = 0; i < proc - 1; ++i)
+    if (0 >= displs[i] / size) root_proc++;
+  if (rank == root_proc)
+    distanceproc[0 - (displs[rank] / size)] = 0;
+
+  std::vector<int> sendbuf(size * size);
+  if (rank == 0) {
+    for (int i = 0; i < size; i++)
+      for (int j = 0; j < size; j++)
+        sendbuf[(i * size) + j] = (*graph)[(j * size) + i];
+  }
+
+  MPI_Scatterv(sendbuf.data(), sendcounts.data(), displs.data(),
+      MPI_INT, &procgaraph[0], procgaraph.size(), MPI_INT, 0, MPI_COMM_WORLD);
+
+  for (int i = 0; i < size - 1; i++) {
+    for (int k = 0; k < sendcounts_dist[rank]; k++) {
+      for (int j = 0; j < size; ++j)
+        if ((procgaraph[(k * size) + j] < max_point) && (result[j] < max_point))
+          if (distanceproc[k] > result[j] + procgaraph[(k * size) + j])
+            distanceproc[k] = result[j] + procgaraph[(k * size) + j];
     }
-
-    int global_sum = 0;
-    int local_sum = getSequentialOperations(local_vec, ops);
-    MPI_Op op_code;
-    if (ops == "+" || ops == "-") { op_code = MPI_SUM; }
-    if (ops == "max") { op_code = MPI_MAX; }
-    MPI_Reduce(&local_sum, &global_sum, 1, MPI_INT, op_code, 0, MPI_COMM_WORLD);
-    return global_sum;
+    MPI_Allgatherv(distanceproc.data(), (step + (rank < size % proc ? 1 : 0)), MPI_INT,
+        result.data(), sendcounts_dist.data(), displs_dist.data(), MPI_INT, MPI_COMM_WORLD);
+  }
+  return result;
 }

@@ -1,64 +1,43 @@
-// Copyright 2018 Nesterov Alexander
+// Copyright 2020 Dmitriy Ryazanov
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
 #include <vector>
-#include "./ops_mpi.h"
+#include "./method_moore.h"
 
-TEST(Parallel_Operations_MPI, Test_Sum) {
-    int rank;
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::vector<int> global_vec;
-    const int count_size_vector = 100;
-
-    if (rank == 0) {
-        global_vec = getRandomVector(count_size_vector);
-    }
-
-    int global_sum = getParallelOperations(global_vec, count_size_vector, "+");
-
-    if (rank == 0) {
-        int reference_sum = getSequentialOperations(global_vec, "+");
-        ASSERT_EQ(reference_sum, global_sum);
-    }
+TEST(Parallel_Operations_MPI, Create_Random_Graph) {
+  ASSERT_NO_THROW(CreateGraph(30));
 }
 
-TEST(Parallel_Operations_MPI, Test_Diff) {
-    int rank;
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::vector<int> global_vec;
-    const int count_size_vector = 100;
-
-    if (rank == 0) {
-        global_vec = getRandomVector(count_size_vector);
-    }
-
-    int global_diff = getParallelOperations(global_vec, count_size_vector, "-");
-
-    if (rank == 0) {
-        int reference_diff = getSequentialOperations(global_vec, "-");
-        ASSERT_EQ(reference_diff, global_diff);
-    }
+TEST(Parallel_Operations_MPI, Method_Moore_Sequential) {
+  std::vector<int> Graph;
+  Graph = CreateGraph(30);
+  ASSERT_NO_THROW(MethodMoore(&Graph));
 }
 
-TEST(Parallel_Operations_MPI, Test_Max) {
-    int rank;
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::vector<int> global_vec;
-    const int count_size_vector = 100;
-
-    if (rank == 0) {
-        global_vec = getRandomVector(count_size_vector);
-    }
-
-    int global_max;
-    global_max = getParallelOperations(global_vec, count_size_vector, "max");
-
-    if (rank == 0) {
-        int reference_max = getSequentialOperations(global_vec, "max");
-        ASSERT_EQ(reference_max, global_max);
-    }
+TEST(Parallel_Operations_MPI, Method_Moore_Parallel_To_30) {
+  std::vector<int> Graph;
+  Graph = CreateGraph(30);
+  ASSERT_NO_THROW(MethodMoore(&Graph));
 }
 
+TEST(Parallel_Operations_MPI, Method_Moore_Parallel_To_10) {
+  std::vector<int> Graph;
+  Graph = CreateGraph(10);
+  ASSERT_NO_THROW(MethodMoore(&Graph));
+}
+
+TEST(Parallel_Operations_MPI, Sequential_And_Parallel_Operations) {
+  int size = 10;
+  std::vector<int> Graph;
+  std::vector<int> result;
+  std::vector<int> pResult;
+  Graph = CreateGraph(size);
+  result = MethodMoore(&Graph);
+  pResult = MethodMooreP(&Graph);
+  for (int i = 0; i < size; i++) {
+    EXPECT_EQ(result[i], pResult[i]);
+  }
+}
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     MPI_Init(&argc, &argv);

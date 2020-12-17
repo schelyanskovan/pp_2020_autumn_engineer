@@ -1,13 +1,11 @@
-// Copyright 2018 Nesterov Alexander
-#ifndef MODULES_TEST_TASKS_TEST_MPI_OPS_MPI_H_
-#define MODULES_TEST_TASKS_TEST_MPI_OPS_MPI_H_
+// Copyright 2020 Dmitriy Ryazanov
+#ifndef MODULES_TASK_3_RYAZANOV_D_METHOD_MOORE_METHOD_MOORE_H_
+#define MODULES_TASK_3_RYAZANOV_D_METHOD_MOORE_METHOD_MOORE_H_
 
 #include <vector>
-#include <string>
 
-std::vector<int> getRandomVector(int  sz);
-int getParallelOperations(std::vector<int> global_vec,
-                          int count_size_vector, std::string ops);
-int getSequentialOperations(std::vector<int> vec, std::string ops);
+std::vector<int> CreateGraph(int size);
+std::vector<int> MethodMoore(std::vector<int>* graph);
+std::vector<int> MethodMooreP(std::vector<int>* graph);
 
-#endif  // MODULES_TEST_TASKS_TEST_MPI_OPS_MPI_H_
+#endif  // MODULES_TASK_3_RYAZANOV_D_METHOD_MOORE_METHOD_MOORE_H_
