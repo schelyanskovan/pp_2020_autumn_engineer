@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 #include <math.h>
 #include <stack>
+#include <vector>
 #include <iostream>
 #include "../../../modules/task_3/khismatulina_k_graham/graham.h"
 
