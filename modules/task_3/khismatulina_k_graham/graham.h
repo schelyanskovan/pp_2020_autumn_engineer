@@ -1,9 +1,12 @@
 // Copyright 2020 Khismatulina Karina
-#ifndef MODULES_TASK_3_KHISMATULIMA_K_GRAHAM_GRAHAM_H_
-#define MODULES_TASK_3_KHISMATULIMA_K_GRAHAM_GRAHAM_H_
+#include <algorithm>
+#include <vector>
+
+#ifndef MODULES_TASK_3_KHISMATULINA_K_GRAHAM_GRAHAM_H_
+#define MODULES_TASK_3_KHISMATULINA_K_GRAHAM_GRAHAM_H_
 
 class Point {
-public:
+ public:
     double x;
     double y;
     Point() { x = 0; y = 0; }
@@ -34,7 +37,7 @@ public:
 };
 
 class Vector {
-public:
+ public:
     double X;
     double Y;
     Vector() { X = 0; Y = 0; }
@@ -62,4 +65,4 @@ std::vector<Point> Sort(const std::vector<Point>& Points);
 
 std::vector<Point> GenPoints(int n);
 
-#endif  // MODULES_TASK_3_KHISMATULIMA_K_GRAHAM_GRAHAM_H_
+#endif  // MODULES_TASK_3_KHISMATULINA_K_GRAHAM_GRAHAM_H_

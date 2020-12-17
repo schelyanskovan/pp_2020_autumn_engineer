@@ -22,8 +22,7 @@ double cos(const Vector& A, const Vector& B) {
 Point SearchMinPoint(const std::vector<Point>& Points) {
     Point min_point = Points[0];
     int i = 0;
-    while (i < Points.size())
-    {
+    while (i < Points.size()) {
         min_point = min_point.min(min_point, Points[i]);
         i += 1;
     }
@@ -133,8 +132,7 @@ std::vector<Point> GrahamPar(const std::vector<Point>& Points) {
         MPI_Scatter(&Vec[0], 2 * delta, MPI_DOUBLE, &local_vec[0], 2 * delta, MPI_DOUBLE, 0, MPI_COMM_WORLD);
         if (rank == (size - 1)) {
             int i = size * delta;
-            while (i < P.size())
-            {
+            while (i < P.size()) {
                 local_vec.push_back(P[i].x);
                 local_vec.push_back(P[i].y);
                 i += 1;
@@ -178,8 +176,7 @@ std::vector<Point> GrahamPar(const std::vector<Point>& Points) {
         if (rank == 0) {
             std::vector<Point> global_res(global_vec.size() / 2);
             int i = 0;
-            while (i < global_vec.size())
-            {
+            while (i < global_vec.size()) {
                 global_res[i / 2].x = global_vec[i];
                 global_res[i / 2].y = global_vec[i + 1];
                 i += 2;
