@@ -20,7 +20,7 @@ std::vector<int> getRandomVector(int sz) {
 void print(std::vector <int> const &a) {
     std::cout << "The vector elements are : ";
 
-    for (int64_t i = 0; i < a.size(); i++)
+    for (unsigned int i = 0; i < a.size(); i++)
          std::cout << a.at(i) << ' ';
 
     std::cout << std::endl;
@@ -103,7 +103,7 @@ void uns(std::vector<int> *vec, int l, int r) {
 }
 
 bool simpleCheck(std::vector<int> const &vec) {
-    for (int64_t i = 0; i < vec.size() - 1; i++)
+    for (unsigned int i = 0; i < vec.size() - 1; i++)
         if (vec[i + 1] < vec[i])
            return false;
 
@@ -112,7 +112,7 @@ bool simpleCheck(std::vector<int> const &vec) {
 
 void simpleSort(std::vector<int> *vec) {
     while (!simpleCheck(*vec)) {
-        for (int64_t i = 0; i < vec->size() - 1; i++) {
+        for (unsigned int i = 0; i < vec->size() - 1; i++) {
             compEx(vec, i, i + 1);
         }
     }
