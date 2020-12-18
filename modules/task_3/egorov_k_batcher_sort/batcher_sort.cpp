@@ -20,7 +20,7 @@ std::vector<int> getRandomVector(int sz) {
 void print(std::vector <int> const &a) {
     std::cout << "The vector elements are : ";
 
-    for (int i = 0; i < a.size(); i++)
+    for (unsigned long int i = 0; i < a.size(); i++)
          std::cout << a.at(i) << ' ';
 
     std::cout << std::endl;
@@ -72,7 +72,6 @@ void sh(std::vector<int> *vec, int l, int r) {
 
 void uns(std::vector<int> *vec, int l, int r) {
     std::vector<int> auxLeft, auxRight;
-    int m = (l + r) / 2;
 
     if (vec->size() % 2 != 0) {
         int lValue = vec->at(vec->size() - 1), lPos = vec->size() - 1;
@@ -104,7 +103,7 @@ void uns(std::vector<int> *vec, int l, int r) {
 }
 
 bool simpleCheck(std::vector<int> const &vec) {
-    for (int i = 0; i < vec.size() - 1; i++)
+    for (unsigned long int i = 0; i < vec.size() - 1; i++)
         if (vec[i + 1] < vec[i])
            return false;
 
@@ -113,7 +112,7 @@ bool simpleCheck(std::vector<int> const &vec) {
 
 void simpleSort(std::vector<int> *vec) {
     while (!simpleCheck(*vec)) {
-        for (int i = 0; i < vec->size() - 1; i++) {
+        for (unsigned long int i = 0; i < vec->size() - 1; i++) {
             compEx(vec, i, i + 1);
         }
     }
@@ -151,7 +150,7 @@ void BatcherSort(std::vector<int> *vec) {
 }
 
 void BatcherSortParallel(std::vector<int> *vec) {
-    int numtasks, rank, elemCount, rmPart, count, localCount = 0, rankToSent;
+    int numtasks, rank, elemCount, rmPart, count, localCount = 0;
     std::vector<int> locVec, auxLeft, auxRight;
 
     MPI_Status status;
@@ -164,7 +163,7 @@ void BatcherSortParallel(std::vector<int> *vec) {
 
     while (check <= numtasks) {
         check = check * 2;
-        count++;
+        localCount++;
     }
 
     numtasks = check / 2;
@@ -184,7 +183,7 @@ void BatcherSortParallel(std::vector<int> *vec) {
 
         BatcherSort(&auxLeft);
 
-        for (count; count > 0; count--) {
+        for (count = localCount; count > 0; count--) {
             int currentProcesses = pow(2, count);
             int half = currentProcesses / 2;
             if (rank < currentProcesses) {
