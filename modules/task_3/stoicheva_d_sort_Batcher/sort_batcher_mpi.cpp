@@ -265,6 +265,7 @@ std::vector<T> getParallelOperations(const std::vector<T> source) {
     }
 
     // 1. Scatter source data
+    // 1. Scatter source data
     std::vector<T> proc_source(count_items_per_proc);
     MPI_Datatype datatype = get_datatype(proc_source[0]);
     MPI_Scatter(result.data(), count_items_per_proc, datatype,
