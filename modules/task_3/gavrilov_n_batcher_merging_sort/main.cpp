@@ -8,8 +8,8 @@
 #include "BatcherMergingSort.h"
 #include <vector>
 #include <iostream>
-#include <random>
 #include <ctime>
+#include <random>
 
 bool IsSorted(const std::vector<int>& data) {
     if (data.size() == 0)
