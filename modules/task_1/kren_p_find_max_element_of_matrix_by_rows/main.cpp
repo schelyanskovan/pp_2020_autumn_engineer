@@ -7,8 +7,8 @@
 TEST(Parallel_Operations_MPI, Test_not_correct_size_of_matrix) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::vector<int> result_vector;
     const int rows = 5, columns = -4;
+    std::vector<int> result_vector;
     if (rank == 0) {
         ASSERT_ANY_THROW(result_vector = getRandomMatrix(rows, columns));
     }
@@ -17,13 +17,12 @@ TEST(Parallel_Operations_MPI, Test_not_correct_size_of_matrix) {
 TEST(Parallel_Operations_MPI, Test_large_matrix_parall) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::vector<int> result_matrix;
     const int rows = 40, columns = 40;
+    std::vector<int> result_matrix(rows*columns);
     if (rank == 0) {
         result_matrix = getRandomMatrix(rows, columns);
     }
-    std::vector<int> result_max;
-    result_max = getMaxInRowsParall(result_matrix, rows, columns);
+    std::vector<int> result_max = getMaxInRowsParall(result_matrix, rows, columns);
     if (rank == 0) {
         std::vector<int> example_max = getMaxInRows(result_matrix, rows, columns);
         ASSERT_EQ(example_max, result_max);
@@ -33,8 +32,8 @@ TEST(Parallel_Operations_MPI, Test_large_matrix_parall) {
 TEST(Parallel_Operations_MPI, Test_correct_size_of_matrix) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::vector<int> result_vector;
     const int rows = 5, columns = 4;
+    std::vector<int> result_vector(rows*columns);
     if (rank == 0) {
         ASSERT_NO_THROW(getRandomMatrix(rows, columns));
     }
@@ -54,13 +53,12 @@ TEST(Parallel_Operations_MPI, Test_Correct_Solve) {
 TEST(Parallel_Operations_MPI, Test_small_matrix_parall) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    std::vector<int> result_matrix;
     const int rows = 20, columns = 20;
+    std::vector<int> result_matrix(rows*columns);
     if (rank == 0) {
         result_matrix = getRandomMatrix(rows, columns);
     }
-    std::vector<int> result_max;
-    result_max = getMaxInRowsParall(result_matrix, rows, columns);
+    std::vector<int> result_max = getMaxInRowsParall(result_matrix, rows, columns);
     if (rank == 0) {
         std::vector<int> example_max = getMaxInRows(result_matrix, rows, columns);
         ASSERT_EQ(example_max, result_max);

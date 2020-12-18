@@ -32,6 +32,8 @@ std::vector<int> getMaxInRows(const std::vector<int>& matrix, int rows, int colu
 }
 
 std::vector<int> getMaxInRowsParall(const std::vector<int>& main_matrix, int rows, int columns) {
+    if (rows <= 0 || columns <= 0)
+        throw "Incorrect data";
     int main_size;
     int rank;
     MPI_Comm_size(MPI_COMM_WORLD, &main_size);
