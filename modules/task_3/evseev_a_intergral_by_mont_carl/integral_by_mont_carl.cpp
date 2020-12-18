@@ -92,3 +92,4 @@ double MonteCarloParallel(std::vector<double> a, double sd,
 
   return area * val;
 }
+// file deepcode ignore DivisionByZero: <comment the reason here>
