@@ -111,6 +111,7 @@ std::vector<int> Parallel_sort(std::vector<int> vect) {
                 } else {
                     if (mynode == proc) {
                         MPI_Status status;
+                        local_vect.resize(lvect_size);
                         MPI_Recv(&local_vect[0], lvect_size, MPI_INT, 0, tag, MPI_COMM_WORLD, &status);
                         local_vect = Sequential_sort(local_vect);
                         MPI_Send(&local_vect[0], lvect_size, MPI_INT, 0, proc + tag, MPI_COMM_WORLD);
@@ -135,6 +136,7 @@ std::vector<int> Parallel_sort(std::vector<int> vect) {
                     count = countProc;
                 for (int proc = 1; proc < count; proc++) {
                     MPI_Status status;
+                    local_vect.resize(lvect_size);
                     MPI_Recv(&local_vect[0], lvect_size, MPI_INT, proc,
                         proc + tag, MPI_COMM_WORLD, &status);
                     for (int i = 0; i < lvect_size; i++) {
