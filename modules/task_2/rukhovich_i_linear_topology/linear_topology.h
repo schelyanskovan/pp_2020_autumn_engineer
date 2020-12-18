@@ -2,13 +2,23 @@
 #ifndef MODULES_TASK_2_RUKHOVICH_I_LINEAR_TOPOLOGY_LINEAR_TOPOLOGY_H_
 #define MODULES_TASK_2_RUKHOVICH_I_LINEAR_TOPOLOGY_LINEAR_TOPOLOGY_H_
 
-
+#include <mpi.h>
+#include <random>
 #include <vector>
-#include <string>
 
-std::vector<int> getRandomVector(int  sz);
-int getParallelOperations(std::vector<int> global_vec,
-                          int count_size_vector, std::string ops);
-int getSequentialOperations(std::vector<int> vec, std::string ops);
+class RandomInt {
+ public:
+    static int Next();
+
+ private:
+    RandomInt();
+
+    std::mt19937_64 gen_;
+    std::uniform_int_distribution<int> dist_;
+};
+
+std::vector<int> random_integral_array(size_t size);
+
+MPI_Comm linear_topology(int* order);
 
 #endif  // MODULES_TASK_2_RUKHOVICH_I_LINEAR_TOPOLOGY_LINEAR_TOPOLOGY_H_
