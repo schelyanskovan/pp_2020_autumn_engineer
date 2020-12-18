@@ -30,8 +30,8 @@ TEST(Parallel_Operations_MPI, Test_task_10) {
         vector2 = greckham_seq(vector);
         std::cout << "Grackham sequential:" << MPI_Wtime() - time << std::endl;
         std::cout << "Convex hull points:" << std::endl;
-        for (size_t j = 0; j < vector2.size(); j++) {
-            std::cout << "(" << vector2[j].x << ", " << vector2[j].y << ")" << std::endl;
+        for (size_t i = 0; i < vector2.size(); i++) {
+            std::cout << "(" << vector2[i].x << ", " << vector2[i].y << ")" << std::endl;
         }
         ASSERT_EQ(vector1, vector2);
     }
@@ -62,8 +62,8 @@ TEST(Parallel_Operations_MPI, Test_task_15) {
         vector2 = greckham_seq(vector);
         std::cout << "Grackham sequential:" << MPI_Wtime() - time << std::endl;
         std::cout << "Convex hull points:" << std::endl;
-        for (size_t j = 0; j < vector2.size(); j++) {
-            std::cout << "(" << vector2[j].x << ", " << vector2[j].y << ")" << std::endl;
+        for (size_t i = 0; i < vector2.size(); i++) {
+            std::cout << "(" << vector2[i].x << ", " << vector2[i].y << ")" << std::endl;
         }
         ASSERT_EQ(vector1, vector2);
     }
