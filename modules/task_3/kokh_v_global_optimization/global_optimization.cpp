@@ -41,7 +41,6 @@ const int& n_max_value_1, const double& r_param) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     xyzStruct last_result = { 0, 0, 0 };
 
-
     std::set<setR> rEl;
     double dop_param, current_dop_param, dop_param_2, current_r, new_x;
     bool term_value = false;

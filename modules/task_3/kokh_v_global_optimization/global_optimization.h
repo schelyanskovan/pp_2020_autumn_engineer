@@ -57,7 +57,6 @@ class setTwo {
     friend bool operator<(const setTwo& left, const setTwo& right) {return left.x < right.x;}
 };
 
-
 bool comparingResults(const xyzStruct& a_value, const xyzStruct& b_value, const double& eps_value = 0.01);
 
 xyzStruct forOne(const double& _a, const double& _b, const double& x_val_send,

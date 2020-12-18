@@ -6,7 +6,6 @@
 #include "./global_optimization.h"
 
 
-
 TEST(Global_Optimization_MPI, Test_1) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
