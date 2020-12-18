@@ -15,7 +15,7 @@ TEST(basic_functions_tests, shuffle_test) {
 
         sh(&testVec, 0, testVec.size());
 
-        for (int i = 0; i < testVec.size(); i++) {
+        for (int64_t i = 0; i < testVec.size(); i++) {
             ASSERT_EQ(testVec[i], checkVec[i]);
         }
     }
@@ -32,7 +32,7 @@ TEST(basic_functions_tests, unshuffle_test) {
 
         uns(&testVec, 0, testVec.size());
 
-        for (int i = 0; i < testVec.size(); i++) {
+        for (int64_t i = 0; i < testVec.size(); i++) {
             ASSERT_EQ(testVec[i], checkVec[i]);
         }
     }
@@ -50,7 +50,7 @@ TEST(basic_functions_test, shuffle_unshuffle_is_correctly_reversed_test) {
         sh(&testVec, 0, testVec.size());
         uns(&testVec, 0, testVec.size());
 
-        for (int i = 0; i < testVec.size(); i++) {
+        for (int64_t i = 0; i < testVec.size(); i++) {
             ASSERT_EQ(testVec[i], checkVec[i]);
         }
     }
@@ -68,7 +68,7 @@ TEST(basic_functions_test, unshuffle_shuffle_is_correctly_reversed_test) {
         uns(&testVec, 0, testVec.size());
         sh(&testVec, 0, testVec.size());
 
-        for (int i = 0; i < testVec.size(); i++) {
+        for (int64_t i = 0; i < testVec.size(); i++) {
             ASSERT_EQ(testVec[i], checkVec[i]);
         }
     }
