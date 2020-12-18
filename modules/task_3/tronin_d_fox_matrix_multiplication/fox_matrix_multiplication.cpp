@@ -15,7 +15,6 @@ std::vector<double> getRandomVector(size_t size) {
             vector[i * size + j] = dist(rand_gen);
         }
     }
-
     return vector;
 }
 
