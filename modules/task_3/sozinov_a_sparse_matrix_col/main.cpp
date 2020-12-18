@@ -15,7 +15,7 @@ TEST(Produce_Matrix, can_compare_matrix1) {
   int countRow2 = 20;
   int countCol2 = 90;
 
-  double perc = 50;
+  double perc = 40;
   ComprColStorage FirstMatr = GenerateMatrix(countRow1, countCol1, perc);
   ComprColStorage SecondMatr = GenerateMatrix(countRow2, countCol2, perc);
   ASSERT_NE(FirstMatr, SecondMatr);
@@ -51,12 +51,12 @@ TEST(Produce_Matrix, test_produce80x20_20x90) {
   }
 }
 
-TEST(Produce_Matrix, test_produce600x260_260x500) {
-  int countRow1 = 600;
-  int countCol1 = 260;
+TEST(Produce_Matrix, test_produce400x160_160x300) {
+  int countRow1 = 400;
+  int countCol1 = 160;
   int countRow2 = 260;
-  int countCol2 = 500;
-  double perc = 14.0;
+  int countCol2 = 300;
+  double perc = 17.0;
 
   int ProcRank;
   MPI_Comm_rank(MPI_COMM_WORLD, &ProcRank);
