@@ -34,7 +34,7 @@ std::vector<Point> GenPoints(int n) {
         throw "slishkom malo!!!";
     std::vector<Point> p(n);
     std::mt19937 gen;
-    for (size_t i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         p[i].x = gen();
         p[i].y = gen();
     }
@@ -95,7 +95,7 @@ std::vector<Point> GrahamSeq(const std::vector<Point>& P) {
     Res.push_back(Points[1].x);
     Res.push_back(Points[1].y);
     if (Points.size() > 2) {
-        for (int i = 2; i < Points.size(); ++i) {
+        for (size_t i = 2; i < Points.size(); ++i) {
             while (cw(Res[Res.size() - 4], Res[Res.size() - 3], Res[Res.size() - 2],
                 Res[Res.size() - 1], Points[i].x, Points[i].y)) {
                 Res.pop_back();
@@ -106,7 +106,7 @@ std::vector<Point> GrahamSeq(const std::vector<Point>& P) {
         }
     }
     std::vector<Point> resPoint(Res.size() / 2);
-    for (int i = 0; i < Res.size(); i += 2) {
+    for (size_t i = 0; i < Res.size(); i += 2) {
         resPoint[i / 2].x = Res[i];
         resPoint[i / 2].y = Res[i + 1];
     }
@@ -124,14 +124,14 @@ std::vector<Point> GrahamPar(const std::vector<Point>& Points) {
     int delta = points_amount / size;
     if (points_amount >= size) {
         std::vector<double> Vec;
-        for (int i = 0; i < P.size(); ++i) {
+        for (size_t i = 0; i < P.size(); ++i) {
             Vec.push_back(P[i].x);
             Vec.push_back(P[i].y);
         }
         std::vector<double> local_vec(2 * delta);
         MPI_Scatter(&Vec[0], 2 * delta, MPI_DOUBLE, &local_vec[0], 2 * delta, MPI_DOUBLE, 0, MPI_COMM_WORLD);
         if (rank == (size - 1)) {
-            int i = size * delta;
+            size_t i = size * delta;
             while (i < P.size()) {
                 local_vec.push_back(P[i].x);
                 local_vec.push_back(P[i].y);
@@ -139,7 +139,7 @@ std::vector<Point> GrahamPar(const std::vector<Point>& Points) {
             }
         }
         std::vector<Point> l_P(local_vec.size() / 2);
-        for (int i = 0; i < local_vec.size(); i += 2) {
+        for (size_t i = 0; i < local_vec.size(); i += 2) {
             l_P[i / 2].x = local_vec[i];
             l_P[i / 2].y = local_vec[i + 1];
         }
