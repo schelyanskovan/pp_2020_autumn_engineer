@@ -1,11 +1,12 @@
 // Copyright 2020 Denis Kadnikov
+#include "../../../modules/task_3/kadnikov_d_shell_sort_simple/shell_sort_simple.h"
+
+#include <mpi.h>
 #include <time.h>
 
 #include <cstdlib>
 #include <iostream>
 #include <random>
-
-#include "mpi.h"
 
 int* createRandomArray(int arraySize) {
   std::mt19937 gen;
@@ -17,17 +18,10 @@ int* createRandomArray(int arraySize) {
   return array;
 }
 
-// int* createRandomArray(int arraySize) {
-//	for (int i = 0; i < arraySize; i++) {
-//		array[i] = rand() % 100000 + 1;
-//		std::cout << "array[" << i << "] = " << array[i] << '\n';
-//	}
-//}
-
 void shellSort(int* arr, int n) {
   int gap;
-  for (gap = 1; gap < n / 3; gap = gap * 3 + 1)
-    ;
+  for (gap = 1; gap < n / 3; gap = gap * 3 + 1) {
+  }
   for (; gap > 0; gap = (gap - 1) / 3) {
     for (int i = gap; i < n; i++) {
       int temp = arr[i];
