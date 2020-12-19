@@ -25,7 +25,7 @@ TEST(khismatulina_task_3, test_2_par_10) {
     std::vector<Point> check{ {-1, 0}, {4, 5}, {3, 6}, {1, -4}, {0, 2} };
     bool a = 1;
     if (rank == 0) {
-        for (int i = 0; i < res.size(); ++i)
+        for (size_t i = 0; i < res.size(); ++i)
             if (res[i] != check[i])
                 a = 0;
         EXPECT_EQ(a, 1);
@@ -40,7 +40,7 @@ TEST(khismatulina_task_3, test_3_par_100) {
     std::vector<Point> check = GrahamSeq(P);
     bool a = 1;
     if (rank == 0) {
-        for (int i = 0; i < res.size(); ++i)
+        for (size_t i = 0; i < res.size(); ++i)
             if (res[i] != check[i])
                 a = 0;
         EXPECT_EQ(a, 1);
@@ -55,7 +55,7 @@ TEST(khismatulina_task_3, test_4_par_200) {
     std::vector<Point> check = GrahamSeq(P);
     bool a = 1;
     if (rank == 0) {
-        for (int i = 0; i < res.size(); ++i)
+        for (size_t i = 0; i < res.size(); ++i)
             if (res[i] != check[i])
                 a = 0;
         EXPECT_EQ(a, 1);
@@ -70,7 +70,7 @@ TEST(khismatulina_task_3, test_5_par_500) {
     std::vector<Point> check = GrahamSeq(P);
     bool a = 1;
     if (rank == 0) {
-        for (int i = 0; i < res.size(); ++i)
+        for (size_t i = 0; i < res.size(); ++i)
             if (res[i] != check[i])
                 a = 0;
         EXPECT_EQ(a, 1);
