@@ -21,7 +21,7 @@ double cos(const Vector& A, const Vector& B) {
 
 Point SearchMinPoint(const std::vector<Point>& Points) {
     Point min_point = Points[0];
-    int i = 0;
+    size_t i = 0;
     while (i < Points.size()) {
         min_point = min_point.min(min_point, Points[i]);
         i += 1;
@@ -34,7 +34,7 @@ std::vector<Point> GenPoints(int n) {
         throw "slishkom malo!!!";
     std::vector<Point> p(n);
     std::mt19937 gen;
-    for (int i = 0; i < n; i++) {
+    for (size_t i = 0; i < n; i++) {
         p[i].x = gen();
         p[i].y = gen();
     }
@@ -46,7 +46,7 @@ std::vector<Point> Sort(const std::vector<Point>& Points) {
     Point min_point = SearchMinPoint(P);
     std::vector<double> Cos(P.size());
     Vector A(1, 0);
-    for (int i = 0; i < P.size(); i++) {
+    for (size_t i = 0; i < P.size(); i++) {
         Vector B(min_point, Points[i]);
         if (min_point == Points[i]) {
             Cos[i] = 2;
@@ -54,8 +54,8 @@ std::vector<Point> Sort(const std::vector<Point>& Points) {
             Cos[i] = cos(A, B);
         }
     }
-    for (int i = 0; i < P.size() - 1; ++i) {
-        for (int j = 0; j < P.size() - i - 1; ++j) {
+    for (size_t i = 0; i < P.size() - 1; ++i) {
+        for (size_t j = 0; j < P.size() - i - 1; ++j) {
             if (Cos[j + 1] > Cos[j]) {
                 Point tmp = P[j + 1];
                 P[j + 1] = P[j];
@@ -175,7 +175,7 @@ std::vector<Point> GrahamPar(const std::vector<Point>& Points) {
         }
         if (rank == 0) {
             std::vector<Point> global_res(global_vec.size() / 2);
-            int i = 0;
+            size_t i = 0;
             while (i < global_vec.size()) {
                 global_res[i / 2].x = global_vec[i];
                 global_res[i / 2].y = global_vec[i + 1];
