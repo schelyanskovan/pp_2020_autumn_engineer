@@ -8,10 +8,9 @@
 TEST(Parallel_shell_sort_simple_MPI, can_create_random_array) {
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  int* array1;
   const int a_size = 100;
 
-  ASSERT_NO_THROW(array1 = createRandomArray(a_size));
+  ASSERT_NO_THROW(createRandomArray(a_size));
 }
 
 TEST(Parallel_shell_sort_simple_MPI, can_sort_array_with_1_elem) {
