@@ -9,6 +9,14 @@
 #include <string>
 #include "../../../modules/task_2/bulychev_a_gather/bulychev_a_gather.h"
 
+std::vector<int> getRandomVector(int size) {
+  std::vector<int> vec(size);
+  std::mt19937 gen;
+  gen.seed(static_cast<unsigned int>(time(0)));
+  for (int i = 0; i < size; i++) vec[i] = gen() % 10000;
+  return vec;
+}
+
 int My_Gather(void* send_buf, int send_count, MPI_Datatype send_type, void* recv_buf, int recv_count,
     MPI_Datatype recv_type, int root, MPI_Comm comm) {
     int size, rank, recv_type_size, send_type_size;
