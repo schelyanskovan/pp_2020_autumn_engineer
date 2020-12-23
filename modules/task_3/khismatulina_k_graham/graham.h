@@ -22,13 +22,13 @@ class Point {
         return ((x == p.x) && (y == p.y));
     }
     bool operator!=(const Point& p) {
-        return ((x != p.x) && (y != p.y));
+        return ((x != p.x) && ((y - p.y) < 0.0001));
     }
     Point min(const Point& A, const Point& B) {
         if (A.y < B.y) {
             return A;
         } else {
-            if ((A.y == B.y) && (A.x < B.x))
+            if (((A.y - B.y) < 0.0001) && (A.x < B.x))
                 return A;
         }
         return B;
