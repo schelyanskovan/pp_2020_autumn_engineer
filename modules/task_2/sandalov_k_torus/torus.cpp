@@ -14,7 +14,7 @@ bool createTorusTopology(MPI_Comm* torusComm, int gridHeight, int gridWidth) {
 
     const int dims[] = {gridHeight, gridWidth};
     const int periods[] = {true, true};
-    const int reorder = true;
+    const int reorder = false;
 
     int mpiCartCreated = MPI_Cart_create(MPI_COMM_WORLD, 2, dims, periods, reorder, torusComm);
     if (mpiCartCreated != MPI_SUCCESS) return false;
@@ -27,61 +27,7 @@ bool freeTorusTopology(MPI_Comm* torusComm, bool topoCreated) {
         int mpiCommFree = MPI_Comm_free(torusComm);
         return (mpiCommFree == MPI_SUCCESS);
     }
-    return false;
-}
-
-int createRoadMap(MPI_Comm* torusComm, int start, int finish) {
-    int startCoords[2];
-    int finCoords[2];
-
-    if (start == finish) return -1;
-
-    int startCoordsRet = MPI_Cart_coords(*torusComm, start, 2, startCoords);
-    int finCoordsRet = MPI_Cart_coords(*torusComm, finish, 2, finCoords);
-    if (finCoordsRet != MPI_SUCCESS || startCoordsRet != MPI_SUCCESS) return -2;
-
-    int dims[2];
-    int periods[2];
-    int coords[2];
-    int cartGet = MPI_Cart_get(*torusComm, 2, dims, periods, coords);
-    if (cartGet != MPI_SUCCESS) return -1;
-
-    int stride[] = {0, 0};
-
-    for (int i = 0; i < 2; ++i) {
-        if (startCoords[i] != finCoords[i]) {
-            if (startCoords[i] < finCoords[i]) {
-                int shift = finCoords[i] - startCoords[i];
-                int cycleShift = dims[i] - shift;
-                if (cycleShift < shift) {
-                    stride[i] = -1;
-                } else {
-                    stride[i] = 1;
-                }
-            } else {
-                int shift = startCoords[i] - finCoords[i];
-                int cycleShift = dims[i] - shift;
-                if (cycleShift < shift) {
-                    stride[i] = 1;
-                } else {
-                    stride[i] = -1;
-                }
-            }
-            break;
-        }
-    }
-    int nextStep = -1;
-    int curCoords[2];
-    curCoords[0] = startCoords[0];
-    curCoords[1] = startCoords[1];
-
-    for (int i = 0; i < 2; ++i) {
-        if (stride[i] != 0) {
-            curCoords[i] = startCoords[i] + stride[i];
-            MPI_Cart_rank(*torusComm, curCoords, &nextStep);
-        }
-    }
-    return nextStep;
+    return true;
 }
 
 int takeRandomPoint(int max) {
@@ -92,9 +38,49 @@ int takeRandomPoint(int max) {
     return distrib(generator);
 }
 
-int sendMessageInTorus(MPI_Comm* torusComm, std::vector<int>* message, int src, int dst) {
+int createRoadMap(MPI_Comm* torusComm, int start, int finish) {
+    int startCoords[2];
+    int finCoords[2];
+    if (start == finish) return -1;
+    int startCoordsRet = MPI_Cart_coords(*torusComm, start, 2, startCoords);
+    int finCoordsRet = MPI_Cart_coords(*torusComm, finish, 2, finCoords);
+    if (finCoordsRet != MPI_SUCCESS || startCoordsRet != MPI_SUCCESS) return -2;
+    int dims[2];
+    int periods[2];
+    int coords[2];
+    int cartGet = MPI_Cart_get(*torusComm, 2, dims, periods, coords);
+    if (cartGet != MPI_SUCCESS) return -1;
+    int stride = 0;
+    int dim = 0;
+    if (startCoords[dim] == finCoords[dim]) ++dim;
+    if (startCoords[dim] < finCoords[dim]) {
+        int shift = finCoords[dim] - startCoords[dim];
+        int cycleShift = dims[dim] - shift;
+        if (cycleShift < shift) {
+            stride = -1;
+        } else {
+            stride = 1;
+        }
+    } else {
+        int shift = startCoords[dim] - finCoords[dim];
+        int cycleShift = dims[dim] - shift;
+        if (cycleShift < shift) {
+            stride = 1;
+        } else {
+            stride = -1;
+        }
+    }
+    int nextStep = -1;
+    if (stride != 0) {
+        startCoords[dim] += stride;
+        MPI_Cart_rank(*torusComm, startCoords, &nextStep);
+    }
+    return nextStep;
+}
+
+int sendMessageInTorus(MPI_Comm* torusComm, std::vector<int32_t>* message, int src, int dst) {
     int result = 0;
-    int stopper = 0;
+    int32_t stopper = 0;
     int procRank, procNum;
     MPI_Comm_size(*torusComm, &procNum);
     MPI_Comm_rank(*torusComm, &procRank);

@@ -2,7 +2,8 @@
 
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
-#include <iostream>
+#include <math.h>
+#include <algorithm>
 #include <vector>
 
 #include "../../../modules/task_2/sandalov_k_torus/torus.h"
@@ -28,13 +29,13 @@ TEST(Topology_Torus, Create_topology_from_extra_number_of_processes) {
     MPI_Comm_size(MPI_COMM_WORLD, &procNum);
 
     int dims[] = {0, 0};
-    if (procNum > 1) --procNum;
-    MPI_Dims_create(procNum, 2, dims);
+    int smallProcNum = std::max(1, procNum / 2);
+    MPI_Dims_create(smallProcNum, 2, dims);
 
     MPI_Comm torusTopology;
     bool res = createTorusTopology(&torusTopology, dims[0], dims[1]);
 
-    if (procRank < procNum) {
+    if (procRank < smallProcNum) {
         ASSERT_TRUE(res);
     } else {
         ASSERT_FALSE(res);
@@ -46,7 +47,7 @@ TEST(Topology_Torus, Send_Message_To_Random_Point_For_Single_Process) {
     int procRank, procNum;
     MPI_Comm_rank(MPI_COMM_WORLD, &procRank);
     MPI_Comm_size(MPI_COMM_WORLD, &procNum);
-    std::vector<int> message;
+    std::vector<int32_t> message;
     int dims[] = {0, 0};
     MPI_Dims_create(procNum, 2, dims);
 
@@ -61,7 +62,7 @@ TEST(Topology_Torus, Send_Message_To_Random_Point_For_Single_Process) {
         if (procRank == 0) {
             startProc = procRank;
             endProc = takeRandomPoint(dims[0] * dims[1]);
-            message = std::vector<int>{1, 2, 3, 4, 5};
+            message = std::vector<int32_t>{1 + endProc, 2 + endProc, 3 + endProc, 4 + endProc, 5 + endProc};
         }
 
         int sendingResult = sendMessageInTorus(&torusTopology, &message, startProc, endProc);
@@ -69,52 +70,12 @@ TEST(Topology_Torus, Send_Message_To_Random_Point_For_Single_Process) {
             bool receivedRightMessage = true;
             if (message.size() == 5) {
                 for (int j = 0; j < 5; ++j) {
-                    if (message[j] != j + 1) receivedRightMessage = false;
+                    if (message[j] != j + 1 + procRank) receivedRightMessage = false;
                 }
             } else {
                 receivedRightMessage = false;
             }
             ASSERT_TRUE(receivedRightMessage);
-        }
-    }
-    freeTorusTopology(&torusTopology, res);
-}
-
-TEST(Topology_Torus, Send_Message_To_Random_Point_For_Each_Process) {
-    int procRank, procNum;
-    MPI_Comm_rank(MPI_COMM_WORLD, &procRank);
-    MPI_Comm_size(MPI_COMM_WORLD, &procNum);
-    std::vector<int> message;
-    int dims[] = {0, 0};
-    MPI_Dims_create(procNum, 2, dims);
-
-    MPI_Comm torusTopology;
-    bool res = createTorusTopology(&torusTopology, dims[0], dims[1]);
-    if (res) {
-        MPI_Comm_rank(torusTopology, &procRank);
-        MPI_Comm_size(torusTopology, &procNum);
-
-        for (int i = 0; i < procNum; ++i) {
-            int startProc = -1;
-            int endProc = -1;
-            if (procRank == i) {
-                startProc = procRank;
-                endProc = takeRandomPoint(dims[0] * dims[1]);
-                message = std::vector<int>{1 + i, 2 + i, 3 + i, 4 + i, 5 + i};
-            }
-
-            int sendingResult = sendMessageInTorus(&torusTopology, &message, startProc, endProc);
-            if (sendingResult == 1) {
-                bool receivedRightMessage = true;
-                if (message.size() == 5) {
-                    for (int j = 0; j < 5; ++j) {
-                        if (message[j] != j + i + 1) receivedRightMessage = false;
-                    }
-                } else {
-                    receivedRightMessage = false;
-                }
-                ASSERT_TRUE(receivedRightMessage);
-            }
         }
     }
     freeTorusTopology(&torusTopology, res);
