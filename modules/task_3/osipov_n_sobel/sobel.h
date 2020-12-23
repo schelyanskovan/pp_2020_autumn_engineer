@@ -3,7 +3,6 @@
 #define MODULES_TASK_3_OSIPOV_N_SOBEL_SOBEL_H_
 
 #include <vector>
-#include <string>
 
 int testM(int sq, int max, int min);
 int testSobel(std::vector<int> image, int cols, int posrows, int poscols);
