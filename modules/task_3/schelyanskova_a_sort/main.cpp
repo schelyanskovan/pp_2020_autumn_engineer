@@ -176,7 +176,4 @@ int main(int argc, char** argv) {
 
   listeners.Append(new GTestMPIListener::MPIMinimalistPrinter);
   return RUN_ALL_TESTS();
-  int rank;
-  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-  cout << rank << endl;
 }
