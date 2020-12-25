@@ -31,7 +31,7 @@ TEST(Parallel_shell_batcher_vectort_sort_MPI, Test_2) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     int rand_vec_size = 1000;
-    int rand_limit = 1000;
+    int rand_limit = 10000;
 
     std::vector<int> vec(1);
     if (rank == 0) {
