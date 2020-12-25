@@ -19,7 +19,7 @@ class Point {
         return *this;
     }
     bool operator==(const Point& p) {
-        return ((x == p.x) && (y == p.y));
+        return ((x == p.x) && (fabs(y - p.y) < 1e-7)));
     }
     bool operator!=(const Point& p) {
         return ((x != p.x) && (fabs(y - p.y) < 1e-7));
