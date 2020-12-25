@@ -19,16 +19,16 @@ class Point {
         return *this;
     }
     bool operator==(const Point& p) {
-        return ((x == p.x) && (fabs(y - p.y) < 1e-7));
+        return ((fabs(x - p.x) < 1e-7)) && (fabs(y - p.y) < 1e-7);
     }
     bool operator!=(const Point& p) {
-        return ((x != p.x) && (fabs(y - p.y) < 1e-7));
+        return ((fabs(x - p.x) > 1e-7)) && (fabs(y - p.y) < 1e-7);
     }
     Point min(const Point& A, const Point& B) {
         if (A.y < B.y) {
             return A;
         } else {
-            if ((fabs(A.y - B.y) < 1e-7) && (A.x < B.x))
+            if ((fabs(A.y - B.y) < 1e-7) && (fabs(A.x - B.x) < 1e-7))
                 return A;
         }
         return B;
