@@ -8,20 +8,6 @@
 #include <algorithm>
 #include "../../../modules/task_1/kamskov_e_word_count/word_count.h"
 
-std::string GenRandString(int wordCount) {
-    std::srand((unsigned)std::time(0));
-    auto rword = []() -> std::string {
-        std::vector<std::string> words = {"aaa", "bbb", "ccc", "ddd"};
-
-        return words[ std::rand() % (words.size() - 1)];
-    };
-    std::string str("");
-    for (int i = 0; i < wordCount; i++) {
-        str.append(rword());
-        str.append(" ");
-    }
-    return str;
-}
 int ParCount(const std::string ref) {
     int size, rank;
     MPI_Comm_size(MPI_COMM_WORLD, &size);
@@ -91,6 +77,20 @@ int SimpleCount(const std::string str) {
         if ((i == s - 1) && str[i] == ' ') count--;
     }
     return count;
+}
+std::string GenRandString(int wordCount) {
+    std::srand((unsigned)std::time(0));
+    auto rword = []() -> std::string {
+        std::vector<std::string> words = { "aaa", "bbb", "ccc", "ddd" };
+
+        return words[std::rand() % (words.size() - 1)];
+    };
+    std::string str("");
+    for (int i = 0; i < wordCount; i++) {
+        str.append(rword());
+        str.append(" ");
+    }
+    return str;
 }
 
 
