@@ -55,7 +55,7 @@ TEST(MPILinearTopology, send_to_neightbors) {
     if (num_proc < 3) {
         return;
     }
-    
+
     if (rank == 1) {
         int *buff = new int[num_elements];
         for (size_t i = 0; i < static_cast<size_t>(num_elements); ++i) {
@@ -87,7 +87,7 @@ TEST(MPILinearTopology, send_to_next) {
     if (num_proc < 2) {
         return;
     }
-    
+
     if (rank != num_proc - 1) {
         int *buff = new int[num_elements];
         for (size_t i = 0; i < static_cast<size_t>(num_elements); ++i) {
@@ -118,7 +118,7 @@ TEST(MPILinearTopology, send_to_prev) {
     if (num_proc < 2) {
         return;
     }
-    
+
     if (rank != num_proc - 1) {
         int *buff = new int[num_elements];
         for (size_t i = 0; i < static_cast<size_t>(num_elements); ++i) {
