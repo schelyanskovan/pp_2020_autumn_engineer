@@ -1,0 +1,813 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[unicode=true]{hyperref}
+\hypersetup{
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{longtable,booktabs}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\date{}
+
+\begin{document}
+
+Министерство науки и высшего образования Российской Федерации
+
+Федеральное государственное автономное образовательное учреждение
+высшего образования
+
+«Нижегородский государственный университет им. Н.И. Лобачевского»
+
+\textbf{Институт информационных технологий, математики и механики}
+
+\textbf{Отчет}
+
+по лабораторной работе №3
+
+\textbf{«}Поразрядная сортировка для вещественных чисел (тип double) с
+простым слиянием\textbf{»}
+
+\begin{quote}
+\textbf{Выполнила:}
+
+студентка группы 381808-2
+
+Щелянскова А.И.
+
+\textbf{Проверил:}
+
+доцент кафедры МОСТ, кандидат технических наук
+
+Сысоев А. В.
+\end{quote}
+
+Нижний Новгород
+
+2018
+
+\textbf{Содержание}
+
+\section{\texorpdfstring{\\
+Постановка
+задачи}{ Постановка задачи}}\label{ux43fux43eux441ux442ux430ux43dux43eux432ux43aux430-ux437ux430ux434ux430ux447ux438}
+
+\protect\hypertarget{_heading=h.30j0zll}{}{}В рамках данной лабораторной
+работы необходимо разработать программу, использующую поразрядную
+сортировку вещественных чисел и простое слияние для сортировки массива.
+Требуется реализовать как параллельную, так и линейную версию программы.
+Массив векторов генерируется в начале работы программы на нулевом
+процессе. По завершении выполнения программа выводит на консоль время
+работы линейной и параллельной версий программы в секундах (в линейной
+версии программы используется только поразрядная сортировка).
+
+\section{\texorpdfstring{\\
+Метод
+решения}{ Метод решения}}\label{ux43cux435ux442ux43eux434-ux440ux435ux448ux435ux43dux438ux44f}
+
+Каждый процесс сортирует полученную часть исходного массива с помощью
+поразрядной сортировки.
+
+Затем каждый процесс отправляет свою отсортированную часть массива всем
+остальным процессам (себе в том числе). Далее циклично происходит
+слияние. Сначала слияние происходит на половине процессов, затем на
+четверти и т.д. до того момента, пока не получим две отсортированные
+части, которые отсортируем слиянием на нулевом процессе
+
+В результате работы на нулевом процессе оказывается отсортированный
+массив. (Его уже нет смысла отсылать всем)
+
+Так как каждая сортировка слиянием требует выделения памяти на
+дополнительный массив, будем выделять массив максимальной необходимой
+длины для каждого процесса в самом начале работы программы, это уменьшит
+время работы программы.
+
+\section{\texorpdfstring{\\
+Схема
+распараллеливания}{ Схема распараллеливания}}\label{ux441ux445ux435ux43cux430-ux440ux430ux441ux43fux430ux440ux430ux43bux43bux435ux43bux438ux432ux430ux43dux438ux44f}
+
+Нулевой процесс поровну разделяет массив между всеми процессами (остаток
+равномерно распределяется между процессами). Затем каждый процесс
+линейно сортирует полученную часть массива с помощью поразрядной
+сортировки. Далее данные собираются на всех процессах, после чего,
+фактически по схеме биномиального дерева, где корнем является нулевой
+процесс, происходит простое слияние. После каждой итерации значения
+массива отправляются остальным процессам, количество процессов,
+участвующих в итерации сокращается вдвое
+
+Для написания параллельной программы используется библиотека MS-MPI.
+
+\section{\texorpdfstring{\\
+Описание программной
+реализации}{ Описание программной реализации}}\label{ux43eux43fux438ux441ux430ux43dux438ux435-ux43fux440ux43eux433ux440ux430ux43cux43cux43dux43eux439-ux440ux435ux430ux43bux438ux437ux430ux446ux438ux438}
+
+\textbf{Руководство пользователя}
+
+Для запуска программы необходимо выполнить в консоли следующую команду:
+
+path/to/mpiexec.exe --n PNum "pathto/program.exe", где PNum --
+количество процессов
+
+Далее программа запросит размер массива
+
+В результате работы программы выводится время выполнения линейной и
+параллельной версий программы в секундах.
+
+\textbf{Руководство программиста}
+
+Программа реализована в radix\_sort\_double\_simple\_merge.cpp
+
+radix\_sort\_double\_simple\_merge.h
+
+Тесты main.cpp
+
+Функции:
+
+\begin{quote}
+\protect\hypertarget{_heading=h.gjdgxs}{}{}getRandomVector - функция,
+генерирующая вектор, заполненный случайными значениями.
+
+bubbleSort - функция сортировки пузырьком, нужна для того чтобы в тестах
+удобнее было сортировать тестовые массивы.
+
+numberOfPositiveRadix - функция получения кол-ва положительных разрядов
+в числе.
+
+numberOfNegativeRadix - функция получения кол-ва отрицательных разрядов
+в числе.
+
+merge - функция слияния двух отсортированных массивов.
+
+getDigit - функция получения цифры из указанного разряда числа.
+
+radixSort - функция сортировки чисел по указанному разряду.
+
+linearRadixSort - функция линейной поразрядной сортировки.
+
+parallelRadixSort - функция параллельной сортировки.
+\end{quote}
+
+Массивы и переменные:
+
+num- количество процессов
+
+rank - номер текущего процесса
+
+size - размер массива
+
+start - переменная для счета времени
+
+end - переменная для счета времени
+
+gen - переменная для генерирования случайных значений массива
+
+vec - сортируемый массив
+
+vec\_left - куски сортируемого массива
+
+vec\_right - куски сортируемого массива
+
+tmp - вспомогательный массива для сортировки с несчетными процессами
+
+Код программы находится в разделе
+«\protect\hyperlink{_heading=h.3dy6vkm}{\emph{Приложение}}».
+
+\section{\texorpdfstring{\\
+Подтверждение
+корректности}{ Подтверждение корректности}}\label{ux43fux43eux434ux442ux432ux435ux440ux436ux434ux435ux43dux438ux435-ux43aux43eux440ux440ux435ux43aux442ux43dux43eux441ux442ux438}
+
+Для подтверждения корректности в программе реализована линейная и
+параллельная версия. Показано время, с которым работает линейная и
+параллельная версии, также результаты можно вывести и сравнить
+результаты сортировок (при больших размерах массивов это делать
+нецелесообразно )\\
+Кроме этого запоминается отсортированный массив на линейной версии и
+сравнивается с сортировкой на параллельной, после это выдается сообщение
+о том, что ошибки нет, или о том, что найдены не одинаковые элементы
+
+\section{\texorpdfstring{\\
+Результаты
+экспериментов}{ Результаты экспериментов}}\label{ux440ux435ux437ux443ux43bux44cux442ux430ux442ux44b-ux44dux43aux441ux43fux435ux440ux438ux43cux435ux43dux442ux43eux432}
+
+\protect\hypertarget{_heading=h.tyjcwt}{}{}Программа запускалась на
+компьютере со следующими характеристиками:
+
+\begin{itemize}
+\item
+  \begin{quote}
+  Процессор: Intel Core i5 2.50GHz;
+  \end{quote}
+\item
+  \begin{quote}
+  Оперативная память: 6ГБ;
+  \end{quote}
+\item
+  \begin{quote}
+  ОС: Windows 8.1 Профессиональная
+  \end{quote}
+\end{itemize}
+
+График с результатами: Время от количества процессов, ускорение от
+количества процессов
+
+В таблицу заносились средние значения по 5 экспериментам, во всех
+экспериментах сортировка происходила на массиве типа double длиной в
+10000000 элементов.
+
+\begin{longtable}[]{@{}lllllllllll@{}}
+\toprule
+Количество процессов & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 &
+10\tabularnewline
+\midrule
+\endhead
+Время работы(пар), \textbf{сек} & 0,8 & 0,788 & 0,805 & 0,811 & 0,795 &
+0,790 & 0,803 & 0,8 & 0,815 & 0,819\tabularnewline
+Время работы(лин), \textbf{сек} & 0,8 & 0,688 & 0,668 & 0,739 & 0,868 &
+0,896 & 0,790 & 1,050 & 1,33 & 1,476\tabularnewline
+Ускорение (пар) & 1,00 & 1,14 & 1,2 & 1,10 & 0,91 & 0,88 & 1,02 & 0,76 &
+0,6 & 0,55\tabularnewline
+\bottomrule
+\end{longtable}
+
+\section{\texorpdfstring{\\
+Заключение}{ Заключение}}\label{ux437ux430ux43aux43bux44eux447ux435ux43dux438ux435}
+
+Мы не получили большого ускорения за счет распараллеливания программы.\\
+Возможно, это произошло из-за использования функции Allgatherv . Также
+это могло произойти из-за того, что сортировка слиянием работает
+недостаточно быстро
+
+\section{}\label{section}
+
+\section{Литература}\label{ux43bux438ux442ux435ux440ux430ux442ux443ux440ux430}
+
+Сиднев А.А., Сысоев А.В., Мееров И.Б «Лабораторная работа №7.
+Оптимизация вычислительно трудоемкого программного модуля для
+архитектуры Intel Xeon Phi. Линейные сортировки». Нижний Новгород, 2007,
+56 с.
+
+Лаборатория Параллельных информационных технологий НИВЦ МГУ
+{[}Электронный ресурс{]} // URL: \textbackslash{}url
+\{https://parallel.ru/vvv/mpi.html\}
+
+Алгоритмы, методы, исходники {[}Электронный ресурс{]} // URL:
+\textbackslash{}url
+\{\href{http://algolist.manual.ru/sort/radix_sort.php}{\emph{http://algolist.manual.ru/sort/radix\_sort.php}}\}
+
+Городецкий С.Ю. «Лекции по нелинейному математическому
+программированию». Нижний Новгород, 2020, 154-155 с.
+
+Воеводин В.В. «Лекция 5. Технологии параллельного
+программирования.Message Passing Interface (MPI)»
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+&\tabularnewline
+\bottomrule
+\end{longtable}
+
+\section{}\label{section-1}
+
+\section{}\label{section-2}
+
+\section{Приложение}\label{ux43fux440ux438ux43bux43eux436ux435ux43dux438ux435}
+
+radix\_sort\_double\_simple\_merge.cpp
+
+\#include
+"../../../modules/task\_3/schelyanskova\_a\_sort/radix\_sort\_double\_simple\_merge.h"
+
+\#include \textless{}mpi.h\textgreater{}
+
+\#include \textless{}ctime\textgreater{}
+
+\#include \textless{}iostream\textgreater{}
+
+\#include \textless{}random\textgreater{}
+
+\#include \textless{}vector\textgreater{}
+
+\#include \textless{}list\textgreater{}
+
+\#include \textless{}utility\textgreater{}
+
+\#include \textless{}string\textgreater{}
+
+\#include \textless{}algorithm\textgreater{}
+
+\textbf{using} std::vector;
+
+\textbf{using} std::cout;
+
+\textbf{using} std::endl;
+
+\textbf{using} std::list;
+
+\textbf{using} std::to\_string;
+
+vector\textless{}\textbf{double}\textgreater{}
+getRandomVector(\textbf{int} size) \{
+
+vector\textless{}\textbf{double}\textgreater{} vec(size);
+
+std::mt19937 gen;
+
+gen.seed(\textbf{static\_cast}\textless{}\textbf{unsigned}
+\textbf{char}\textgreater{}(time(0)));
+
+\textbf{for} (\textbf{int} i = 0; i \textless{} size; i++) \{
+
+vec{[}i{]} = gen() / 10000;
+
+\}
+
+\textbf{return} vec;
+
+\}
+
+vector\textless{}\textbf{double}\textgreater{} bubbleSort(\textbf{const}
+std::vector\textless{}\textbf{double}\textgreater{}\& vec) \{
+
+std::vector\textless{}\textbf{double}\textgreater{} sorted(vec);
+
+\textbf{for} (\textbf{int} i = 0; i \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(sorted.size());
+i++) \{
+
+\textbf{for} (\textbf{int} j = i; j \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(sorted.size());
+j++) \{
+
+\textbf{if} (sorted{[}i{]} \textgreater{} sorted{[}j{]}) \{
+
+std::swap(sorted{[}i{]}, sorted{[}j{]});
+
+\}
+
+\}
+
+\}
+
+\textbf{return} sorted;
+
+\}
+
+\textbf{int} numberOfPositiveRadix(\textbf{int} num) \{
+
+\textbf{int} num\_of\_radix = 0;
+
+\textbf{while} (num\textgreater{} 0) \{
+
+num /= 10;
+
+num\_of\_radix++;
+
+\}
+
+\textbf{return} num\_of\_radix;
+
+\}
+
+\textbf{int} numberOfNegativeRadix(\textbf{double} num) \{
+
+std::string str\_num = to\_string(num);
+
+\textbf{if} (str\_num.find('.')) \{
+
+\textbf{return}
+-(\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(str\_num.find('.'))
+-
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(str\_num.size()))
+- 1;
+
+\} \textbf{else} \{
+
+\textbf{return} 0;
+
+\}
+
+\}
+
+vector\textless{}\textbf{double}\textgreater{} merge(\textbf{const}
+vector\textless{}\textbf{double}\textgreater{}\& vec\_left,
+\textbf{const} vector\textless{}\textbf{double}\textgreater{}\&
+vec\_right) \{
+
+std::vector\textless{}\textbf{double}\textgreater{}
+result((vec\_left.size() + vec\_right.size()));
+
+\textbf{int} i = 0, j = 0, k = 0;
+
+\textbf{while} (i \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vec\_left.size())
+\&\& j \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vec\_right.size()))
+\{
+
+\textbf{if} (vec\_left{[}i{]} \textless{} vec\_right{[}j{]})
+
+result{[}k{]} = vec\_left{[}i++{]};
+
+\textbf{else}
+
+result{[}k{]} = vec\_right{[}j++{]};
+
+k++;
+
+\}
+
+\textbf{while} (i \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vec\_left.size()))
+\{
+
+result{[}k++{]} = vec\_left{[}i++{]};
+
+\}
+
+\textbf{while} (j \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vec\_right.size()))
+\{
+
+result{[}k++{]} = vec\_right{[}j++{]};
+
+\}
+
+\textbf{return} result;
+
+\}
+
+\textbf{int} getDigit(\textbf{double} num, \textbf{int} radix) \{
+
+\textbf{if} (radix \textgreater{} 0) \{
+
+\textbf{double} mask = pow(10, radix);
+
+\textbf{double} tmp = num / mask;
+
+\textbf{return}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(tmp) \% 10;
+
+\}
+
+\textbf{return} uint64\_t(num * pow(10, -radix)) \% 10;
+
+\}
+
+std::vector\textless{}\textbf{double}\textgreater{}
+radixSort(\textbf{const}
+std::vector\textless{}\textbf{double}\textgreater{}\& vect, \textbf{int}
+rad) \{
+
+vector\textless{}\textbf{double}\textgreater{} res;
+
+vector\textless{}list\textless{}\textbf{double}\textgreater{}\textgreater{}
+radix(10);
+
+\textbf{for} (\textbf{auto} i = radix.begin(); i \textless{}
+radix.end(); i++) \{
+
+(*i) = list\textless{}\textbf{double}\textgreater{}();
+
+\}
+
+\textbf{for} (\textbf{int} i = 0; i \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vect.size());
+i++) \{
+
+radix{[}getDigit(vect{[}i{]}, rad){]}.push\_back(vect{[}i{]});
+
+\}
+
+\textbf{for} (\textbf{auto} vect : radix) \{
+
+\textbf{for} (\textbf{auto} element : vect) \{
+
+res.push\_back(element);
+
+\}
+
+\}
+
+\textbf{return} res;
+
+\}
+
+std::vector\textless{}\textbf{double}\textgreater{}
+linearRadixSort(\textbf{const}
+std::vector\textless{}\textbf{double}\textgreater{}\& vect) \{
+
+\textbf{int} radixNegativeZero = 0;
+
+\textbf{int} maxRadixNegativeZero = numberOfNegativeRadix(vect{[}0{]});
+
+\textbf{for} (\textbf{auto} element : vect) \{
+
+radixNegativeZero = numberOfNegativeRadix(element);
+
+\textbf{if} (radixNegativeZero \textgreater{} maxRadixNegativeZero) \{
+
+maxRadixNegativeZero = radixNegativeZero;
+
+\}
+
+\}
+
+\textbf{double} max = vect{[}0{]};
+
+\textbf{for} (\textbf{int} i = 1; i \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vect.size());
+i++) \{
+
+\textbf{if} (vect{[}i{]} \textgreater{} max) \{
+
+max = vect{[}i{]};
+
+\}
+
+\}
+
+\textbf{int} maxRadixPositiveZero = numberOfPositiveRadix(max);
+
+vector\textless{}\textbf{double}\textgreater{} result(vect);
+
+\textbf{for} (\textbf{int} i = -maxRadixNegativeZero; i \textless{}=
+maxRadixPositiveZero; i++) \{
+
+result = radixSort(result, i);
+
+\}
+
+\textbf{return} result;
+
+\}
+
+std::vector\textless{}\textbf{double}\textgreater{}
+parallelRadixSort(\textbf{const}
+std::vector\textless{}\textbf{double}\textgreater{}\& vect) \{
+
+\textbf{int} size, rank;
+
+MPI\_Comm\_size(MPI\_COMM\_WORLD, \&size);
+
+MPI\_Comm\_rank(MPI\_COMM\_WORLD, \&rank);
+
+\textbf{if} ((size == 1) \textbar{}\textbar{}
+(\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vect.size())
+\textless{} size)) \{
+
+\textbf{if} (rank == 0) \{
+
+\textbf{return} linearRadixSort(vect);
+
+\}
+
+\textbf{return} vector\textless{}\textbf{double}\textgreater{}();
+
+\}
+
+vector\textless{}\textbf{double}\textgreater{} local\_vect;
+
+\textbf{int} num\_of\_local\_numbers =
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vect.size())
+/ size;
+
+\textbf{int} count = num\_of\_local\_numbers;
+
+\textbf{if} (rank == 0) \{
+
+\textbf{int} begin;
+
+local\_vect =
+vector\textless{}\textbf{double}\textgreater{}(num\_of\_local\_numbers);
+
+std::copy(vect.begin(), vect.begin() + num\_of\_local\_numbers,
+local\_vect.begin());
+
+\textbf{for} (\textbf{int} process\_num = 1; process\_num \textless{}
+size; process\_num++) \{
+
+begin = num\_of\_local\_numbers * process\_num;
+
+\textbf{if} (process\_num == size - 1) \{
+
+count =
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vect.size())
+- begin;
+
+\}
+
+MPI\_Send(\&vect{[}0{]} + num\_of\_local\_numbers * process\_num, count,
+
+MPI\_DOUBLE, process\_num, 0, MPI\_COMM\_WORLD);
+
+\}
+
+count = num\_of\_local\_numbers;
+
+\} \textbf{else} \{
+
+MPI\_Status st;
+
+\textbf{if} (rank == size - 1) \{
+
+count =
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vect.size())
+- num\_of\_local\_numbers * (size - 1);
+
+\}
+
+local\_vect = vector\textless{}\textbf{double}\textgreater{}(count);
+
+MPI\_Recv(\&local\_vect{[}0{]}, count, MPI\_DOUBLE, 0, 0,
+MPI\_COMM\_WORLD, \&st);
+
+\}
+
+vector\textless{}\textbf{double}\textgreater{} result =
+linearRadixSort(local\_vect);
+
+vector\textless{}\textbf{int}\textgreater{} active\_process(size);
+
+vector\textless{}\textbf{int}\textgreater{} process\_deltas\_map(size);
+
+\textbf{for} (\textbf{int} i = 0; i \textless{} size - 1; i++) \{
+
+active\_process{[}i{]} = i;
+
+process\_deltas\_map{[}i{]} = num\_of\_local\_numbers;
+
+\}
+
+active\_process{[}size - 1{]} = size - 1;
+
+process\_deltas\_map{[}size - 1{]} =
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(vect.size())
+
+- num\_of\_local\_numbers * (size - 1);
+
+\textbf{while}
+(\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(active\_process.size())
+\textgreater{} 1) \{
+
+\textbf{int} index\_of\_cur\_process =
+std::find(active\_process.begin(), active\_process.end(), rank)
+
+- active\_process.begin();
+
+\textbf{if} ((index\_of\_cur\_process ==
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(active\_process.size())
+- 1) \&\&
+
+(\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(active\_process.size())
+\% 2)) \{
+
+vector\textless{}\textbf{int}\textgreater{} tmp\_active\_proc;
+
+vector\textless{}\textbf{int}\textgreater{} tmp\_process\_deltas\_map;
+
+\textbf{for} (\textbf{int} i = 0; i \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(active\_process.size())
+- 1; i += 2) \{
+
+tmp\_active\_proc.push\_back(active\_process{[}i{]});
+
+tmp\_process\_deltas\_map.push\_back(process\_deltas\_map{[}i{]});
+
+\}
+
+tmp\_active\_proc.push\_back(active\_process{[}index\_of\_cur\_process{]});
+
+tmp\_process\_deltas\_map.push\_back(process\_deltas\_map{[}index\_of\_cur\_process{]});
+
+\textbf{for} (\textbf{int} i = 0; i \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(tmp\_active\_proc.size());
+i++) \{
+
+\textbf{if} (tmp\_active\_proc{[}i{]} != rank) \{
+
+tmp\_process\_deltas\_map{[}i{]} *= 2;
+
+\}
+
+\}
+
+active\_process = tmp\_active\_proc;
+
+process\_deltas\_map = tmp\_process\_deltas\_map;
+
+\textbf{continue};
+
+\}
+
+\textbf{if} (index\_of\_cur\_process \% 2 == 1) \{
+
+MPI\_Send(\&result{[}0{]}, count, MPI\_DOUBLE,
+active\_process{[}index\_of\_cur\_process - 1{]}, 0,
+
+MPI\_COMM\_WORLD);
+
+\textbf{return} vector\textless{}\textbf{double}\textgreater{}();
+
+\} \textbf{else} \{
+
+MPI\_Status st;
+
+vector\textless{}\textbf{double}\textgreater{}
+tmp(process\_deltas\_map{[}index\_of\_cur\_process + 1{]});
+
+MPI\_Recv(\&tmp{[}0{]}, process\_deltas\_map{[}index\_of\_cur\_process +
+1{]}, MPI\_DOUBLE,
+
+active\_process{[}index\_of\_cur\_process + 1{]}, 0, MPI\_COMM\_WORLD,
+\&st);
+
+result = merge(result, tmp);
+
+count =
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(result.size());
+
+vector\textless{}\textbf{int}\textgreater{} tmp\_active\_proc;
+
+vector\textless{}\textbf{int}\textgreater{} tmp\_process\_deltas\_map;
+
+\textbf{for} (\textbf{int} i = 0; i \textless{}
+\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(active\_process.size())
+- 1; i += 2) \{
+
+tmp\_active\_proc.push\_back(active\_process{[}i{]});
+
+tmp\_process\_deltas\_map.push\_back(process\_deltas\_map{[}i{]} +
+process\_deltas\_map{[}i + 1{]});
+
+\}
+
+\textbf{if}
+((\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(active\_process.size())
+\% 2)) \{
+
+tmp\_active\_proc.push\_back(active\_process{[}\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(active\_process.size())
+- 1{]});
+
+tmp\_process\_deltas\_map.push\_back(process\_deltas\_map{[}\textbf{static\_cast}\textless{}\textbf{int}\textgreater{}(active\_process.size())
+- 1{]});
+
+\}
+
+active\_process = tmp\_active\_proc;
+
+process\_deltas\_map = tmp\_process\_deltas\_map;
+
+\}
+
+\}
+
+\textbf{if} (rank == 0) \{
+
+\textbf{return} result;
+
+\}
+
+\textbf{return} vector\textless{}\textbf{double}\textgreater{}();
+
+\}
+
+\end{document}
