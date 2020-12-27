@@ -3,3 +3,6 @@ mpich
 cmake-build-release
 cmake-build-debug
 .idea/
+/.vs/pp_2020_autumn_engineer/v15
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
