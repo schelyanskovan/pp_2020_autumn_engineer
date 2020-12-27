@@ -44,7 +44,7 @@ std::vector<int> getParallelOperations(std::vector<int> Matrix, int rows, int co
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     int delta = rows / size;
-    std::vector<int> rez(rows);
+    std::vector<int> rez(rows > 0 ? rows : 1);
     std::vector<int> local_rez(delta);
     std::vector<int> local_matrix(delta * colls);
 
