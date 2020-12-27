@@ -9,6 +9,11 @@ std::vector<int> getRandomVector(int size) {
     std::mt19937 randGenerator;
     randGenerator.seed(static_cast<unsigned>(time(NULL)));
 
+    if (size == 0) {
+        std::vector<int> vec;
+        return vec;
+    }
+
     std::vector<int> vec(size);
     for (int i = 0; i < size; ++i) {
         vec[i] = randGenerator() % 100;
@@ -18,6 +23,8 @@ std::vector<int> getRandomVector(int size) {
 }
 
 int getVectorSumSequential(std::vector<int> vec) {
+    if (vec.size() == 0) return 0;
+
     int vecSum = 0;
 
     for (size_t i = 0; i < vec.size(); ++i) {
@@ -28,23 +35,28 @@ int getVectorSumSequential(std::vector<int> vec) {
 }
 
 int getVectorSumParallel(std::vector<int> vec, int vecCountSize) {
+    if (vecCountSize == 0) return 0;
+
     int commSize, procRank;
     MPI_Comm_size(MPI_COMM_WORLD, &commSize);
     MPI_Comm_rank(MPI_COMM_WORLD, &procRank);
     const int numPerProc = vecCountSize / commSize;
+    const int leftover = vecCountSize % commSize;
 
     if (procRank == 0) {
         for (int procNum = 1; procNum < commSize; ++procNum) {
-            MPI_Send(&vec[0] + procNum * numPerProc, numPerProc, MPI_INT, procNum, 0, MPI_COMM_WORLD);
+            MPI_Send(&vec[0] + procNum * numPerProc + std::min(procNum, leftover),
+                     numPerProc + (procNum < leftover ? 1 : 0),
+                     MPI_INT, procNum, 0, MPI_COMM_WORLD);
         }
     }
 
-    std::vector<int> subVector(numPerProc);
+    std::vector<int> subVector(numPerProc + 1);
     if (procRank == 0) {
-        subVector = std::vector<int>(vec.begin(), vec.begin() + numPerProc);
+        subVector = std::vector<int>(vec.begin(), vec.begin() + numPerProc + (leftover > 0 ? 1 : 0));
     } else {
         MPI_Status status;
-        MPI_Recv(&subVector[0], numPerProc, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
+        MPI_Recv(&subVector[0], numPerProc + (procRank < leftover ? 1 : 0), MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
     }
 
     int sum = 0;
